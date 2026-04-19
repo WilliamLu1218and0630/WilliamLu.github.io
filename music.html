@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音樂與藝術 · William Lu</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* YouTube thumbnail card */
+    .yt-thumb {
+      display: block;
+      position: relative;
+      text-decoration: none;
+      overflow: hidden;
+      background: #000;
+    }
+    .yt-thumb img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      opacity: 0.88;
+      transition: opacity 0.2s;
+    }
+    .yt-thumb:hover img { opacity: 0.72; }
+    .yt-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .yt-play span {
+      width: 52px;
+      height: 52px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--accent);
+      padding-left: 4px;
+      transition: transform 0.2s;
+    }
+    .yt-thumb:hover .yt-play span { transform: scale(1.1); }
+    .yt-open {
+      display: inline-block;
+      margin-top: 0.45rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .yt-open:hover { color: var(--accent); }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.4rem;
+      font-size: 1.6rem;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      background: none;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    #lightbox-close:hover { opacity: 1; }
+
+    /* Gallery clickable */
+    .gallery-grid a { display: block; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li><a href="math.html">Math</a></li>
+      <li><a href="linguistics.html">Linguistics</a></li>
+      <li><a href="music.html" class="active">Music & Art</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <p class="section-label">Music & Art</p>
+      <h1>音樂與藝術</h1>
+      <p class="hero-sub">編曲 · 打擊 · 油畫 · 素描 · 摺紙</p>
+    </section>
+
+    <!-- MUSIC -->
+    <section>
+      <p class="section-label">Music</p>
+      <h2 class="section-title">音樂</h2>
+
+      <div class="research-block">
+        <h3 class="research-title">Jacob Collier Covers</h3>
+        <p class="research-meta">多聲部編曲 · 翻唱</p>
+        <div class="research-desc">
+          <p>受 Jacob Collier 影響，探索多聲部和聲、非傳統調式與複雜節奏的結合。以下為翻唱作品。</p>
+        </div>
+        <div class="yt-grid">
+          <div class="yt-item">
+            <h3>The Christmas Song</h3>
+            <a class="yt-thumb" href="https://youtu.be/pDjovKH0zxc" target="_blank" rel="noopener">
+              <img src="https://img.youtube.com/vi/pDjovKH0zxc/maxresdefault.jpg" alt="The Christmas Song Cover">
+              <div class="yt-play"><span>▶</span></div>
+            </a>
+            <a class="yt-open" href="https://youtu.be/pDjovKH0zxc" target="_blank" rel="noopener">在 YouTube 觀看 ↗</a>
+            <a class="yt-open" href="christmas-song.html">製作紀錄 →</a>
+          </div>
+          <div class="yt-item">
+            <h3>Flintstones</h3>
+            <a class="yt-thumb" href="https://youtu.be/_O-Wn0ytJg4" target="_blank" rel="noopener">
+              <img src="https://img.youtube.com/vi/_O-Wn0ytJg4/maxresdefault.jpg" alt="Flintstones Cover">
+              <div class="yt-play"><span>▶</span></div>
+            </a>
+            <a class="yt-open" href="https://youtu.be/_O-Wn0ytJg4" target="_blank" rel="noopener">在 YouTube 觀看 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">行進小鼓</h3>
+        <p class="research-meta">Marching Percussion</p>
+        <div class="research-desc">
+          <p>打點演奏影片收錄於 Instagram，歡迎前往查看。</p>
+        </div>
+        <div class="ig-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+          </svg>
+          Instagram：
+          <a href="https://instagram.com/wei1218and0630" target="_blank" rel="noopener">@wei1218and0630</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ART -->
+    <section>
+      <p class="section-label">Art</p>
+      <h2 class="section-title">藝術創作</h2>
+
+      <!-- Paintings -->
+      <div class="research-block">
+        <h3 class="research-title">油畫</h3>
+        <p class="research-meta">Oil Painting</p>
+        <div class="painting-grid">
+          <div class="painting-item">
+            <img src="assets/art/油畫_不對稱的臉.jpg" alt="不對稱的臉">
+            <p class="caption">不對稱的臉</p>
+          </div>
+          <div class="painting-item">
+            <img src="assets/art/幾何油畫.jpg" alt="幾何">
+            <p class="caption">幾何</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 百週百張 -->
+      <div class="research-block">
+        <h3 class="research-title">百週百張直線創作</h3>
+        <p class="research-meta">2B 鉛筆 · A5 方格紙 · 純線條構成</p>
+        <div class="research-desc">
+          <p>以純線條為限制條件，一週完成一幅素描，最終累積一百週的持續創作。作品以 2B 鉛筆於 A5 方格紙上繪製，探索直線取線在構圖、明暗與空間上的可能性。</p>
+        </div>
+        <div class="gallery-grid">
+          <a href="assets/art/百週百張直線創作/01.jpg"><img src="assets/art/百週百張直線創作/01.jpg" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/02.JPG"><img src="assets/art/百週百張直線創作/02.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/03.JPG"><img src="assets/art/百週百張直線創作/03.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/04.JPG"><img src="assets/art/百週百張直線創作/04.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/05.JPG"><img src="assets/art/百週百張直線創作/05.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/06.JPG"><img src="assets/art/百週百張直線創作/06.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/07.JPG"><img src="assets/art/百週百張直線創作/07.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/08.JPG"><img src="assets/art/百週百張直線創作/08.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/09.JPG"><img src="assets/art/百週百張直線創作/09.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/10.JPG"><img src="assets/art/百週百張直線創作/10.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/11.JPG"><img src="assets/art/百週百張直線創作/11.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/12.JPG"><img src="assets/art/百週百張直線創作/12.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/13.JPG"><img src="assets/art/百週百張直線創作/13.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/14.JPG"><img src="assets/art/百週百張直線創作/14.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/15.JPG"><img src="assets/art/百週百張直線創作/15.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/16.JPG"><img src="assets/art/百週百張直線創作/16.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/17.JPG"><img src="assets/art/百週百張直線創作/17.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/18.JPG"><img src="assets/art/百週百張直線創作/18.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/19.JPG"><img src="assets/art/百週百張直線創作/19.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/20.JPG"><img src="assets/art/百週百張直線創作/20.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/21.JPG"><img src="assets/art/百週百張直線創作/21.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/22.JPG"><img src="assets/art/百週百張直線創作/22.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/23.JPG"><img src="assets/art/百週百張直線創作/23.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/24.JPG"><img src="assets/art/百週百張直線創作/24.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/25.JPG"><img src="assets/art/百週百張直線創作/25.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/26.JPG"><img src="assets/art/百週百張直線創作/26.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/27.JPG"><img src="assets/art/百週百張直線創作/27.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/28.JPG"><img src="assets/art/百週百張直線創作/28.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/29.jpg"><img src="assets/art/百週百張直線創作/29.jpg" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/30.jpg"><img src="assets/art/百週百張直線創作/30.jpg" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/31.JPG"><img src="assets/art/百週百張直線創作/31.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/32.JPG"><img src="assets/art/百週百張直線創作/32.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/33.JPG"><img src="assets/art/百週百張直線創作/33.JPG" alt="直線創作" loading="lazy"></a>
+          <a href="assets/art/百週百張直線創作/99.JPG"><img src="assets/art/百週百張直線創作/99.JPG" alt="直線創作" loading="lazy"></a>
+        </div>
+        <p class="gallery-note">* 點擊圖片可放大查看。作品持續更新中。</p>
+      </div>
+
+      <!-- Origami -->
+      <div class="research-block">
+        <h3 class="research-title">摺紙</h3>
+        <p class="research-meta">Origami · 依 YouTube 教學折製</p>
+        <div class="origami-wrap">
+          <img src="assets/photos/S__13852731.jpg" alt="摺紙作品">
+          <div class="origami-desc">
+            <p>依照
+              <a href="https://www.youtube.com/@JoNakashima" target="_blank" rel="noopener">Origami with Jo Nakashima</a>
+              的 YouTube 教學折製，涵蓋動物、幾何體等多種模型。</p>
+            <p>摺紙的過程需要精確的空間推理——將平面的折疊操作映射到三維結構，對訓練幾何直覺頗有幫助。</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      <p>© 2026 William Lu 呂乃崴</p>
+      <p><a href="index.html" style="color:inherit;text-decoration:none;">← 返回首頁</a></p>
+    </footer>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="圖片放大">
+    <button id="lightbox-close" aria-label="關閉">×</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.gallery-grid a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        lbImg.src = a.href;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+
+</body>
+</html>

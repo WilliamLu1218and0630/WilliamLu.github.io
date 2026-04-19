@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>William Lu 呂乃崴</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #F8F7F4;
+      --surface:    #FFFFFF;
+      --text:       #1A1A1A;
+      --text-muted: #747070;
+      --accent:     #A83226;
+      --border:     #E0DBD5;
+      --font-sans:  'Inter', 'Taipei Sans TC', 'Noto Sans TC', sans-serif;
+      --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(248, 247, 244, 0.90);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      height: 52px;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    /* ── HERO ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 5rem;
+      align-items: center;
+      min-height: 92vh;
+      padding-top: 110px;
+      padding-bottom: 72px;
+      border-top: none;
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-serif);
+      font-size: 3.6rem;
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.15em;
+    }
+
+    .hero-zh {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 1.55rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      margin-top: 0.1em;
+    }
+
+    .hero-subtitle {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 1rem;
+      margin-bottom: 1.8rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    .hero-subtitle::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-desc {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: var(--text);
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc p + p { margin-top: 0.75em; }
+
+    .hero-desc .placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.4rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .social-links a:hover { color: var(--accent); }
+
+    .social-links svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    /* Photo */
+    .hero-photo {
+      position: relative;
+      align-self: center;
+    }
+
+    .hero-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center center;
+      filter: grayscale(10%);
+    }
+
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: -10px;
+      bottom: -10px;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 72px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── AREAS ── */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .area-card {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.8rem 1.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      min-height: 260px;
+    }
+
+    .area-card:hover {
+      border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+    }
+
+    .area-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.7rem;
+    }
+
+    .area-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .area-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: auto;
+      padding-bottom: 1.4rem;
+    }
+
+    .area-tag {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.2em 0.6em;
+      line-height: 1.6;
+    }
+
+    .area-arrow {
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .area-card:hover .area-arrow { color: var(--accent); }
+
+    /* ── ACHIEVEMENTS ── */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 2.5rem;
+    }
+
+    .achievement-group h3 {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .achievement-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .achievement-list li {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0.6rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .achievement-list li:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .achievement-year {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding-top: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .achievement-desc {
+      color: var(--text);
+    }
+
+    .achievement-desc .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.05em 0.45em;
+      margin-left: 0.4em;
+      vertical-align: middle;
+      line-height: 1.6;
+    }
+
+
+    /* ── CONTACT ── */
+    .contact-intro {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 440px;
+      margin-bottom: 2rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      font-size: 0.88rem;
+    }
+
+    .contact-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    .contact-list a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-list a:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 2.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 740px) {
+      nav { padding: 0 1.4rem; }
+      main { padding: 0 1.4rem; }
+
+      #about {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 80px;
+        gap: 2.4rem;
+      }
+
+      .hero-photo {
+        order: -1;
+        max-width: 220px;
+      }
+
+      .hero-text h1 { font-size: 2.6rem; }
+      .areas-grid { grid-template-columns: 1fr; }
+      .achievements-grid { grid-template-columns: 1fr; gap: 2rem 0; }
+
+      .nav-links { gap: 1.2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .interests-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 0.9rem; }
+      footer { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#about" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li><a href="math.html">Math</a></li>
+      <li><a href="linguistics.html">Linguistics</a></li>
+      <li><a href="music.html">Music & Art</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="about" style="border-top:none;">
+      <div class="hero-text">
+        <h1>
+          William Lu
+          <span class="hero-zh">呂乃崴</span>
+        </h1>
+        <p class="hero-subtitle">臺北市非學校型態實驗教育 · 二年級</p>
+        <div class="hero-desc">
+          <p>就讀臺北市高級中等教育階段非學校型態實驗教育，對語言學、數學與藝術創作抱有好奇心。</p>
+          <p>語言學是目前最深入的方向——從馬祖語否定詞研究，到語言類型學上的南島語系數詞分析。數學上參與國內外競賽，也關注真實問題中的應用。</p>
+          <p>音樂與藝術是另一種思考方式。以純線條創作、超現實主義油畫與摺紙為創作媒介，實驗形式與限制之間的張力；受 Jacob Collier 影響，探索多聲部和聲與非傳統調式，目前累計兩首 cover。</p>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/WilliamLu1218and0630" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.01 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="mailto:weiweiaakid@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="m2 7 10 7 10-7"/>
+            </svg>
+            Email
+          </a>
+          <a href="https://instagram.com/wei1218and0630" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            </svg>
+            Instagram
+          </a>
+          <a href="https://www.youtube.com/channel/UClZzDZsrKMD9aMEn6M2iYXQ" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
+            </svg>
+            YouTube
+          </a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/photos/S__13852725.jpg" alt="William Lu 呂乃崴">
+      </div>
+    </section>
+
+    <!-- AREAS -->
+    <section id="interests">
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">研究與創作</h2>
+      <div class="areas-grid">
+
+        <a href="linguistics.html" class="area-card">
+          <p class="area-label">Linguistics</p>
+          <h3>語言學</h3>
+          <div class="area-tags">
+            <span class="area-tag">類型語言學</span>
+            <span class="area-tag">語言奧林匹亞</span>
+            <span class="area-tag">馬祖語否定詞研究</span>
+            <span class="area-tag">南島語系數詞</span>
+          </div>
+          <span class="area-arrow">查看研究 →</span>
+        </a>
+
+        <a href="math.html" class="area-card">
+          <p class="area-label">Mathematics</p>
+          <h3>數學</h3>
+          <div class="area-tags">
+            <span class="area-tag">數學競賽</span>
+            <span class="area-tag">騎士周遊問題</span>
+            <span class="area-tag">羽狀複葉生長機制</span>
+          </div>
+          <span class="area-arrow">查看研究 →</span>
+        </a>
+
+        <a href="music.html" class="area-card">
+          <p class="area-label">Music &amp; Art</p>
+          <h3>音樂與藝術</h3>
+          <div class="area-tags">
+            <span class="area-tag">多聲部編曲</span>
+            <span class="area-tag">行進小鼓</span>
+            <span class="area-tag">直線創作</span>
+            <span class="area-tag">超現實主義油畫</span>
+            <span class="area-tag">摺紙</span>
+            <span class="area-tag">Jacob Collier Covers</span>
+          </div>
+          <span class="area-arrow">查看作品 →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements">
+      <p class="section-label">Record</p>
+      <h2 class="section-title">經歷與獲獎</h2>
+      <div class="achievements-grid">
+
+        <div class="achievement-group">
+          <h3>數學 · Mathematics</h3>
+          <ul class="achievement-list">
+            <li>
+              <span class="achievement-year">2021</span>
+              <span class="achievement-desc">International Mathematics Competition (IMC) 國際數學競賽<span class="badge">個人銅牌</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2023</span>
+              <span class="achievement-desc">Junior High School Mathematics Competition in Taiwan (JHMC) 數學競賽 臺北地區<span class="badge">個人一等獎</span><span class="badge">團體一等獎</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2023</span>
+              <span class="achievement-desc">American Mathematics Competitions (AMC 12A) — 獲邀 AIME I 臺灣區美國國際數學邀請賽 </span>
+            </li>
+            <li>
+              <span class="achievement-year">2023</span>
+              <span class="achievement-desc">Taiwan Mathematics Test (TMT11) 臺灣數學測驗<span class="badge">菁英證書</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">第十四屆APX全國高中數理能力檢定-數學科 高級<span class="badge">合格</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">國立中興大學2024夏令營【數理類】UniMath高等數學探索營</span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">臺北市第57屆中小學科學展覽會 國中組生物科《羽狀複葉之探究：優勢種密毛小毛蕨的生長機制》以數學模型分析植物之型態<span class="badge">特優</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2025</span>
+              <span class="achievement-desc">115學年度全國高級中等學校小論文寫作比賽 — 六邊形棋盤上騎士周遊問題之「七色棋盤法」<span class="badge">優等</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="achievement-group">
+          <h3>語言學 · Linguistics</h3>
+          <ul class="achievement-list">
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">語言解謎鐵人賽<br><span class="badge">最佳解題獎</span><span class="badge">國中組銀牌</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">臺灣語言學奧林匹亞（TOL）初賽<span class="badge">佳作</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">第三屆臺灣中學生語言科學科展 — 決賽入圍<br>「從類型語言學看人稱標記」</span>
+            </li>
+            <li>
+              <span class="achievement-year">2025</span>
+              <span class="achievement-desc">第四屆臺灣中學生語言科學科展 — 「馬祖語否定詞研究：從語言分析、數據統計到遊戲開發」<span class="badge">第一名</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2026</span>
+              <span class="achievement-desc">亞太語言學奧林匹亞競賽（APLO）<span class="badge">全國第九名</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2026</span>
+              <span class="achievement-desc">Emory Undergraduate Linguistics Conference (EULC) 7 — Beyond Decimal: Typological Patterns and Hierarchies in Numeral Systems<span class="badge">Oral Presentation</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="achievement-group">
+          <h3>其他 · Other</h3>
+          <ul class="achievement-list">
+            <li>
+              <span class="achievement-year">2023</span>
+              <span class="achievement-desc">第19屆國家地理知識大競賽 — 環境觀察暨手繪地圖組<br>《流動能源－大安、文山區電源分布地圖》</span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">114學年度全國高級中等學校小論文寫作比賽 — 《臺灣綠能發展現況分析與探討-以台北市電動車充電點位與微笑單車2.0為例》</span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">珩天文化國際英語朗誦節 台灣賽區北部決賽<span class="badge">第三名</span></span>
+            </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">NEC 經濟學 中國區競賽<span class="badge">Top Rookie Individual Award</span></span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-title">聯絡</h2>
+      <p class="contact-intro">
+        歡迎任何合作想法來信交流。
+      </p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Email</span>
+          <a href="mailto:weiweiaakid@gmail.com">weiweiaakid@gmail.com</a>
+        </li>
+        <li>
+          <span class="contact-label">GitHub</span>
+          <a href="https://github.com/WilliamLu1218and0630" target="_blank" rel="noopener">
+            github.com/WilliamLu1218and0630
+          </a>
+        </li>
+        <li>
+          <span class="contact-label">Instagram</span>
+          <a href="https://instagram.com/wei1218and0630" target="_blank" rel="noopener">
+            @wei1218and0630
+          </a>
+        </li>
+        <li>
+          <span class="contact-label">YouTube</span>
+          <a href="https://www.youtube.com/channel/UClZzDZsrKMD9aMEn6M2iYXQ" target="_blank" rel="noopener">
+            William Lu
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>© 2026 William Lu 呂乃崴</p>
+      <p>臺北，臺灣</p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

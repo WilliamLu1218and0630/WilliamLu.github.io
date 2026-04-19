@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Christmas Song · William Lu</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .stat-item {
+      background: var(--surface);
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 1rem;
+    }
+    .detail-table td {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .detail-table td:first-child {
+      color: var(--text-muted);
+      width: 38%;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      padding-right: 1.2rem;
+    }
+    .detail-table tr:last-child td { border-bottom: none; }
+    .breadcrumb {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { margin: 0 0.4em; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li><a href="math.html">Math</a></li>
+      <li><a href="linguistics.html">Linguistics</a></li>
+      <li><a href="music.html" class="active">Music & Art</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <p class="breadcrumb">
+        <a href="music.html">Music & Art</a>
+        <span>›</span>
+        <a href="music.html">Jacob Collier Covers</a>
+        <span>›</span>
+        The Christmas Song
+      </p>
+      <p class="section-label">Cover Production</p>
+      <h1>The Christmas Song</h1>
+      <p class="hero-sub">Chestnuts Roasting On An Open Fire</p>
+    </section>
+
+    <!-- VIDEO -->
+    <section>
+      <p class="section-label">Watch</p>
+      <h2 class="section-title">影片</h2>
+      <div class="yt-embed">
+        <iframe src="https://www.youtube.com/embed/pDjovKH0zxc" title="The Christmas Song Cover" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section>
+      <p class="section-label">Overview</p>
+      <h2 class="section-title">製作概覽</h2>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num">203.5<span style="font-size:1.1rem">+</span></div>
+          <div class="stat-label">製作總時數</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5:31</div>
+          <div class="stat-label">影片時長</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">264</div>
+          <div class="stat-label">音軌數量</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">102</div>
+          <div class="stat-label">Jacob 角色數</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">22</div>
+          <div class="stat-label">服裝套數</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">15</div>
+          <div class="stat-label">Album 頁數</div>
+        </div>
+      </div>
+
+      <div class="research-desc">
+        <p>受 Jacob Collier 影響，以多聲部和聲、非傳統調式與複雜節奏為核心，花費超過 203.5 小時從九月製作至十二月完成這首翻唱。22 套服裝中包含 7 件從紐西蘭採購的夏威夷衫。</p>
+      </div>
+    </section>
+
+    <!-- AUDIO -->
+    <section>
+      <p class="section-label">Audio</p>
+      <h2 class="section-title">音訊製作</h2>
+
+      <div class="research-block">
+        <h3 class="research-title">錄音設置</h3>
+        <p class="research-meta">Dual Microphone Setup</p>
+        <div class="research-desc">
+          <p>使用兩支電容麥克風（SSL Connex 與 G55）分別捕捉不同頻率特性的聲音，透過雙麥設置豐富和聲的音色層次。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>DAW</td><td>Reaper（Windows 免費版）</td></tr>
+          <tr><td>錄音器材</td><td>iPhone 8 Plus、SSL Connex、G55 電容麥克風</td></tr>
+          <tr><td>總音軌數</td><td>264 軌</td></tr>
+          <tr><td>混音工具</td><td>音量調整、淡入淡出、EQ 處理、壓縮、低音八度降調</td></tr>
+        </table>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">錄音技巧</h3>
+        <p class="research-meta">Recording Techniques</p>
+        <div class="research-desc">
+          <p>困難段落採降速錄音以確保音準，事後回調至正常速度；低音聲部以八度降調壓縮方式處理，以現有器材模擬深沉音色。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>困難段落</td><td>降速錄音，後期調回正常速度</td></tr>
+          <tr><td>低音處理</td><td>八度降調壓縮</td></tr>
+          <tr><td>口琴段落</td><td>SUZUKI MELODION M-37，自學簡化版獨奏</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- VIDEO PRODUCTION -->
+    <section>
+      <p class="section-label">Video</p>
+      <h2 class="section-title">影像製作</h2>
+
+      <div class="research-block">
+        <h3 class="research-title">拍攝設置</h3>
+        <p class="research-meta">Filming Setup</p>
+        <div class="research-desc">
+          <p>架設 2m × 3m 綠幕棚，在 22 套服裝（含 7 件紐西蘭夏威夷衫）之間切換，共完成約 102 個不同「Jacob」角色的對嘴演出。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>綠幕尺寸</td><td>2m × 3m</td></tr>
+          <tr><td>服裝數量</td><td>22 套（含 7 件紐西蘭夏威夷衫）</td></tr>
+          <tr><td>角色數量</td><td>約 102 個</td></tr>
+          <tr><td>Album 頁數</td><td>15 頁（筆記本頁面 + 卡紙手工製作）</td></tr>
+        </table>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">後期製作</h3>
+        <p class="research-meta">Post-Production</p>
+        <div class="research-desc">
+          <p>手工製作 Album 道具，以 Adobe After Effects 處理多層合成，Premiere Pro 完成最終剪輯。此為首次自學影片剪輯的作品。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>合成軟體</td><td>Adobe After Effects 2025</td></tr>
+          <tr><td>剪輯軟體</td><td>Adobe Premiere Pro 2025</td></tr>
+          <tr><td>Album 道具</td><td>筆記本頁面 + 卡紙，手工製作</td></tr>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 William Lu</p>
+    <p><a href="music.html" style="color:var(--text-muted);text-decoration:none;">← 返回 Music & Art</a></p>
+  </footer>
+
+</body>
+</html>
