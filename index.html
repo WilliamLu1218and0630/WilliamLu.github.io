@@ -554,6 +554,25 @@
       .nav-links { gap: 0.9rem; }
       footer { flex-direction: column; gap: 0.4rem; text-align: center; }
     }
+
+    /* ── DEFAULT INLINE LINK STYLE ──
+       Content links (e.g. inside .achievement-desc, .hero-subtitle, .hero-desc):
+       inherit text color with a thin underline, turn blue on hover.
+       Component-scoped rules above (nav-links, social-links, contact-list, etc.)
+       set text-decoration:none and override this where appropriate. */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      text-decoration-color: currentColor;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+    }
+
+    a:hover {
+      color: #2563eb;
+      text-decoration-color: #2563eb;
+    }
   </style>
 </head>
 <body>
