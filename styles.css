@@ -537,3 +537,22 @@ footer p {
   footer { flex-direction: column; gap: 0.4rem; text-align: center; }
   .nav-links { gap: 0.9rem; }
 }
+
+/* ── DEFAULT INLINE LINK STYLE ──
+   Content links inherit text color with a thin underline by default,
+   and turn blue on hover. Component-scoped rules above (nav, awards,
+   social-links, pdf-actions, etc.) override this where text-decoration
+   is explicitly set, so layout links remain unaffected. */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: currentColor;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+a:hover {
+  color: #2563eb;
+  text-decoration-color: #2563eb;
+}
