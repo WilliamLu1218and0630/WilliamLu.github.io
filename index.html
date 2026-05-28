@@ -81,6 +81,53 @@
 
     .nav-links a:hover { color: var(--accent); }
 
+    /* Dropdown */
+    .nav-links li.has-dropdown { position: relative; }
+    .nav-links .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      list-style: none;
+      padding: 0.5rem 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 110;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .nav-links li.has-dropdown:hover > .dropdown,
+    .nav-links li.has-dropdown:focus-within > .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-links .dropdown li { display: block; }
+    .nav-links .dropdown a {
+      display: block;
+      padding: 0.45rem 1.1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .nav-links .dropdown a:hover {
+      background: var(--bg);
+      color: var(--accent);
+    }
+    .nav-links li.has-dropdown::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 8px;
+    }
+
     /* ── MAIN ── */
     main {
       max-width: 920px;
@@ -416,6 +463,8 @@
     @media (max-width: 740px) {
       nav { padding: 0 1.4rem; }
       main { padding: 0 1.4rem; }
+      .nav-links .dropdown { display: none !important; }
+      .nav-links li.has-dropdown::after { display: none; }
 
       #about {
         grid-template-columns: 1fr;
@@ -448,9 +497,27 @@
   <nav>
     <a href="#about" class="nav-logo">William Lu</a>
     <ul class="nav-links">
-      <li><a href="math.html">Math</a></li>
-      <li><a href="linguistics.html">Linguistics</a></li>
-      <li><a href="music.html">Music & Art</a></li>
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -591,6 +658,10 @@
               <span class="achievement-year">2025</span>
               <span class="achievement-desc">115學年度全國高級中等學校小論文寫作比賽 — 六邊形棋盤上騎士周遊問題之「七色棋盤法」<span class="badge">優等</span></span>
             </li>
+            <li>
+              <span class="achievement-year">2024</span>
+              <span class="achievement-desc">NEC 經濟學 中國區競賽<span class="badge">Top Rookie Individual Award</span></span>
+            </li>
           </ul>
         </div>
 
@@ -625,7 +696,7 @@
         </div>
 
         <div class="achievement-group">
-          <h3>其他 · Others</h3>
+          <h3>專題研究 · Projects</h3>
           <ul class="achievement-list">
             <li>
               <span class="achievement-year">2023</span>
@@ -640,8 +711,8 @@
               <span class="achievement-desc">珩天文化國際英語朗誦節 台灣賽區北部決賽<span class="badge">第三名</span></span>
             </li>
             <li>
-              <span class="achievement-year">2024</span>
-              <span class="achievement-desc">NEC 經濟學 中國區競賽<span class="badge">Top Rookie Individual Award</span></span>
+              <span class="achievement-year">2025</span>
+              <span class="achievement-desc">教育部青年發展署 青年百億海外圓夢基金計畫 海外翱翔組 — 大溪地語言學田野調查計畫<span class="badge">入選</span></span>
             </li>
           </ul>
         </div>

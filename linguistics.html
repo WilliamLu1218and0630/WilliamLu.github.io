@@ -12,9 +12,27 @@
   <nav>
     <a href="index.html" class="nav-logo">William Lu</a>
     <ul class="nav-links">
-      <li><a href="math.html">Math</a></li>
-      <li><a href="linguistics.html" class="active">Linguistics</a></li>
-      <li><a href="music.html">Music & Art</a></li>
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html" class="active">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
   </nav>
@@ -27,7 +45,7 @@
       <p class="hero-sub">語言學研究 · 語言奧林匹亞</p>
     </section>
 
-    <section>
+    <section id="research">
       <p class="section-label">Research</p>
       <h2 class="section-title">研究成果</h2>
       <!-- Research 1: EULC 7 -->
@@ -48,7 +66,7 @@
           <a href="assets/linguistics/Beyond Decimal Typological Patterns and Hierarchies in Numeral.pdf" download>下載簡報</a>
         </div>
       </div>
-    </section>
+
       <!-- Research 2: 馬祖語 -->
       <div class="research-block">
         <h3 class="research-title">馬祖語否定詞研究</h3>
@@ -128,7 +146,51 @@
         </ul>
       </div>
 
+      <!-- Research 4: 大溪地計畫 -->
+      <div class="research-block" id="tahiti">
+        <h3 class="research-title">大溪地語言學田野調查計畫</h3>
+        <p class="research-meta">教育部青年發展署 青年百億海外圓夢基金計畫 · 海外翱翔組 · 入選</p>
+        <div class="research-desc">
+          <p>2025 年入選教育部青年發展署青年百億海外圓夢基金計畫海外翱翔組，計畫赴法屬玻里尼西亞大溪地進行南島語系田野調查與語料蒐集，延伸南島語系數詞系統與類型學研究的實證基礎。</p>
+        </div>
+        <div class="pdf-wrap">
+          <iframe src="assets/linguistics/大溪地計畫申請書.pdf"
+            title="大溪地語言學田野調查計畫申請書"
+            loading="lazy">
+          </iframe>
+        </div>
+        <div class="pdf-actions">
+          <a href="assets/linguistics/大溪地計畫申請書.pdf" target="_blank">在新分頁開啟</a>
+          <a href="assets/linguistics/大溪地計畫申請書.pdf" download>下載計畫申請書</a>
+        </div>
+      </div>
+
     </section>
+
+    <section id="awards">
+      <p class="section-label">Awards</p>
+      <h2 class="section-title">獎狀</h2>
+      <div class="awards-grid">
+
+        <a class="award-item" href="assets/awards/linguistics/2024_puzzleironman_bestsolver.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/linguistics/2024_puzzleironman_bestsolver.jpg" alt="2024 語言解謎鐵人賽 最佳解題獎"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">第二屆語言解謎鐵人賽 · 最佳解題獎</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/linguistics/2024_puzzleironman_silver.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/linguistics/2024_puzzleironman_silver.jpg" alt="2024 語言解謎鐵人賽 國中組銀牌"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">第二屆語言解謎鐵人賽 · 國中組銀牌</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
     <footer>
       <p>© 2026 William Lu 呂乃崴</p>
       <p>呂乃崴是人類，有時可能會出錯。</p>

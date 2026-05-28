@@ -100,9 +100,27 @@
   <nav>
     <a href="index.html" class="nav-logo">William Lu</a>
     <ul class="nav-links">
-      <li><a href="math.html">Math</a></li>
-      <li><a href="linguistics.html">Linguistics</a></li>
-      <li><a href="music.html" class="active">Music & Art</a></li>
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html" class="active">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
   </nav>
@@ -116,7 +134,7 @@
     </section>
 
     <!-- MUSIC -->
-    <section>
+    <section id="music">
       <p class="section-label">Music</p>
       <h2 class="section-title">音樂</h2>
 
@@ -164,7 +182,7 @@
     </section>
 
     <!-- ART -->
-    <section>
+    <section id="art">
       <p class="section-label">Art</p>
       <h2 class="section-title">藝術創作</h2>
 

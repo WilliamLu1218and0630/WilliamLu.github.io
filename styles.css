@@ -71,6 +71,60 @@ nav {
 .nav-links a:hover { color: var(--accent); }
 .nav-links a.active { color: var(--accent); }
 
+/* ── NAV DROPDOWN ── */
+.nav-links li.has-dropdown { position: relative; }
+
+.nav-links .dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 140px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 110;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.nav-links li.has-dropdown:hover > .dropdown,
+.nav-links li.has-dropdown:focus-within > .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-links .dropdown li { display: block; }
+
+.nav-links .dropdown a {
+  display: block;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.nav-links .dropdown a:hover {
+  background: var(--bg);
+  color: var(--accent);
+}
+
+/* invisible hover bridge so dropdown doesn't close between gap */
+.nav-links li.has-dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
 /* ── MAIN ── */
 main {
   max-width: 920px;
@@ -220,6 +274,83 @@ section {
 }
 
 .doc-list li a:hover { color: var(--accent); }
+
+/* ── AWARDS GRID ── */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.4rem;
+}
+
+.award-item {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.award-item .award-thumb {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.award-item:hover .award-thumb {
+  border-color: var(--accent);
+  box-shadow: 4px 4px 0 var(--accent);
+}
+
+.award-item .award-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+}
+
+.award-item .award-thumb.is-pdf {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  background: var(--bg);
+}
+
+.award-item .award-thumb.is-pdf::before {
+  content: 'PDF';
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.15em 0.7em;
+}
+
+.award-meta {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.award-year {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 0.1em;
+}
+
+.award-name {
+  color: var(--text);
+}
+
+.award-item:hover .award-name { color: var(--accent); }
 
 /* ── POSTER ── */
 .poster-wrap {
@@ -380,6 +511,21 @@ footer p {
   nav { padding: 0 1.4rem; }
   main { padding: 0 1.4rem; }
   .nav-links { gap: 1.2rem; }
+  /* Dropdown becomes inline on mobile */
+  .nav-links .dropdown {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: none;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    background: transparent;
+    min-width: 0;
+  }
+  .nav-links li.has-dropdown::after { display: none; }
+  .nav-links li.has-dropdown:hover > .dropdown { display: none; }
   .yt-grid { grid-template-columns: 1fr; }
   .painting-grid { grid-template-columns: 1fr; }
   .origami-wrap { grid-template-columns: 1fr; }

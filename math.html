@@ -12,9 +12,27 @@
   <nav>
     <a href="index.html" class="nav-logo">William Lu</a>
     <ul class="nav-links">
-      <li><a href="math.html" class="active">Math</a></li>
-      <li><a href="linguistics.html">Linguistics</a></li>
-      <li><a href="music.html">Music & Art</a></li>
+      <li class="has-dropdown">
+        <a href="math.html" class="active">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
       <li><a href="index.html#contact">Contact</a></li>
     </ul>
   </nav>
@@ -27,7 +45,7 @@
       <p class="hero-sub">競賽 · 研究 · 探索</p>
     </section>
 
-    <section>
+    <section id="research">
       <p class="section-label">Research</p>
       <h2 class="section-title">研究與專題</h2>
 
@@ -53,7 +71,7 @@
       <!-- Paper 2 -->
       <div class="research-block">
         <h3 class="research-title">六邊形棋盤上騎士周遊問題之「七色棋盤法」</h3>
-        <p class="research-meta">數學研究</p>
+        <p class="research-meta">115學年度全國高級中等學校小論文寫作比賽 · 優等</p>
         <div class="research-desc">
           <p>將經典的騎士周遊問題（Knight's Tour）推廣至六邊形棋盤，提出「七色棋盤法」——以七色著色對六邊形格點分類，藉此系統性地構造騎士的封閉路徑，並分析其存在條件與計數性質。</p>
         </div>
@@ -69,6 +87,86 @@
         </div>
       </div>
 
+    </section>
+
+    <section id="awards">
+      <p class="section-label">Awards</p>
+      <h2 class="section-title">獎狀</h2>
+      <div class="awards-grid">
+
+        <a class="award-item" href="assets/awards/math/2021_IMC_bronze.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2021_IMC_bronze.jpg" alt="2021 IMC 個人銅牌"></div>
+          <div class="award-meta">
+            <span class="award-year">2021</span>
+            <span class="award-name">IMC 國際數學競賽 · 個人銅牌</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2023_JHMC_individual.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2023_JHMC_individual.jpg" alt="2023 JHMC 個人一等獎"></div>
+          <div class="award-meta">
+            <span class="award-year">2023</span>
+            <span class="award-name">JHMC 臺北地區 · 個人一等獎</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2023_JHMC_team.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2023_JHMC_team.jpg" alt="2023 JHMC 團體一等獎"></div>
+          <div class="award-meta">
+            <span class="award-year">2023</span>
+            <span class="award-name">JHMC 臺北地區 · 團體一等獎</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2023_AMC12.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2023_AMC12.jpg" alt="2023 AMC 12A 證書"></div>
+          <div class="award-meta">
+            <span class="award-year">2023</span>
+            <span class="award-name">AMC 12A 證書</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2024_AIME_invitation.pdf" target="_blank" rel="noopener">
+          <div class="award-thumb is-pdf"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">AIME I 邀請通知書</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2023_TMT11.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2023_TMT11.jpg" alt="2023 TMT11 菁英證書"></div>
+          <div class="award-meta">
+            <span class="award-year">2023</span>
+            <span class="award-name">TMT11 臺灣數學測驗 · 菁英證書</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2024_APX_pass.pdf" target="_blank" rel="noopener">
+          <div class="award-thumb is-pdf"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">APX 數學科 高級 · 合格證書</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2024_UniMath.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2024_UniMath.jpg" alt="2024 UniMath 結訓證書"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">中興大學 UniMath 高等數學探索營 · 結訓證書</span>
+          </div>
+        </a>
+
+        <a class="award-item" href="assets/awards/math/2024_NEC.jpg" target="_blank" rel="noopener">
+          <div class="award-thumb"><img src="assets/awards/math/2024_NEC.jpg" alt="2024 NEC Top Rookie Individual Award"></div>
+          <div class="award-meta">
+            <span class="award-year">2024</span>
+            <span class="award-name">NEC 經濟學中國區競賽 · Top Rookie Individual Award</span>
+          </div>
+        </a>
+
+      </div>
     </section>
 
     <footer>
