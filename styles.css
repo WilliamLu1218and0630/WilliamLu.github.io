@@ -491,6 +491,196 @@ section {
 
 .origami-desc a:hover { text-decoration: underline; }
 
+/* ── BREADCRUMB ── */
+.breadcrumb {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+}
+
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb span { margin: 0 0.4em; }
+
+/* ── PROJECT GRID (Interactive landing) ── */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.8rem 1.8rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  box-shadow: 4px 4px 0 var(--accent);
+  color: inherit;
+}
+
+.project-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.7rem;
+}
+
+.project-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+}
+
+.project-card .project-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.project-tag {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.2em 0.6em;
+  line-height: 1.6;
+}
+
+.project-arrow {
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+
+.project-card:hover .project-arrow { color: var(--accent); }
+
+/* ── LAUNCH BUTTON ── */
+.launch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.8rem 1.7rem;
+  border: 1px solid var(--accent);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.launch-btn:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+/* ── STAT GRID ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 1.4rem 0 2rem;
+}
+
+.stat-item {
+  background: var(--surface);
+  padding: 1.4rem 1.2rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ── DETAIL TABLE ── */
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  margin-top: 1rem;
+}
+
+.detail-table td {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.detail-table td:first-child {
+  color: var(--text-muted);
+  width: 38%;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  padding-right: 1.2rem;
+}
+
+.detail-table tr:last-child td { border-bottom: none; }
+
+/* ── SCREENSHOT ── */
+.shot {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--border);
+  margin-bottom: 1.4rem;
+}
+
+.shot-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.4rem;
+  background: var(--surface);
+  text-align: center;
+  padding: 1rem;
+}
+
 /* ── FOOTER ── */
 footer {
   border-top: 1px solid var(--border);
@@ -529,6 +719,7 @@ footer p {
   .yt-grid { grid-template-columns: 1fr; }
   .painting-grid { grid-template-columns: 1fr; }
   .origami-wrap { grid-template-columns: 1fr; }
+  .project-grid { grid-template-columns: 1fr; }
   .page-hero h1 { font-size: 2.4rem; }
 }
 

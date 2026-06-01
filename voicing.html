@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacob Collier 和聲聲位分析 · William Lu 呂乃崴</title>
+  <meta name="description" content="拆解 78 首 Jacob Collier 編曲、42,530 個和弦的聲位選擇，做成 10 個可互動探索的樂理分析工具：和弦地圖、再和聲偵測、轉調時間軸、聲位生成器與即時哼唱配和聲。">
+  <meta name="author" content="William Lu 呂乃崴">
+  <link rel="canonical" href="https://williamlu1218and0630.github.io/WilliamLu.github.io/voicing.html">
+  <link rel="icon" type="image/jpeg" href="assets/photos/S__13852725.jpg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="William Lu 呂乃崴">
+  <meta property="og:title" content="Jacob Collier 和聲聲位分析 · William Lu 呂乃崴">
+  <meta property="og:description" content="78 首編曲、42,530 個和弦、10 個互動樂理分析工具。">
+  <meta property="og:url" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/voicing.html">
+  <meta property="og:image" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/assets/photos/web_photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Jacob Collier Voicing Analysis",
+    "alternateName": "Jacob Collier 和聲聲位分析",
+    "url": "https://jacob-collier-voicing.vercel.app/",
+    "description": "分析 78 首 Jacob Collier 編曲、42,530 個和弦的聲位結構，提供 10 個互動式樂理探索工具。",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any (web)",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "William Lu",
+      "alternateName": "呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/"
+    },
+    "about": ["Music Theory", "Harmony", "Voicing", "Jacob Collier", "Computational Music Analysis"],
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "互動與數位作品 — William Lu 呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/interactive.html"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="interactive.html" class="active">Interactive</a>
+        <ul class="dropdown">
+          <li><a href="silhouette.html">Silhouette</a></li>
+          <li><a href="voicing.html">Jacob Voicing</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <p class="breadcrumb">
+        <a href="interactive.html">Interactive</a>
+        <span>›</span>
+        Jacob Collier Voicing
+      </p>
+      <p class="section-label">Research Tool</p>
+      <h1>Jacob Collier 和聲聲位分析</h1>
+      <p class="hero-sub">把和聲拆成可以探索的資料</p>
+    </section>
+
+    <!-- LAUNCH -->
+    <section>
+      <p class="section-label">Open</p>
+      <h2 class="section-title">啟動工具</h2>
+      <img class="shot" src="assets/interactive/voicing.png" alt="Jacob Collier Voicing 分析工具畫面：和弦經 UMAP 降維後的散點分佈與分群" loading="lazy">
+      <a class="launch-btn" href="https://jacob-collier-voicing.vercel.app/" target="_blank" rel="noopener">▶ 開啟分析工具 ↗</a>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section>
+      <p class="section-label">Overview</p>
+      <h2 class="section-title">這是什麼</h2>
+
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num">78</div>
+          <div class="stat-label">分析編曲</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">42,530</div>
+          <div class="stat-label">和弦</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">1,700</div>
+          <div class="stat-label">樂句</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">10</div>
+          <div class="stat-label">互動工具</div>
+        </div>
+      </div>
+
+      <div class="research-desc">
+        <p>Jacob Collier 的和聲常被形容為「聽得到卻講不清」。這個專案試著把它變成看得見、摸得到的東西——蒐集 78 首編曲、共 42,530 個和弦、1,700 個樂句，抽取每個和弦的特徵，再做成 10 個可互動探索的工具，讓人能實際翻看他在聲位（voicing）上的選擇。</p>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section>
+      <p class="section-label">Tools</p>
+      <h2 class="section-title">十個工具</h2>
+
+      <div class="research-block">
+        <h3 class="research-title">瀏覽 · Browse</h3>
+        <p class="research-meta">翻看既有編曲中的和聲</p>
+        <div class="research-desc">
+          <p>六個瀏覽工具：<strong>和弦地圖</strong>（依聲位類型分佈視覺化每個和弦）、<strong>和弦轉換 A→B</strong>（相鄰和弦的移動）、<strong>樂句進行</strong>（多和弦序列與相似搜尋）、<strong>終止式瀏覽器</strong>（761 種終止式，附五線譜與鍵盤動畫）、<strong>再和聲瀏覽器</strong>（偵測三全音代理、借用和弦、調式互換等手法），以及<strong>轉調時間軸</strong>（每首歌的調性中心以色帶呈現）。</p>
+        </div>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">生成 · Generate</h3>
+        <p class="research-meta">用這套和聲語彙產生新東西</p>
+        <div class="research-desc">
+          <p>三個生成工具：<strong>聲位生成器</strong>（輸入旋律，找出最接近的 Jacob 式聲位並做聲部進行最佳化）、<strong>聲位拼貼器</strong>（用真實樂句片段、以 DTW 骨架規劃拼接）、<strong>配和聲器</strong>（即時單音輸入，以 YIN 偵測音高、Viterbi 推斷和弦、phase vocoder 變調）。</p>
+        </div>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">比較 · Compare</h3>
+        <p class="research-meta">放在更大的座標裡看</p>
+        <div class="research-desc">
+          <p>把 Jacob 的和弦分佈，疊在巴赫聖詠、爵士標準曲，以及 Bill Evans、Keith Jarrett 等鋼琴家的分佈之上比較，看出他的聲位選擇落在哪個位置。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHOD -->
+    <section>
+      <p class="section-label">Method</p>
+      <h2 class="section-title">資料怎麼來的</h2>
+      <div class="research-desc">
+        <p>從樂譜光學辨識（OMR）開始，把譜面轉成結構化資料，再抽取特徵、降維、分群，最後接上音訊與互動介面。</p>
+      </div>
+      <table class="detail-table">
+        <tr><td>樂譜辨識</td><td>Audiveris OMR → MusicXML</td></tr>
+        <tr><td>特徵抽取</td><td>music21，每個和弦約 26 項特徵</td></tr>
+        <tr><td>降維 / 分群</td><td>UMAP · HDBSCAN</td></tr>
+        <tr><td>即時音訊</td><td>YIN 音高偵測 · Viterbi 和弦推斷 · phase vocoder 變調</td></tr>
+        <tr><td>規劃演算法</td><td>Beam search · DTW · 分段動態規劃</td></tr>
+        <tr><td>呈現</td><td>和弦 / 轉換 / 終止式可發聲，並連結對應影片片段</td></tr>
+      </table>
+    </section>
+
+    <!-- DISCLAIMER -->
+    <section>
+      <p class="section-label">Note</p>
+      <h2 class="section-title">說明</h2>
+      <div class="research-desc">
+        <p>本專案為非商業性質的個人研究工具，與 Jacob Collier 本人及其團隊<strong>無任何關聯</strong>。資料來自樂譜光學辨識，可能含有辨識誤差；影片對齊亦有約 ±2–5 秒的誤差範圍。</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 William Lu 呂乃崴</p>
+      <p>呂乃崴是人類，有時可能會出錯。</p>
+      <p><a href="interactive.html" style="color:var(--text-muted);text-decoration:none;">← 返回 Interactive</a></p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

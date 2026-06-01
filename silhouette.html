@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silhouette · 投影幾何解謎 · William Lu 呂乃崴</title>
+  <meta name="description" content="Silhouette：呂乃崴設計的三維線條投影解謎遊戲。旋轉視角，讓線條在正確角度落入目標剪影，玩的是投影幾何與空間推理。">
+  <meta name="author" content="William Lu 呂乃崴">
+  <link rel="canonical" href="https://williamlu1218and0630.github.io/WilliamLu.github.io/silhouette.html">
+  <link rel="icon" type="image/jpeg" href="assets/photos/S__13852725.jpg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="William Lu 呂乃崴">
+  <meta property="og:title" content="Silhouette · 投影幾何解謎 · William Lu 呂乃崴">
+  <meta property="og:description" content="三維線條投影解謎遊戲：旋轉視角，讓線條落入目標剪影。">
+  <meta property="og:url" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/silhouette.html">
+  <meta property="og:image" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/assets/photos/web_photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Silhouette",
+    "url": "https://williamlu1218and0630.github.io/silhouette/",
+    "description": "三維線條投影解謎遊戲：旋轉視角，讓眼前的線條在正確的角度落入目標剪影。",
+    "genre": ["Puzzle", "Geometry"],
+    "applicationCategory": "Game",
+    "gamePlatform": "Web browser",
+    "operatingSystem": "Any (web)",
+    "author": {
+      "@type": "Person",
+      "name": "William Lu",
+      "alternateName": "呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "互動與數位作品 — William Lu 呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/interactive.html"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="interactive.html" class="active">Interactive</a>
+        <ul class="dropdown">
+          <li><a href="silhouette.html">Silhouette</a></li>
+          <li><a href="voicing.html">Jacob Voicing</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <p class="breadcrumb">
+        <a href="interactive.html">Interactive</a>
+        <span>›</span>
+        Silhouette
+      </p>
+      <p class="section-label">Puzzle Game</p>
+      <h1>Silhouette</h1>
+      <p class="hero-sub">三維線條投影解謎</p>
+    </section>
+
+    <!-- LAUNCH -->
+    <section>
+      <p class="section-label">Play</p>
+      <h2 class="section-title">啟動遊戲</h2>
+      <img class="shot" src="assets/interactive/silhouette.png" alt="Silhouette 遊戲畫面：頂端為目標剪影縮圖，主畫面為待對齊的三維線條碎片" loading="lazy">
+      <a class="launch-btn" href="https://williamlu1218and0630.github.io/silhouette/" target="_blank" rel="noopener">▶ 啟動 Silhouette ↗</a>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section>
+      <p class="section-label">Overview</p>
+      <h2 class="section-title">這是什麼</h2>
+      <div class="research-desc">
+        <p>Silhouette 是一款在瀏覽器裡執行的解謎遊戲。畫面中散落著一組三維線條，你的任務是旋轉視角、調整位置，直到這些線條從某個角度看過去，剛好對齊成畫面頂端給定的目標剪影。對準的瞬間，關卡就通關了。</p>
+        <p>它的核心是一個簡單卻不直覺的事實：同一組三維結構，從不同角度投影到二維平面，會得到截然不同的形狀。遊戲把「找到那個對的角度」變成謎題本身。</p>
+      </div>
+    </section>
+
+    <!-- HOW TO PLAY -->
+    <section>
+      <p class="section-label">How to Play</p>
+      <h2 class="section-title">玩法</h2>
+
+      <div class="research-block">
+        <h3 class="research-title">基本操作</h3>
+        <p class="research-meta">Controls</p>
+        <div class="research-desc">
+          <p>拖曳線條、旋轉視角、縮放畫面，三種操作配合著找出能通關的角度。畫面頂端會顯示本關的目標剪影作為參考，你要讓散落的線條從某個視角看過去，剛好對齊成那個圖形。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>拖曳</td><td>移動線條</td></tr>
+          <tr><td>旋轉</td><td>轉動觀看視角</td></tr>
+          <tr><td>縮放</td><td>滾輪 / 雙指縮放</td></tr>
+          <tr><td>目標參考</td><td>畫面頂端的目標剪影縮圖</td></tr>
+        </table>
+      </div>
+
+      <div class="research-block">
+        <h3 class="research-title">關卡與進度</h3>
+        <p class="research-meta">Levels &amp; Progress</p>
+        <div class="research-desc">
+          <p>遊戲以關卡推進，附計時器記錄每關用時。進度可在本機儲存，並支援匯出 / 匯入存檔，換裝置也能接續。介面提供中文與英文切換。</p>
+        </div>
+        <table class="detail-table">
+          <tr><td>進度</td><td>本機儲存 · 匯出 / 匯入存檔</td></tr>
+          <tr><td>語言</td><td>中文 · English</td></tr>
+          <tr><td>計時</td><td>每關計時器</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- THE MATH -->
+    <section>
+      <p class="section-label">Behind the Scenes</p>
+      <h2 class="section-title">背後的幾何</h2>
+      <div class="research-desc">
+        <p>Silhouette 玩的其實是<strong>投影幾何</strong>與<strong>空間推理</strong>：把三維物件沿某方向投影到二維平面，等同於對它做一次降維。要預測投影後的形狀，得在腦中先完成這個運算——這跟我在<a href="math.html">數學</a>裡關注的空間結構，以及<a href="music.html#art">藝術</a>中的純線條創作、摺紙（把平面折疊映射到三維）是同一種直覺的不同面向。</p>
+        <p>這也是為什麼這個遊戲被歸在「互動與數位作品」而非單一領域——它剛好坐落在數學、視覺與程式的交界。</p>
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section>
+      <p class="section-label">Credits</p>
+      <h2 class="section-title">製作</h2>
+      <table class="detail-table">
+        <tr><td>遊戲設計 / 開發</td><td>William Lu 呂乃崴</td></tr>
+        <tr><td>音樂</td><td>TBA</td></tr>
+        <tr><td>技術</td><td>HTML5 Canvas / WebGL · JavaScript</td></tr>
+        <tr><td>平台</td><td>瀏覽器（桌機 / 行動裝置）</td></tr>
+      </table>
+    </section>
+
+    <footer>
+      <p>© 2026 William Lu 呂乃崴</p>
+      <p>呂乃崴是人類，有時可能會出錯。</p>
+      <p><a href="interactive.html" style="color:var(--text-muted);text-decoration:none;">← 返回 Interactive</a></p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

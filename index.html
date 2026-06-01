@@ -7,7 +7,7 @@
   <title>William Lu 呂乃崴 — 語言學、數學、藝術創作</title>
   <meta name="description" content="呂乃崴（William Lu）個人網站。臺北市非學校型態實驗教育學生，研究馬祖語否定詞、南島語系數詞類型學，參與數學競賽與語言學奧林匹亞，並進行油畫、線條藝術與音樂創作。">
   <meta name="author" content="William Lu 呂乃崴">
-  <meta name="keywords" content="呂乃崴, William Lu, 馬祖語, 南島語系, 類型語言學, 語言學奧林匹亞, APLO, EULC, 數學競賽, 騎士周遊問題, Jacob Collier cover, 直線創作">
+  <meta name="keywords" content="呂乃崴, William Lu, 馬祖語, 南島語系, 類型語言學, 語言學奧林匹亞, APLO, EULC, 數學競賽, 騎士周遊問題, Jacob Collier cover, 直線創作, Silhouette, 投影幾何, Jacob Collier voicing, 和聲分析">
   <link rel="canonical" href="https://williamlu1218and0630.github.io/WilliamLu.github.io/">
   <link rel="icon" type="image/png" href="assets/photos/web_photo.png">
 
@@ -48,7 +48,10 @@
       "Knight's Tour Problem",
       "Mathematical Modeling",
       "Music Theory",
-      "Visual Art"
+      "Visual Art",
+      "Game Design",
+      "Creative Coding",
+      "Computational Music Analysis"
     ],
     "knowsLanguage": ["zh-TW", "en", "Matsu"],
     "affiliation": {
@@ -342,7 +345,7 @@
     /* ── AREAS ── */
     .areas-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.2rem;
     }
 
@@ -573,6 +576,14 @@
       color: #2563eb;
       text-decoration-color: #2563eb;
     }
+
+    /* Record 區連結密集 — 移除常駐底線，hover 時才浮現 */
+    .achievement-desc a { text-decoration: none; }
+    .achievement-desc a:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
   </style>
 </head>
 <body>
@@ -599,6 +610,13 @@
         <ul class="dropdown">
           <li><a href="music.html#music">音樂</a></li>
           <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="interactive.html">Interactive</a>
+        <ul class="dropdown">
+          <li><a href="silhouette.html">Silhouette</a></li>
+          <li><a href="voicing.html">Jacob Voicing</a></li>
         </ul>
       </li>
       <li><a href="#contact">Contact</a></li>
@@ -693,6 +711,18 @@
             <span class="area-tag">超現實主義油畫</span>
             <span class="area-tag">摺紙</span>
             <span class="area-tag">Jacob Collier Covers</span>
+          </div>
+          <span class="area-arrow">查看作品 →</span>
+        </a>
+
+        <a href="interactive.html" class="area-card">
+          <p class="area-label">Interactive</p>
+          <h3>互動與數位作品</h3>
+          <div class="area-tags">
+            <span class="area-tag">Silhouette 投影解謎</span>
+            <span class="area-tag">Jacob Collier 和聲分析</span>
+            <span class="area-tag">遊戲設計</span>
+            <span class="area-tag">運算與音訊</span>
           </div>
           <span class="area-arrow">查看作品 →</span>
         </a>
