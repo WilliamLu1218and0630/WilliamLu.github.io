@@ -180,6 +180,8 @@
     .num-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, auto);
+      grid-auto-flow: column;   /* 1–5 在左欄，6–10 在右欄 */
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -371,6 +373,15 @@
       color: var(--text-muted);
       font-style: italic;
     }
+    .chain-ex { margin-top: 0.5rem; }
+    .chain-lead {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      align-self: center;
+      margin-right: 0.2rem;
+    }
     .implic-note {
       font-size: 0.86rem;
       line-height: 1.7;
@@ -400,6 +411,8 @@
     .ht-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, auto);
+      grid-auto-flow: column;   /* 1–5 在左欄，6–10 在右欄 */
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -898,71 +911,93 @@
     }
 
     // ── interactive implicational hierarchies ──
+    // 每個 node 綁定一個範例語言（ex）與它示範的數字（keys）。
+    // 點 node → 右側表換成該語言，並把對應格一起點亮。
     const HIER = [
-      { name: "減法階層", tag: "Subtractive", strat: "subtractive",
-        exampleName: "Likum", display: "Likum",
-        nodes: [{ label: "6=10−4", k: "6" }, { label: "7=10−3", k: "7" },
-                { label: "8=10−2", k: "8" }, { label: "9=10−1", k: "9" }],
-        note: "有最左端 6=10−4，其右全部隨之成立。許多 Manus 分支語言以減法表 7、8、9。" },
-      { name: "倍數階層", tag: "Doubling", strat: "doubling",
-        exampleName: "Sedeq (Taroko)", display: "Seediq",
-        nodes: [{ label: "6=2×3", k: "6" }, { label: "8=2×4", k: "8" }],
-        chainNote: "反之不然",
-        note: "部分語言再疊加 ±1：Roro 的 7=2×3+1、9=2×4+1，Keapara 的 7=2×4−1、9=2×5−1。" },
+      { name: "減法階層", tag: "Subtractive",
+        chain: [
+          { label: "6=10−4", ex: "Likum", keys: ["6"] },
+          { label: "7=10−3", ex: "Likum", keys: ["7"] },
+          { label: "8=10−2", ex: "Likum", keys: ["8"] },
+          { label: "9=10−1", ex: "Likum", keys: ["9"] },
+        ],
+        note: "出現最左端 6=10−4，其右便全部隨之成立（範例 Likum）。許多 Manus 分支語言以減法表 7、8、9。" },
+      { name: "倍數階層", tag: "Doubling",
+        chain: [
+          { label: "6=2×3", ex: "Sedeq (Taroko)", disp: "Seediq", keys: ["6"] },
+          { label: "8=2×4", ex: "Sedeq (Taroko)", disp: "Seediq", keys: ["8"] },
+        ],
+        examples: [
+          { label: "Roro：7=2×3+1、9=2×4+1", ex: "Roro", keys: ["7", "9"],
+            note: "Roro 在倍數之上再 +1：7=2×3+1、9=2×4+1。" },
+          { label: "Keapara：7=2×4−1、9=2×5−1", ex: "Keapara", keys: ["7", "9"],
+            note: "Keapara 在倍數之上再 −1：7=2×4−1、9=2×5−1。" },
+        ],
+        note: "有 6=2×3 就有 8=2×4，但反之不然（範例 Seediq）。部分語言再把倍數與加減疊加，見下方 Roro、Keapara。" },
     ];
 
     function buildImplic() {
       implicEl.innerHTML = "";
       HIER.forEach((h, hi) => {
-        let nodes = "";
-        h.nodes.forEach((nd, i) => {
-          if (i) nodes += '<span class="arr">→</span>';
-          nodes += '<span class="node" data-h="' + hi + '" data-k="' + nd.k + '">' + esc(nd.label) + '</span>';
+        h._nodes = [...(h.chain || []), ...(h.examples || [])];
+        let chainHtml = "";
+        (h.chain || []).forEach((nd, i) => {
+          const ni = i;
+          if (i) chainHtml += '<span class="arr">→</span>';
+          chainHtml += '<span class="node" data-h="' + hi + '" data-n="' + ni + '">' + esc(nd.label) + '</span>';
         });
-        if (h.chainNote) nodes += '<span class="chain-note">' + esc(h.chainNote) + '</span>';
+        let exHtml = "";
+        if (h.examples && h.examples.length) {
+          let chips = "";
+          h.examples.forEach((nd, j) => {
+            const ni = (h.chain ? h.chain.length : 0) + j;
+            chips += '<span class="node" data-h="' + hi + '" data-n="' + ni + '">' + esc(nd.label) + '</span>';
+          });
+          exHtml = '<div class="chain chain-ex"><span class="chain-lead">延伸例</span>' + chips + '</div>';
+        }
         const row = document.createElement("div");
         row.className = "implic-row";
         row.innerHTML =
           '<div class="implic-head"><span class="implic-name">' + esc(h.name) + '</span>' +
           '<span class="implic-tag">' + esc(h.tag) + '</span></div>' +
-          '<div class="chain">' + nodes + '</div>' +
+          '<div class="chain">' + chainHtml + '</div>' + exHtml +
           '<p class="implic-note">' + esc(h.note) + '</p>';
         implicEl.appendChild(row);
       });
       implicEl.querySelectorAll(".node").forEach(n =>
-        n.addEventListener("click", () => selectHierNode(+n.dataset.h, n.dataset.k)));
-      selectHierNode(0, null);
+        n.addEventListener("click", () => selectHierNode(+n.dataset.h, +n.dataset.n)));
+      selectHierNode(0, 0);
     }
 
-    function selectHierNode(hi, k) {
+    function selectHierNode(hi, ni) {
       implicEl.querySelectorAll(".node").forEach(n =>
-        n.classList.toggle("active", +n.dataset.h === hi && k !== null && n.dataset.k === k));
-      renderHierTable(hi, k);
+        n.classList.toggle("active", +n.dataset.h === hi && +n.dataset.n === ni));
+      renderHierTable(HIER[hi]._nodes[ni]);
     }
 
-    function renderHierTable(hi, activeK) {
-      const h = HIER[hi];
-      const L = DATA.languages.find(x => x.name === h.exampleName);
-      const keys = new Set(h.nodes.map(n => n.k));
-      let html = '<div class="ht-lang">' + esc(h.display) + '</div>';
+    function renderHierTable(node) {
+      const L = DATA.languages.find(x => x.name === node.ex);
+      const disp = node.disp || node.ex;
+      const lit = new Set(node.keys);
+      let html = '<div class="ht-lang">' + esc(disp) + '</div>';
       html += '<div class="ht-sub">' + (L ? esc(L.branch) + ' · ' : '') + '範例語言</div>';
       html += '<div class="ht-grid">';
       for (let i = 1; i <= 10; i++) {
         const v = L ? (L.numerals[String(i)] || "") : "";
-        const tint = keys.has(String(i));
-        const act = activeK && String(i) === activeK;
-        html += '<div class="ht-cell' + (tint ? ' tint' : '') + (act ? ' active' : '') + '">' +
+        const act = lit.has(String(i));
+        html += '<div class="ht-cell' + (act ? ' active' : '') + '">' +
           '<span class="ht-k">' + i + '</span>' +
           '<span class="ht-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '·') + '</span></div>';
       }
       html += '</div>';
-      if (activeK) {
-        const nd = h.nodes.find(n => n.k === activeK);
-        const expr = nd.label.split("=")[1] || nd.label;
-        html += '<p class="ht-note">' + esc(h.display) + ' 用 <b>' + esc(expr) + '</b> 表示 ' + activeK + '。</p>';
+      let note;
+      if (node.note) {
+        note = node.note;
       } else {
-        html += '<p class="ht-note">點左側任一格看對照，標色格為此階層涉及的數字。</p>';
+        const expr = node.label.split("=")[1] || node.label;
+        note = esc(disp) + ' 用 <b>' + esc(expr) + '</b> 表示 ' + node.keys.join("、");
       }
+      html += '<p class="ht-note">' + note + '</p>';
       hierTableEl.innerHTML = html;
     }
 
