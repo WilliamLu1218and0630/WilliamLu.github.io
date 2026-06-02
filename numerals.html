@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>南島語數詞類型探索器 · William Lu 呂乃崴</title>
-  <meta name="description" content="互動探索 898 個南島語的 1–10 數詞與其構詞類型：純十進位、五進制（5+n）、減法（10−n）、倍數與混合型。太平洋置中地圖上色標點，點選查看每個語言的數詞與分支，呈現繼承與接觸交織的類型分布。延續 EULC 2026 'Beyond Decimal' 研究。">
+  <meta name="description" content="互動探索 892 個南島語的 1–10 數詞構詞策略：純十進位、五進制（5+n）、減法（10−n）、倍數（2×3、2×4）與加法（4=2+2）。太平洋置中地圖上色標點，點選查看每個語言的數詞、分支與構詞策略，並呈現兩條數詞蘊含階層。延續 EULC 7 'Beyond Decimal' 研究。">
   <meta name="author" content="William Lu 呂乃崴">
   <link rel="canonical" href="https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html">
   <link rel="icon" type="image/jpeg" href="assets/photos/S__13852725.jpg">
@@ -12,7 +12,7 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="William Lu 呂乃崴">
   <meta property="og:title" content="南島語數詞類型探索器 · William Lu 呂乃崴">
-  <meta property="og:description" content="898 個南島語、1–10 數詞、5 種構詞類型，在太平洋置中地圖上互動探索。">
+  <meta property="og:description" content="892 個南島語、1–10 數詞、5 種構詞策略，在太平洋置中地圖上互動探索。">
   <meta property="og:url" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html">
   <meta property="og:image" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/assets/photos/web_photo.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -24,7 +24,7 @@
     "name": "Austronesian Numeral Typology Explorer",
     "alternateName": "南島語數詞類型探索器",
     "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html",
-    "description": "互動探索 898 個南島語的 1–10 數詞構詞類型，含太平洋置中地理分布地圖。延續 'Beyond Decimal: Typological Patterns and Hierarchies in Numeral Systems'（EULC 2026）研究。",
+    "description": "互動探索 892 個南島語的 1–10 數詞構詞策略，含太平洋置中地理分布地圖。延續 'Beyond Decimal: Typological Patterns and Hierarchies in Numeral Formation (1–10) across 900 Austronesian Languages'（EULC 7）研究。",
     "applicationCategory": "EducationalApplication",
     "operatingSystem": "Any (web)",
     "isAccessibleForFree": true,
@@ -204,6 +204,29 @@
     }
     .panel-note a { color: var(--accent); }
 
+    .decomps {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .decomps-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      width: 100%;
+      margin-bottom: 0.1rem;
+    }
+    .decomp-chip {
+      font-size: 0.76rem;
+      font-variant-numeric: tabular-nums;
+      padding: 0.18em 0.55em;
+      border: 1px solid var(--border);
+      background: var(--bg);
+    }
+
     /* ── CONTROLS ── */
     .controls { margin-bottom: 1.2rem; }
     .search-box {
@@ -369,14 +392,14 @@
       <p class="section-label">Overview</p>
       <h2 class="section-title">這是什麼</h2>
       <div class="research-desc">
-        <p>南島語系橫跨半個地球——從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞 1–10 大多源自共同祖型，卻在各地長出截然不同的構詞策略：有的純十進位，有的用「五加幾」，有的甚至用「十減幾」來數 7、8、9。</p>
-        <p>這個工具把我研究中整理的 <strong>898 個南島語、1–10 數詞</strong>放上太平洋置中的地圖，依構詞類型上色。你可以縮放、點選任一語言看它怎麼數數，也能看出哪些「創新」其實是地理鄰近語言互相接觸的結果。延續我在 <a href="linguistics.html#research">EULC 2026 的研究 “Beyond Decimal”</a>。</p>
+        <p>南島語系橫跨半個地球，從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞以十進位為主，1–10 可上溯到原始南島語；但在十進位之外，不少語言用算術策略來構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。</p>
+        <p>這個工具收錄 <strong>892 個南島語的 1–10 數詞</strong>，放上太平洋置中的地圖，依主要構詞策略上色。你可以縮放、搜尋、點選任一語言，看它怎麼數數、用了哪些構詞策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
       </div>
 
       <div class="stat-grid">
-        <div class="stat-item"><div class="stat-num">898</div><div class="stat-label">南島語</div></div>
+        <div class="stat-item"><div class="stat-num">892</div><div class="stat-label">南島語</div></div>
         <div class="stat-item"><div class="stat-num">677</div><div class="stat-label">有地理座標</div></div>
-        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">構詞類型</div></div>
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">構詞策略</div></div>
         <div class="stat-item"><div class="stat-num">1–10</div><div class="stat-label">數詞欄位</div></div>
       </div>
     </section>
@@ -407,44 +430,64 @@
         </div>
 
         <aside class="panel" id="panel">
-          <p class="empty">在地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、所屬分支與構詞類型。</p>
+          <p class="empty">在地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、所屬分支與構詞策略。</p>
         </aside>
       </div>
     </section>
 
-    <!-- HIERARCHY -->
+    <!-- STRATEGIES -->
     <section>
-      <p class="section-label">Pattern</p>
-      <h2 class="section-title">五種構詞類型</h2>
+      <p class="section-label">Strategies</p>
+      <h2 class="section-title">十進位之外的構詞策略</h2>
       <div class="research-desc">
-        <p>把 898 個語言依 1–10 的構詞策略分群，會落入五種主要類型。純十進位是泛南島的主體與最可能的祖型；其餘四種帶有明顯的「五進制」或「減法」創新，且幾乎全集中在大洋洲（東部）分支。</p>
+        <p>南島語數詞以十進位為主，但在 4–9 上會用到三種算術運算來構詞：加法、減法、乘法（除法未見）。把 892 個語言依其主要策略歸類，分布如下。</p>
       </div>
       <div class="hier" id="hier"></div>
+      <p class="research-meta" style="margin-top:1rem;">註：一個語言可能同時用到多種策略；上方依優先序（減法 ＞ 倍數 ＞ 五進制 ＞ 加法 ＞ 純十進位）取其主要策略上色，點選語言可在側欄看到它使用的所有策略。除十進位與五進制外，資料中也有罕見的四進制（如 Bam）與八進制（如 Yotafa／Tobati），以及僅以 1、2 相加構詞的系統（如 Azera）。</p>
+    </section>
+
+    <!-- HIERARCHIES -->
+    <section>
+      <p class="section-label">Hierarchies</p>
+      <h2 class="section-title">兩條蘊含階層</h2>
+      <div class="research-desc">
+        <p>這些特殊策略並非隨意出現，而是遵循可預測的蘊含關係。本研究在資料中發現兩條穩定成立的蘊含階層，且皆無反例。</p>
+      </div>
+      <div class="find-grid">
+        <div class="find-card">
+          <h3>減法階層</h3>
+          <p>若一個語言用 <span class="k">10−a</span>（1 ≤ a ≤ 4）來構詞，則從 10−a 到 9 都以減法表示。也就是說，有 <span class="k">6=10−4</span> 就會有 7=10−3、8=10−2、9=10−1（如 Likum）。許多 Manus 分支語言以減法表 7、8、9。</p>
+        </div>
+        <div class="find-card">
+          <h3>倍數階層</h3>
+          <p>若一個語言有 <span class="k">6=2×3</span>，就會有 <span class="k">8=2×4</span>，但反之不然（如 Seediq 的 6=2×3、8=2×4）。部分語言更把策略疊加，如 Roro 的 7=2×3+1、9=2×4+1，或 Keapara 的 7=2×4−1、9=2×5−1。</p>
+        </div>
+      </div>
     </section>
 
     <!-- FINDINGS -->
     <section>
       <p class="section-label">Findings</p>
-      <h2 class="section-title">繼承，還是接觸？</h2>
+      <h2 class="section-title">三個研究結論</h2>
       <div class="find-grid">
         <div class="find-card">
-          <h3>系譜留下的痕跡</h3>
-          <p>數詞類型有 <span class="k">約 25%</span> 的變異能由語言的系譜分支解釋（PERMANOVA R²＝0.254）。也就是說，一個語言怎麼數數，很大程度寫在它的家族裡——這是「繼承」的訊號。</p>
+          <h3>單一語系，高度多樣</h3>
+          <p>儘管同屬一個語系，這約 900 個語言在數詞系統上展現出可觀的類型差異，反映南島語內部構詞策略的多樣，也反映人類對「數」的不同概念化方式。</p>
         </div>
         <div class="find-card">
-          <h3>地理留下的痕跡</h3>
-          <p>控制系譜後，類型仍與<span class="k">地理鄰近</span>顯著相關（partial Mantel，p&lt;.01）。五進制與減法型緊聚在新幾內亞／美拉尼西亞——與巴布亞諸語的經典接觸帶。這是「接觸」的訊號。</p>
+          <h3>不只由底數決定</h3>
+          <p>數詞系統雖以十進位為主，南島語仍用加法、乘法、減法等算術策略構成 4–9，顯示數詞構詞並非單由底數系統決定。</p>
         </div>
         <div class="find-card">
-          <h3>兩者並存，而非互斥</h3>
-          <p>用 Glottolog 族譜樹距離重算後，<span class="k">繼承與接觸各自都有獨立、顯著的貢獻</span>，系譜的獨立效果略大於地理。南島語數詞的樣貌，是兩股力量交織的結果。</p>
+          <h3>底數系統的分布</h3>
+          <p>十進位最普遍，其次為五進制（如 Ilongot），約佔樣本的四分之一到五分之一；另有罕見的四進制（Bam）與八進制（Yotafa／Tobati），未見七進制或九進制。</p>
         </div>
         <div class="find-card">
-          <h3>會說話的離群者</h3>
-          <p><span class="k">Yapese</span>（西部語言，卻用大洋洲式減法）與 <span class="k">Ilongot</span>（菲律賓，卻用五進制）打破了家族界線——正是接觸假說最生動的證據。在地圖上找找它們。</p>
+          <h3>兩條可預測的階層</h3>
+          <p>資料支持兩條蘊含通則：有 10−4=6 的語言也會有 10−3=7、10−2=8、10−1=9；有 3×2=6 的語言也會有 4×2=8。</p>
         </div>
       </div>
-      <p class="research-meta" style="margin-top:1.4rem;">資料與分析出自作者 EULC 2026 研究 “Beyond Decimal: Typological Patterns and Hierarchies in Numeral Systems”。數詞拼寫經人工校核，少數語言仍待補；歡迎指正。</p>
+      <p class="research-meta" style="margin-top:1.4rem;">數詞拼寫資料取自 the Numbers List。本研究的工作是對 1–10 進行構詞分析、辨識數詞詞根與彼此的關係，並逐一校核每個語言的策略標註；地圖與本頁的分類即依此校核結果。出自作者 EULC 7 研究「Beyond Decimal: Typological Patterns and Hierarchies in Numeral Formation (1–10) across 900 Austronesian Languages」。</p>
     </section>
 
   </main>
@@ -479,12 +522,10 @@
     const tip        = document.getElementById("tip");
     const SVGNS = "http://www.w3.org/2000/svg";
 
-    let DATA = null, CLUSTERS = null;
-    const active = new Set();      // active cluster keys (filter)
+    let DATA = null, STRAT = null, ORDER = [];
+    const active = new Set();      // active strategy keys (filter)
     let selected = null;           // selected language name
     const ptByName = {};
-
-    const HIER_ORDER = ["2", "1", "0", "3", "4", "-1"];
 
     function el(tag, attrs) {
       const e = document.createElementNS(SVGNS, tag);
@@ -497,7 +538,8 @@
       fetch("assets/data/numerals.json").then(r => r.json()),
       fetch("assets/data/an_coastline.json").then(r => r.json())
     ]).then(([nd, coast]) => {
-      DATA = nd; CLUSTERS = nd.clusters;
+      DATA = nd; STRAT = nd.strategies;
+      ORDER = ["decimal", "quinary", "subtractive", "doubling", "additive"];
       drawCoast(coast.segments);
       drawPoints();
       buildLegend();
@@ -518,28 +560,28 @@
       layerCoast.appendChild(frag);
     }
 
-    function colorOf(cl) {
-      return (CLUSTERS[cl] && CLUSTERS[cl].color) || "#c4bcae";
+    function colorOf(s) {
+      return (STRAT[s] && STRAT[s].color) || "#c4bcae";
     }
-    function isBg(cl) { return cl === "2" || cl === "-1" || !cl; }
+    function isBg(s) { return s === "decimal" || !s; }
 
     function drawPoints() {
       const frag = document.createDocumentFragment();
-      // draw background (decimal) first, innovations on top
+      // draw background (decimal) first, special strategies on top
       const ordered = DATA.languages
         .filter(L => L.x !== null)
-        .sort((a, b) => (isBg(b.cluster) ? 1 : 0) - (isBg(a.cluster) ? 1 : 0));
+        .sort((a, b) => (isBg(b.strat) ? 1 : 0) - (isBg(a.strat) ? 1 : 0));
       for (const L of ordered) {
-        const bg = isBg(L.cluster);
+        const bg = isBg(L.strat);
         const c = el("circle", {
           cx: sx(L.x).toFixed(1),
           cy: sy(L.lat).toFixed(1),
           r: bg ? 2.6 : 3.6,
-          fill: colorOf(L.cluster),
+          fill: colorOf(L.strat),
           class: "pt" + (bg ? " bg" : "")
         });
         c.dataset.name = L.name;
-        c.dataset.cluster = L.cluster || "";
+        c.dataset.strat = L.strat || "";
         c.addEventListener("click", e => { e.stopPropagation(); select(L.name); });
         c.addEventListener("mouseenter", e => showTip(e, L));
         c.addEventListener("mousemove", moveTip);
@@ -551,7 +593,7 @@
     }
 
     function showTip(e, L) {
-      tip.textContent = L.name + (CLUSTERS[L.cluster] ? " · " + CLUSTERS[L.cluster].label_zh : "");
+      tip.textContent = L.name + (STRAT[L.strat] ? " · " + STRAT[L.strat].label_zh : "");
       tip.style.opacity = "1";
       moveTip(e);
     }
@@ -561,9 +603,9 @@
     // ── legend / filter ──
     function buildLegend() {
       legendEl.innerHTML = "";
-      for (const k of HIER_ORDER) {
-        if (!CLUSTERS[k]) continue;
-        const m = CLUSTERS[k];
+      for (const k of ORDER) {
+        if (!STRAT[k]) continue;
+        const m = STRAT[k];
         const b = document.createElement("div");
         b.className = "leg";
         b.dataset.k = k;
@@ -591,10 +633,10 @@
       const q = searchEl.value.trim().toLowerCase();
       for (const name in ptByName) {
         const c = ptByName[name];
-        const cl = c.dataset.cluster;
-        const passCluster = active.size === 0 || active.has(cl);
+        const s = c.dataset.strat;
+        const passStrat = active.size === 0 || active.has(s);
         const passSearch = !q || name.toLowerCase().includes(q);
-        c.classList.toggle("dim", !(passCluster && passSearch));
+        c.classList.toggle("dim", !(passStrat && passSearch));
       }
     }
 
@@ -635,9 +677,9 @@
     }
 
     function renderPanel(L) {
-      const m = CLUSTERS[L.cluster];
+      const m = STRAT[L.strat];
       let html = '<div class="panel-lang">' + esc(L.name) + '</div>';
-      const branchPath = L.branches.length ? L.branches.join(" › ") : "—";
+      const branchPath = L.branches.length ? L.branches.join(" › ") : "·";
       html += '<div class="panel-branch">' + esc(branchPath) +
         (L.macro_zh ? ' · ' + esc(L.macro_zh) : '') + '</div>';
       if (m) {
@@ -648,9 +690,14 @@
       for (let i = 1; i <= 10; i++) {
         const v = L.numerals[String(i)] || "";
         html += '<div class="num-cell"><span class="num-k">' + i + '</span>' +
-          '<span class="num-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '—') + '</span></div>';
+          '<span class="num-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '·') + '</span></div>';
       }
       html += '</div>';
+      if (L.decomps && L.decomps.length) {
+        html += '<div class="decomps"><span class="decomps-label">構詞策略</span>';
+        for (const d of L.decomps) html += '<span class="decomp-chip">' + esc(d) + '</span>';
+        html += '</div>';
+      }
       if (m) html += '<p class="panel-note">' + esc(m.desc) + '</p>';
       if (L.special) html += '<p class="panel-note"><strong>備註：</strong>' + esc(L.special) + '</p>';
       if (L.glottocode) {
@@ -665,12 +712,12 @@
       return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     }
 
-    // ── hierarchy bars ──
+    // ── strategy distribution bars ──
     function buildHier() {
-      const maxN = Math.max(...HIER_ORDER.map(k => (CLUSTERS[k] ? CLUSTERS[k].n : 0)));
+      const maxN = Math.max(...ORDER.map(k => (STRAT[k] ? STRAT[k].n : 0)));
       let html = "";
-      for (const k of HIER_ORDER) {
-        const m = CLUSTERS[k];
+      for (const k of ORDER) {
+        const m = STRAT[k];
         if (!m) continue;
         const w = Math.max(3, (m.n / maxN) * 100);
         html += '<div class="hier-row">' +
