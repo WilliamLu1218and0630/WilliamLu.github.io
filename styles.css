@@ -245,6 +245,63 @@ section {
 
 .pdf-actions a:hover { color: var(--accent); }
 
+/* ── DOC CARD (replaces heavy inline PDF iframes) ── */
+.doc-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 1.3rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doc-card:hover {
+  border-color: var(--accent);
+  box-shadow: 4px 4px 0 var(--accent);
+  color: inherit;
+}
+
+.doc-ico {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.5em 0.55em;
+  flex-shrink: 0;
+}
+
+.doc-info { flex: 1; min-width: 0; }
+
+.doc-t {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.doc-m {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.doc-card:hover .doc-t { color: var(--accent); }
+
+.doc-arrow { color: var(--text-muted); font-size: 0.85rem; flex-shrink: 0; }
+.doc-card:hover .doc-arrow { color: var(--accent); }
+
+.doc-actions { margin-top: 0.55rem; }
+.doc-actions a {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.doc-actions a:hover { color: var(--accent); }
+
 /* ── FILE PLACEHOLDER ── */
 .file-placeholder {
   border: 1px dashed var(--border);
@@ -437,17 +494,21 @@ section {
   height: auto;
 }
 
-/* ── GALLERY ── */
+/* ── GALLERY (masonry columns — preserve each drawing's aspect ratio) ── */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 0.4rem;
+  column-count: 4;
+  column-gap: 0.5rem;
+}
+
+.gallery-grid a {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 0.5rem;
 }
 
 .gallery-grid img {
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
+  height: auto;
   display: block;
   cursor: zoom-in;
   transition: opacity 0.2s;
@@ -718,13 +779,14 @@ footer p {
   .nav-links li.has-dropdown:hover > .dropdown { display: none; }
   .yt-grid { grid-template-columns: 1fr; }
   .painting-grid { grid-template-columns: 1fr; }
+  .gallery-grid { column-count: 3; }
   .origami-wrap { grid-template-columns: 1fr; }
   .project-grid { grid-template-columns: 1fr; }
   .page-hero h1 { font-size: 2.4rem; }
 }
 
 @media (max-width: 480px) {
-  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .gallery-grid { column-count: 2; }
   footer { flex-direction: column; gap: 0.4rem; text-align: center; }
   .nav-links { gap: 0.9rem; }
 }
