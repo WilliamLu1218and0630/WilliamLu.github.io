@@ -575,7 +575,7 @@
 
       <div class="explorer">
         <div class="map-wrap">
-          <svg id="map" viewBox="0 0 1100 440" role="img" aria-label="南島語數詞類型地理分布地圖">
+          <svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="南島語數詞類型地理分布地圖">
             <g id="layer-coast"></g>
             <g id="layer-labels"></g>
             <g id="layer-pts"></g>
@@ -661,9 +661,9 @@
     "use strict";
 
     // ── map projection (Pacific-centred) ──
-    const VB_W = 1100, VB_H = 440;
-    const LON0 = 38, LON1 = 264;     // x range (recentred longitude)
-    const LAT0 = 36, LAT1 = -56;     // top→bottom latitude
+    const VB_W = 1000, VB_H = 1000;  // square frame
+    const LON0 = 40, LON1 = 262;     // x range (recentred longitude)
+    const LAT0 = 46, LAT1 = -74;     // top→bottom latitude (widened to fill the square)
     const sx = x => (x - LON0) / (LON1 - LON0) * VB_W;
     const sy = lat => (LAT0 - lat) / (LAT0 - LAT1) * VB_H;
 
