@@ -911,56 +911,45 @@
     }
 
     // ── interactive implicational hierarchies ──
-    // 每個 node 綁定一個範例語言（ex）與它示範的數字（keys）。
-    // 點 node → 右側表換成該語言，並把對應格一起點亮。
+    // 每個 node 綁一個範例語言。點 node → 右表換成該語言，並把它用此策略構成的
+    // 數字一起點亮。非最左端的 node 刻意選「沒有最強條件」的語言，演示蘊含的方向性。
     const HIER = [
-      { name: "減法階層", tag: "Subtractive",
-        chain: [
-          { label: "6=10−4", ex: "Likum", keys: ["6"] },
-          { label: "7=10−3", ex: "Likum", keys: ["7"] },
-          { label: "8=10−2", ex: "Likum", keys: ["8"] },
-          { label: "9=10−1", ex: "Likum", keys: ["9"] },
+      { name: "減法階層", tag: "Subtractive", prefix: "10−",
+        nodes: [
+          { label: "6=10−4", ex: "Likum",
+            note: "Likum 從 6 起全用減法（6、7、8、9）。有最左端的 6=10−4，右側必然全部成立。" },
+          { label: "7=10−3", ex: "Yapese",
+            note: "Yapese 有 7、8、9 的減法，卻沒有 6=10−4。可見 7=10−3 不必依賴 6=10−4。" },
+          { label: "8=10−2", ex: "Sori",
+            note: "Sori 同樣沒有 6=10−4。資料中找不到「有 8=10−2 卻無 7=10−3」的語言，印證減法是連續的鏈。" },
+          { label: "9=10−1", ex: "Mandar",
+            note: "Mandar 只有 9=10−1。最右、最弱的條件可以完全單獨出現。" },
         ],
-        note: "出現最左端 6=10−4，其右便全部隨之成立（範例 Likum）。許多 Manus 分支語言以減法表 7、8、9。" },
-      { name: "倍數階層", tag: "Doubling",
-        chain: [
-          { label: "6=2×3", ex: "Sedeq (Taroko)", disp: "Seediq", keys: ["6"] },
-          { label: "8=2×4", ex: "Sedeq (Taroko)", disp: "Seediq", keys: ["8"] },
+        note: "10−a 蘊含其右所有減法（10−a 到 9）。點各格看不同語言：越往右，條件越弱、越能單獨出現。" },
+      { name: "倍數階層", tag: "Doubling", prefix: "2×",
+        nodes: [
+          { label: "6=2×3", ex: "Sedeq (Taroko)", disp: "Seediq",
+            note: "Seediq 同時有 6=2×3 與 8=2×4。有 6=2×3 就有 8=2×4。" },
+          { label: "8=2×4", ex: "Ujir",
+            note: "Ujir 只有 8=2×4、沒有 6=2×3。可見 8=2×4 不蘊含 6=2×3（只有反方向成立）。" },
         ],
-        examples: [
-          { label: "Roro：7=2×3+1、9=2×4+1", ex: "Roro", keys: ["7", "9"],
-            note: "Roro 在倍數之上再 +1：7=2×3+1、9=2×4+1。" },
-          { label: "Keapara：7=2×4−1、9=2×5−1", ex: "Keapara", keys: ["7", "9"],
-            note: "Keapara 在倍數之上再 −1：7=2×4−1、9=2×5−1。" },
-        ],
-        note: "有 6=2×3 就有 8=2×4，但反之不然（範例 Seediq）。部分語言再把倍數與加減疊加，見下方 Roro、Keapara。" },
+        note: "有 6=2×3 就有 8=2×4，但反之不然。點各格看不同語言。" },
     ];
 
     function buildImplic() {
       implicEl.innerHTML = "";
       HIER.forEach((h, hi) => {
-        h._nodes = [...(h.chain || []), ...(h.examples || [])];
         let chainHtml = "";
-        (h.chain || []).forEach((nd, i) => {
-          const ni = i;
+        h.nodes.forEach((nd, i) => {
           if (i) chainHtml += '<span class="arr">→</span>';
-          chainHtml += '<span class="node" data-h="' + hi + '" data-n="' + ni + '">' + esc(nd.label) + '</span>';
+          chainHtml += '<span class="node" data-h="' + hi + '" data-n="' + i + '">' + esc(nd.label) + '</span>';
         });
-        let exHtml = "";
-        if (h.examples && h.examples.length) {
-          let chips = "";
-          h.examples.forEach((nd, j) => {
-            const ni = (h.chain ? h.chain.length : 0) + j;
-            chips += '<span class="node" data-h="' + hi + '" data-n="' + ni + '">' + esc(nd.label) + '</span>';
-          });
-          exHtml = '<div class="chain chain-ex"><span class="chain-lead">延伸例</span>' + chips + '</div>';
-        }
         const row = document.createElement("div");
         row.className = "implic-row";
         row.innerHTML =
           '<div class="implic-head"><span class="implic-name">' + esc(h.name) + '</span>' +
           '<span class="implic-tag">' + esc(h.tag) + '</span></div>' +
-          '<div class="chain">' + chainHtml + '</div>' + exHtml +
+          '<div class="chain">' + chainHtml + '</div>' +
           '<p class="implic-note">' + esc(h.note) + '</p>';
         implicEl.appendChild(row);
       });
@@ -972,13 +961,18 @@
     function selectHierNode(hi, ni) {
       implicEl.querySelectorAll(".node").forEach(n =>
         n.classList.toggle("active", +n.dataset.h === hi && +n.dataset.n === ni));
-      renderHierTable(HIER[hi]._nodes[ni]);
+      renderHierTable(HIER[hi], HIER[hi].nodes[ni]);
     }
 
-    function renderHierTable(node) {
+    function renderHierTable(hier, node) {
       const L = DATA.languages.find(x => x.name === node.ex);
       const disp = node.disp || node.ex;
-      const lit = new Set(node.keys);
+      // 點亮：此語言以本階層策略（prefix）構成的所有數字
+      const lit = new Set();
+      if (L) for (const d of L.decomps) {
+        const parts = d.split("=");
+        if (parts[1] && parts[1].indexOf(hier.prefix) === 0) lit.add(parts[0]);
+      }
       let html = '<div class="ht-lang">' + esc(disp) + '</div>';
       html += '<div class="ht-sub">' + (L ? esc(L.branch) + ' · ' : '') + '範例語言</div>';
       html += '<div class="ht-grid">';
@@ -990,14 +984,7 @@
           '<span class="ht-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '·') + '</span></div>';
       }
       html += '</div>';
-      let note;
-      if (node.note) {
-        note = node.note;
-      } else {
-        const expr = node.label.split("=")[1] || node.label;
-        note = esc(disp) + ' 用 <b>' + esc(expr) + '</b> 表示 ' + node.keys.join("、");
-      }
-      html += '<p class="ht-note">' + note + '</p>';
+      html += '<p class="ht-note">' + node.note + '</p>';
       hierTableEl.innerHTML = html;
     }
 
