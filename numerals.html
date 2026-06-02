@@ -314,8 +314,15 @@
     }
     .research-desc .lead + p { font-size: 0.95rem; }
 
-    /* ── IMPLICATION DIAGRAM ── */
-    .implic-row { padding: 1.6rem 0; border-top: 1px solid var(--border); }
+    /* ── IMPLICATION DIAGRAM (interactive) ── */
+    .implic-wrap {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 1.8rem;
+      align-items: start;
+      margin-top: 0.6rem;
+    }
+    .implic-row { padding: 1.5rem 0; border-top: 1px solid var(--border); }
     .implic-row:last-of-type { border-bottom: 1px solid var(--border); }
     .implic-head {
       display: flex;
@@ -348,13 +355,16 @@
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s, color 0.15s;
     }
-    .node-seed {
+    .node:hover { border-color: var(--accent); color: var(--accent); }
+    .node.active {
       border-color: var(--accent);
       color: var(--accent);
       box-shadow: 2px 2px 0 var(--accent);
     }
-    .arr { color: var(--accent); font-size: 1.1rem; line-height: 1; }
+    .arr { color: var(--text-muted); font-size: 1.1rem; line-height: 1; }
     .chain-note {
       margin-left: 0.4rem;
       font-size: 0.74rem;
@@ -365,8 +375,64 @@
       font-size: 0.86rem;
       line-height: 1.7;
       color: var(--text-muted);
-      max-width: 640px;
+      max-width: 560px;
     }
+
+    /* comparison table beside the diagram */
+    .implic-table {
+      position: sticky;
+      top: 68px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.1rem 1.2rem 1.3rem;
+    }
+    .implic-table .ht-lang {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    .implic-table .ht-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+    .ht-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .ht-cell {
+      background: var(--surface);
+      padding: 0.4rem 0.55rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.45rem;
+      transition: background 0.15s;
+    }
+    .ht-k {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      width: 1.1em;
+      flex-shrink: 0;
+    }
+    .ht-v { font-size: 0.82rem; word-break: break-word; }
+    .ht-cell.tint .ht-k { color: var(--accent); }
+    .ht-cell.active {
+      background: #F3E4E0;
+      box-shadow: inset 0 0 0 1.5px var(--accent);
+    }
+    .ht-note {
+      font-size: 0.76rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-top: 0.8rem;
+      min-height: 1.6em;
+    }
+    .ht-note b { color: var(--accent); font-weight: 500; font-variant-numeric: tabular-nums; }
 
     /* ── FINDINGS (editorial numbered list) ── */
     .findings { list-style: none; }
@@ -423,6 +489,8 @@
       .lead { font-size: 1.25rem; }
       .findings li { grid-template-columns: 44px 1fr; gap: 0.3rem 1rem; }
       .f-num { font-size: 1.9rem; }
+      .implic-wrap { grid-template-columns: 1fr; }
+      .implic-table { position: static; order: -1; }
     }
   </style>
 </head>
@@ -479,7 +547,7 @@
     <!-- OVERVIEW -->
     <section class="intro">
       <div class="research-desc">
-        <p class="lead">南島語系橫跨半個地球，從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞以十進位為主，1–10 可上溯到原始南島語。</p>
+        <p>南島語系橫跨半個地球：北起臺灣、西至馬達加斯加、東抵復活節島、南達紐西蘭。它們的數詞以十進位為主，1–10 可上溯到原始南島語。</p>
         <p>但在十進位之外，不少語言用算術策略構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。這個工具收錄 892 個南島語的 1–10 數詞，放上太平洋置中的地圖，依主要構詞策略上色；你可以縮放、搜尋、點選任一語言，看它怎麼數數、用了哪些策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
       </div>
     </section>
@@ -527,28 +595,12 @@
     <section>
       <h2 class="section-title">兩條蘊含階層</h2>
       <div class="research-desc">
-        <p>這些策略並非隨意出現，而是遵循可預測的蘊含關係。資料中有兩條穩定成立、且無反例的階層：出現左端的策略，右側便隨之出現。</p>
+        <p>這些策略並非隨意出現，而是遵循可預測的蘊含關係。資料中有兩條穩定成立、且無反例的階層：出現左端的策略，右側便隨之出現。點選任一格，右側的數詞表會對照標出該語言實際怎麼數。</p>
       </div>
 
-      <div class="implic-row">
-        <div class="implic-head"><span class="implic-name">減法階層</span><span class="implic-tag">Subtractive</span></div>
-        <div class="chain">
-          <span class="node node-seed">6=10−4</span><span class="arr">→</span>
-          <span class="node">7=10−3</span><span class="arr">→</span>
-          <span class="node">8=10−2</span><span class="arr">→</span>
-          <span class="node">9=10−1</span>
-        </div>
-        <p class="implic-note">有最左端 6=10−4，其右全部隨之成立（如 Likum）。許多 Manus 分支語言以減法表 7、8、9。</p>
-      </div>
-
-      <div class="implic-row">
-        <div class="implic-head"><span class="implic-name">倍數階層</span><span class="implic-tag">Doubling</span></div>
-        <div class="chain">
-          <span class="node node-seed">6=2×3</span><span class="arr">→</span>
-          <span class="node">8=2×4</span>
-          <span class="chain-note">反之不然</span>
-        </div>
-        <p class="implic-note">如 Seediq 的 6=2×3、8=2×4。部分語言再疊加 ±1：Roro 的 7=2×3+1、9=2×4+1，Keapara 的 7=2×4−1、9=2×5−1。</p>
+      <div class="implic-wrap">
+        <div class="implic-list" id="implic"></div>
+        <aside class="implic-table" id="hierTable"></aside>
       </div>
     </section>
 
@@ -611,6 +663,8 @@
     const resultsEl  = document.getElementById("results");
     const searchEl   = document.getElementById("search");
     const hierEl     = document.getElementById("hier");
+    const implicEl   = document.getElementById("implic");
+    const hierTableEl = document.getElementById("hierTable");
     const tip        = document.getElementById("tip");
     const SVGNS = "http://www.w3.org/2000/svg";
 
@@ -637,6 +691,7 @@
       drawPoints();
       buildLegend();
       buildHier();
+      buildImplic();
     }).catch(err => {
       panel.innerHTML = '<p class="empty">資料載入失敗。若是在本機直接開啟檔案，請改用本地伺服器或部署後的網址（GitHub Pages）瀏覽。<br><br>' + err + '</p>';
     });
@@ -692,7 +747,7 @@
         });
         c.dataset.name = L.name;
         c.dataset.strat = L.strat || "";
-        c.addEventListener("click", e => { e.stopPropagation(); select(L.name); });
+        c.addEventListener("click", e => { e.stopPropagation(); if (!dragMoved) select(L.name); });
         c.addEventListener("mouseenter", e => showTip(e, L));
         c.addEventListener("mousemove", moveTip);
         c.addEventListener("mouseleave", hideTip);
@@ -784,6 +839,8 @@
       renderPanel(L);
       // pan to it if it has coords
       if (L.x !== null) focusOn(L);
+      // on narrow screens the panel sits below the map; bring it into view
+      if (window.innerWidth <= 740) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function renderPanel(L) {
@@ -840,6 +897,75 @@
       hierEl.innerHTML = html;
     }
 
+    // ── interactive implicational hierarchies ──
+    const HIER = [
+      { name: "減法階層", tag: "Subtractive", strat: "subtractive",
+        exampleName: "Likum", display: "Likum",
+        nodes: [{ label: "6=10−4", k: "6" }, { label: "7=10−3", k: "7" },
+                { label: "8=10−2", k: "8" }, { label: "9=10−1", k: "9" }],
+        note: "有最左端 6=10−4，其右全部隨之成立。許多 Manus 分支語言以減法表 7、8、9。" },
+      { name: "倍數階層", tag: "Doubling", strat: "doubling",
+        exampleName: "Sedeq (Taroko)", display: "Seediq",
+        nodes: [{ label: "6=2×3", k: "6" }, { label: "8=2×4", k: "8" }],
+        chainNote: "反之不然",
+        note: "部分語言再疊加 ±1：Roro 的 7=2×3+1、9=2×4+1，Keapara 的 7=2×4−1、9=2×5−1。" },
+    ];
+
+    function buildImplic() {
+      implicEl.innerHTML = "";
+      HIER.forEach((h, hi) => {
+        let nodes = "";
+        h.nodes.forEach((nd, i) => {
+          if (i) nodes += '<span class="arr">→</span>';
+          nodes += '<span class="node" data-h="' + hi + '" data-k="' + nd.k + '">' + esc(nd.label) + '</span>';
+        });
+        if (h.chainNote) nodes += '<span class="chain-note">' + esc(h.chainNote) + '</span>';
+        const row = document.createElement("div");
+        row.className = "implic-row";
+        row.innerHTML =
+          '<div class="implic-head"><span class="implic-name">' + esc(h.name) + '</span>' +
+          '<span class="implic-tag">' + esc(h.tag) + '</span></div>' +
+          '<div class="chain">' + nodes + '</div>' +
+          '<p class="implic-note">' + esc(h.note) + '</p>';
+        implicEl.appendChild(row);
+      });
+      implicEl.querySelectorAll(".node").forEach(n =>
+        n.addEventListener("click", () => selectHierNode(+n.dataset.h, n.dataset.k)));
+      selectHierNode(0, null);
+    }
+
+    function selectHierNode(hi, k) {
+      implicEl.querySelectorAll(".node").forEach(n =>
+        n.classList.toggle("active", +n.dataset.h === hi && k !== null && n.dataset.k === k));
+      renderHierTable(hi, k);
+    }
+
+    function renderHierTable(hi, activeK) {
+      const h = HIER[hi];
+      const L = DATA.languages.find(x => x.name === h.exampleName);
+      const keys = new Set(h.nodes.map(n => n.k));
+      let html = '<div class="ht-lang">' + esc(h.display) + '</div>';
+      html += '<div class="ht-sub">' + (L ? esc(L.branch) + ' · ' : '') + '範例語言</div>';
+      html += '<div class="ht-grid">';
+      for (let i = 1; i <= 10; i++) {
+        const v = L ? (L.numerals[String(i)] || "") : "";
+        const tint = keys.has(String(i));
+        const act = activeK && String(i) === activeK;
+        html += '<div class="ht-cell' + (tint ? ' tint' : '') + (act ? ' active' : '') + '">' +
+          '<span class="ht-k">' + i + '</span>' +
+          '<span class="ht-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '·') + '</span></div>';
+      }
+      html += '</div>';
+      if (activeK) {
+        const nd = h.nodes.find(n => n.k === activeK);
+        const expr = nd.label.split("=")[1] || nd.label;
+        html += '<p class="ht-note">' + esc(h.display) + ' 用 <b>' + esc(expr) + '</b> 表示 ' + activeK + '。</p>';
+      } else {
+        html += '<p class="ht-note">點左側任一格看對照，標色格為此階層涉及的數字。</p>';
+      }
+      hierTableEl.innerHTML = html;
+    }
+
     // ── zoom & pan ──
     let view = { x: 0, y: 0, w: VB_W, h: VB_H };
     function setVB() { svg.setAttribute("viewBox", view.x + " " + view.y + " " + view.w + " " + view.h); }
@@ -868,21 +994,27 @@
     document.getElementById("zoom-out").onclick = () => zoomAt(1.25, svg.clientWidth / 2, svg.clientHeight / 2);
     document.getElementById("zoom-reset").onclick = () => { view = { x: 0, y: 0, w: VB_W, h: VB_H }; setVB(); };
 
-    let drag = null;
+    // No setPointerCapture: capturing the pointer on the SVG retargets the
+    // click to the SVG, so clicks on data points never reach their handler.
+    // Track drag via window listeners and a moved-flag instead.
+    let drag = null, dragMoved = false;
     svg.addEventListener("pointerdown", e => {
       drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
-      svg.classList.add("grabbing"); svg.setPointerCapture(e.pointerId);
+      dragMoved = false;
+      svg.classList.add("grabbing");
     });
-    svg.addEventListener("pointermove", e => {
+    window.addEventListener("pointermove", e => {
       if (!drag) return;
       const r = svg.getBoundingClientRect();
-      view.x = drag.vx - (e.clientX - drag.x) / r.width * view.w;
-      view.y = drag.vy - (e.clientY - drag.y) / r.height * view.h;
+      const ddx = e.clientX - drag.x, ddy = e.clientY - drag.y;
+      if (Math.abs(ddx) > 3 || Math.abs(ddy) > 3) dragMoved = true;
+      view.x = drag.vx - ddx / r.width * view.w;
+      view.y = drag.vy - ddy / r.height * view.h;
       clamp(); setVB();
     });
-    function endDrag(e) { drag = null; svg.classList.remove("grabbing"); }
-    svg.addEventListener("pointerup", endDrag);
-    svg.addEventListener("pointercancel", endDrag);
+    function endDrag() { drag = null; svg.classList.remove("grabbing"); }
+    window.addEventListener("pointerup", endDrag);
+    window.addEventListener("pointercancel", endDrag);
 
     function focusOn(L) {
       // gently centre without over-zooming
