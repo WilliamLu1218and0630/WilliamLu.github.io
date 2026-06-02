@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>南島語數詞類型探索器 · William Lu 呂乃崴</title>
+  <meta name="description" content="互動探索 898 個南島語的 1–10 數詞與其構詞類型：純十進位、五進制（5+n）、減法（10−n）、倍數與混合型。太平洋置中地圖上色標點，點選查看每個語言的數詞與分支，呈現繼承與接觸交織的類型分布。延續 EULC 2026 'Beyond Decimal' 研究。">
+  <meta name="author" content="William Lu 呂乃崴">
+  <link rel="canonical" href="https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html">
+  <link rel="icon" type="image/jpeg" href="assets/photos/S__13852725.jpg">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="William Lu 呂乃崴">
+  <meta property="og:title" content="南島語數詞類型探索器 · William Lu 呂乃崴">
+  <meta property="og:description" content="898 個南島語、1–10 數詞、5 種構詞類型，在太平洋置中地圖上互動探索。">
+  <meta property="og:url" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html">
+  <meta property="og:image" content="https://williamlu1218and0630.github.io/WilliamLu.github.io/assets/photos/web_photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Austronesian Numeral Typology Explorer",
+    "alternateName": "南島語數詞類型探索器",
+    "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/numerals.html",
+    "description": "互動探索 898 個南島語的 1–10 數詞構詞類型，含太平洋置中地理分布地圖。延續 'Beyond Decimal: Typological Patterns and Hierarchies in Numeral Systems'（EULC 2026）研究。",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any (web)",
+    "isAccessibleForFree": true,
+    "author": {
+      "@type": "Person",
+      "name": "William Lu",
+      "alternateName": "呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/"
+    },
+    "about": ["Linguistic Typology", "Austronesian Languages", "Numeral Systems", "Areal Linguistics"],
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "互動與數位作品 — William Lu 呂乃崴",
+      "url": "https://williamlu1218and0630.github.io/WilliamLu.github.io/interactive.html"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── EXPLORER LAYOUT ── */
+    .explorer {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.4rem;
+      align-items: start;
+    }
+
+    .map-wrap {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    #map {
+      display: block;
+      width: 100%;
+      height: auto;
+      background:
+        radial-gradient(120% 120% at 60% 35%, #fbfaf8 0%, #f3f1ec 100%);
+      touch-action: none;
+      cursor: grab;
+    }
+    #map.grabbing { cursor: grabbing; }
+
+    .coast { fill: none; stroke: #cfc9c1; stroke-width: 0.7; }
+    .pt {
+      stroke: rgba(0,0,0,0.28);
+      stroke-width: 0.5;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .pt.bg { stroke: rgba(95,116,136,0.35); }
+    .pt.dim { opacity: 0.08; pointer-events: none; }
+    .pt.sel { stroke: var(--text); stroke-width: 1.4; }
+
+    .map-hint {
+      position: absolute;
+      left: 0.7rem; bottom: 0.6rem;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      background: rgba(248,247,244,0.8);
+      padding: 0.15em 0.5em;
+      pointer-events: none;
+    }
+
+    .map-zoom {
+      position: absolute;
+      right: 0.6rem; top: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .map-zoom button {
+      width: 28px; height: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .map-zoom button:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* tooltip */
+    #tip {
+      position: fixed;
+      z-index: 50;
+      pointer-events: none;
+      background: var(--text);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      padding: 0.3em 0.6em;
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.12s;
+      white-space: nowrap;
+      transform: translate(-50%, -130%);
+    }
+
+    /* ── SIDE PANEL ── */
+    .panel {
+      position: sticky;
+      top: 68px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.3rem 1.3rem 1.5rem;
+      min-height: 320px;
+    }
+    .panel .empty {
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      line-height: 1.7;
+    }
+    .panel-lang {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 0.2rem;
+    }
+    .panel-branch {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.9rem;
+    }
+    .type-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45em;
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      padding: 0.25em 0.7em;
+      border: 1px solid var(--border);
+      margin-bottom: 1.1rem;
+    }
+    .type-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    .num-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .num-cell {
+      background: var(--surface);
+      padding: 0.45rem 0.6rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .num-k {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      color: var(--accent);
+      width: 1.1em;
+      flex-shrink: 0;
+    }
+    .num-v {
+      font-size: 0.86rem;
+      word-break: break-word;
+    }
+    .num-v.none { color: var(--text-muted); font-style: italic; }
+
+    .panel-note {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 0.9rem;
+    }
+    .panel-note a { color: var(--accent); }
+
+    /* ── CONTROLS ── */
+    .controls { margin-bottom: 1.2rem; }
+    .search-box {
+      width: 100%;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+    .search-box:focus { outline: none; border-color: var(--accent); }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .leg {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45em;
+      font-size: 0.74rem;
+      padding: 0.3em 0.7em;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.18s, opacity 0.18s;
+    }
+    .leg:hover { border-color: var(--text-muted); }
+    .leg.off { opacity: 0.35; }
+    .leg .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .leg .leg-n { color: var(--text-muted); font-size: 0.68rem; }
+
+    /* search results */
+    .results {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      max-height: 130px;
+      overflow-y: auto;
+    }
+    .res-chip {
+      font-size: 0.74rem;
+      padding: 0.22em 0.6em;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .res-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── FINDINGS ── */
+    .find-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+    .find-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.4rem 1.5rem;
+    }
+    .find-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+      line-height: 1.25;
+    }
+    .find-card p {
+      font-size: 0.84rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .find-card .k { color: var(--accent); font-weight: 500; }
+
+    .hier {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.6rem 1.6rem 1.3rem;
+      margin-top: 0.4rem;
+    }
+    .hier-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .hier-row:last-child { border-bottom: none; }
+    .hier-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .hier-label { font-size: 0.88rem; flex: 1; }
+    .hier-label small { color: var(--text-muted); font-size: 0.76rem; }
+    .hier-bar-wrap { width: 130px; height: 7px; background: var(--bg); flex-shrink: 0; }
+    .hier-bar { height: 100%; }
+    .hier-n { font-size: 0.74rem; color: var(--text-muted); width: 56px; text-align: right; flex-shrink: 0; }
+
+    @media (max-width: 740px) {
+      .explorer { grid-template-columns: 1fr; }
+      .panel { position: static; }
+      .find-grid { grid-template-columns: 1fr; }
+      .hier-bar-wrap { width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">William Lu</a>
+    <ul class="nav-links">
+      <li class="has-dropdown">
+        <a href="math.html">Math</a>
+        <ul class="dropdown">
+          <li><a href="math.html#research">研究</a></li>
+          <li><a href="math.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="linguistics.html">Linguistics</a>
+        <ul class="dropdown">
+          <li><a href="linguistics.html#research">研究</a></li>
+          <li><a href="linguistics.html#awards">獎狀</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="music.html">Music & Art</a>
+        <ul class="dropdown">
+          <li><a href="music.html#music">音樂</a></li>
+          <li><a href="music.html#art">藝術</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="interactive.html" class="active">Interactive</a>
+        <ul class="dropdown">
+          <li><a href="silhouette.html">Silhouette</a></li>
+          <li><a href="voicing.html">Jacob Voicing</a></li>
+          <li><a href="numerals.html">Numeral Explorer</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-hero">
+      <p class="breadcrumb">
+        <a href="interactive.html">Interactive</a>
+        <span>›</span>
+        Numeral Explorer
+      </p>
+      <p class="section-label">Research Tool</p>
+      <h1>南島語數詞類型探索器</h1>
+      <p class="hero-sub">數到十，能看見一整片海洋的歷史</p>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section>
+      <p class="section-label">Overview</p>
+      <h2 class="section-title">這是什麼</h2>
+      <div class="research-desc">
+        <p>南島語系橫跨半個地球——從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞 1–10 大多源自共同祖型，卻在各地長出截然不同的構詞策略：有的純十進位，有的用「五加幾」，有的甚至用「十減幾」來數 7、8、9。</p>
+        <p>這個工具把我研究中整理的 <strong>898 個南島語、1–10 數詞</strong>放上太平洋置中的地圖，依構詞類型上色。你可以縮放、點選任一語言看它怎麼數數，也能看出哪些「創新」其實是地理鄰近語言互相接觸的結果。延續我在 <a href="linguistics.html#research">EULC 2026 的研究 “Beyond Decimal”</a>。</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-item"><div class="stat-num">898</div><div class="stat-label">南島語</div></div>
+        <div class="stat-item"><div class="stat-num">677</div><div class="stat-label">有地理座標</div></div>
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">構詞類型</div></div>
+        <div class="stat-item"><div class="stat-num">1–10</div><div class="stat-label">數詞欄位</div></div>
+      </div>
+    </section>
+
+    <!-- EXPLORER -->
+    <section>
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">互動地圖</h2>
+
+      <div class="controls">
+        <input type="text" id="search" class="search-box" placeholder="搜尋語言（例：Atayal、Maori、Malagasy…）" autocomplete="off">
+        <div class="legend" id="legend"></div>
+        <div class="results" id="results"></div>
+      </div>
+
+      <div class="explorer">
+        <div class="map-wrap">
+          <svg id="map" viewBox="0 0 1100 440" role="img" aria-label="南島語數詞類型地理分布地圖">
+            <g id="layer-coast"></g>
+            <g id="layer-pts"></g>
+          </svg>
+          <div class="map-zoom">
+            <button id="zoom-in" aria-label="放大">+</button>
+            <button id="zoom-out" aria-label="縮小">−</button>
+            <button id="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button>
+          </div>
+          <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+        </div>
+
+        <aside class="panel" id="panel">
+          <p class="empty">在地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、所屬分支與構詞類型。</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- HIERARCHY -->
+    <section>
+      <p class="section-label">Pattern</p>
+      <h2 class="section-title">五種構詞類型</h2>
+      <div class="research-desc">
+        <p>把 898 個語言依 1–10 的構詞策略分群，會落入五種主要類型。純十進位是泛南島的主體與最可能的祖型；其餘四種帶有明顯的「五進制」或「減法」創新，且幾乎全集中在大洋洲（東部）分支。</p>
+      </div>
+      <div class="hier" id="hier"></div>
+    </section>
+
+    <!-- FINDINGS -->
+    <section>
+      <p class="section-label">Findings</p>
+      <h2 class="section-title">繼承，還是接觸？</h2>
+      <div class="find-grid">
+        <div class="find-card">
+          <h3>系譜留下的痕跡</h3>
+          <p>數詞類型有 <span class="k">約 25%</span> 的變異能由語言的系譜分支解釋（PERMANOVA R²＝0.254）。也就是說，一個語言怎麼數數，很大程度寫在它的家族裡——這是「繼承」的訊號。</p>
+        </div>
+        <div class="find-card">
+          <h3>地理留下的痕跡</h3>
+          <p>控制系譜後，類型仍與<span class="k">地理鄰近</span>顯著相關（partial Mantel，p&lt;.01）。五進制與減法型緊聚在新幾內亞／美拉尼西亞——與巴布亞諸語的經典接觸帶。這是「接觸」的訊號。</p>
+        </div>
+        <div class="find-card">
+          <h3>兩者並存，而非互斥</h3>
+          <p>用 Glottolog 族譜樹距離重算後，<span class="k">繼承與接觸各自都有獨立、顯著的貢獻</span>，系譜的獨立效果略大於地理。南島語數詞的樣貌，是兩股力量交織的結果。</p>
+        </div>
+        <div class="find-card">
+          <h3>會說話的離群者</h3>
+          <p><span class="k">Yapese</span>（西部語言，卻用大洋洲式減法）與 <span class="k">Ilongot</span>（菲律賓，卻用五進制）打破了家族界線——正是接觸假說最生動的證據。在地圖上找找它們。</p>
+        </div>
+      </div>
+      <p class="research-meta" style="margin-top:1.4rem;">資料與分析出自作者 EULC 2026 研究 “Beyond Decimal: Typological Patterns and Hierarchies in Numeral Systems”。數詞拼寫經人工校核，少數語言仍待補；歡迎指正。</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 William Lu 呂乃崴</p>
+    <p>資料整理自南島語數詞類型研究</p>
+    <p>臺北，臺灣</p>
+  </footer>
+
+  <div id="tip"></div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    // ── map projection (Pacific-centred) ──
+    const VB_W = 1100, VB_H = 440;
+    const LON0 = 38, LON1 = 264;     // x range (recentred longitude)
+    const LAT0 = 36, LAT1 = -56;     // top→bottom latitude
+    const sx = x => (x - LON0) / (LON1 - LON0) * VB_W;
+    const sy = lat => (LAT0 - lat) / (LAT0 - LAT1) * VB_H;
+
+    const layerCoast = document.getElementById("layer-coast");
+    const layerPts   = document.getElementById("layer-pts");
+    const svg        = document.getElementById("map");
+    const panel      = document.getElementById("panel");
+    const legendEl   = document.getElementById("legend");
+    const resultsEl  = document.getElementById("results");
+    const searchEl   = document.getElementById("search");
+    const hierEl     = document.getElementById("hier");
+    const tip        = document.getElementById("tip");
+    const SVGNS = "http://www.w3.org/2000/svg";
+
+    let DATA = null, CLUSTERS = null;
+    const active = new Set();      // active cluster keys (filter)
+    let selected = null;           // selected language name
+    const ptByName = {};
+
+    const HIER_ORDER = ["2", "1", "0", "3", "4", "-1"];
+
+    function el(tag, attrs) {
+      const e = document.createElementNS(SVGNS, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    // ── load data ──
+    Promise.all([
+      fetch("assets/data/numerals.json").then(r => r.json()),
+      fetch("assets/data/an_coastline.json").then(r => r.json())
+    ]).then(([nd, coast]) => {
+      DATA = nd; CLUSTERS = nd.clusters;
+      drawCoast(coast.segments);
+      drawPoints();
+      buildLegend();
+      buildHier();
+    }).catch(err => {
+      panel.innerHTML = '<p class="empty">資料載入失敗。若是在本機直接開啟檔案，請改用本地伺服器或部署後的網址（GitHub Pages）瀏覽。<br><br>' + err + '</p>';
+    });
+
+    function drawCoast(segs) {
+      const frag = document.createDocumentFragment();
+      for (const seg of segs) {
+        let d = "";
+        for (let i = 0; i < seg.length; i++) {
+          d += (i ? "L" : "M") + sx(seg[i][0]).toFixed(1) + " " + sy(seg[i][1]).toFixed(1) + " ";
+        }
+        frag.appendChild(el("path", { d: d, class: "coast" }));
+      }
+      layerCoast.appendChild(frag);
+    }
+
+    function colorOf(cl) {
+      return (CLUSTERS[cl] && CLUSTERS[cl].color) || "#c4bcae";
+    }
+    function isBg(cl) { return cl === "2" || cl === "-1" || !cl; }
+
+    function drawPoints() {
+      const frag = document.createDocumentFragment();
+      // draw background (decimal) first, innovations on top
+      const ordered = DATA.languages
+        .filter(L => L.x !== null)
+        .sort((a, b) => (isBg(b.cluster) ? 1 : 0) - (isBg(a.cluster) ? 1 : 0));
+      for (const L of ordered) {
+        const bg = isBg(L.cluster);
+        const c = el("circle", {
+          cx: sx(L.x).toFixed(1),
+          cy: sy(L.lat).toFixed(1),
+          r: bg ? 2.6 : 3.6,
+          fill: colorOf(L.cluster),
+          class: "pt" + (bg ? " bg" : "")
+        });
+        c.dataset.name = L.name;
+        c.dataset.cluster = L.cluster || "";
+        c.addEventListener("click", e => { e.stopPropagation(); select(L.name); });
+        c.addEventListener("mouseenter", e => showTip(e, L));
+        c.addEventListener("mousemove", moveTip);
+        c.addEventListener("mouseleave", hideTip);
+        ptByName[L.name] = c;
+        frag.appendChild(c);
+      }
+      layerPts.appendChild(frag);
+    }
+
+    function showTip(e, L) {
+      tip.textContent = L.name + (CLUSTERS[L.cluster] ? " · " + CLUSTERS[L.cluster].label_zh : "");
+      tip.style.opacity = "1";
+      moveTip(e);
+    }
+    function moveTip(e) { tip.style.left = e.clientX + "px"; tip.style.top = e.clientY + "px"; }
+    function hideTip() { tip.style.opacity = "0"; }
+
+    // ── legend / filter ──
+    function buildLegend() {
+      legendEl.innerHTML = "";
+      for (const k of HIER_ORDER) {
+        if (!CLUSTERS[k]) continue;
+        const m = CLUSTERS[k];
+        const b = document.createElement("div");
+        b.className = "leg";
+        b.dataset.k = k;
+        b.innerHTML = '<span class="leg-dot" style="background:' + m.color + '"></span>' +
+          '<span>' + m.label_zh + '</span><span class="leg-n">' + m.n + '</span>';
+        b.addEventListener("click", () => toggle(k));
+        legendEl.appendChild(b);
+      }
+      active.clear();          // empty = show all
+      applyFilter();
+    }
+
+    function toggle(k) {
+      if (active.has(k)) active.delete(k);
+      else active.add(k);
+      // reflect off-state: when set non-empty, non-active are "off"
+      [...legendEl.children].forEach(c => {
+        const on = active.size === 0 || active.has(c.dataset.k);
+        c.classList.toggle("off", !on);
+      });
+      applyFilter();
+    }
+
+    function applyFilter() {
+      const q = searchEl.value.trim().toLowerCase();
+      for (const name in ptByName) {
+        const c = ptByName[name];
+        const cl = c.dataset.cluster;
+        const passCluster = active.size === 0 || active.has(cl);
+        const passSearch = !q || name.toLowerCase().includes(q);
+        c.classList.toggle("dim", !(passCluster && passSearch));
+      }
+    }
+
+    // ── search ──
+    searchEl.addEventListener("input", () => {
+      applyFilter();
+      renderResults();
+    });
+    function renderResults() {
+      const q = searchEl.value.trim().toLowerCase();
+      resultsEl.innerHTML = "";
+      if (!q) return;
+      const hits = DATA.languages
+        .filter(L => L.name.toLowerCase().includes(q))
+        .slice(0, 40);
+      for (const L of hits) {
+        const chip = document.createElement("span");
+        chip.className = "res-chip";
+        chip.textContent = L.name;
+        chip.addEventListener("click", () => select(L.name));
+        resultsEl.appendChild(chip);
+      }
+      if (!hits.length) {
+        resultsEl.innerHTML = '<span class="res-chip" style="cursor:default;color:var(--text-muted)">查無此語言</span>';
+      }
+    }
+
+    // ── selection / panel ──
+    function select(name) {
+      const L = DATA.languages.find(x => x.name === name);
+      if (!L) return;
+      selected = name;
+      if (ptByName[name]) ptByName[name].classList.remove("dim");
+      for (const n in ptByName) ptByName[n].classList.toggle("sel", n === name);
+      renderPanel(L);
+      // pan to it if it has coords
+      if (L.x !== null) focusOn(L);
+    }
+
+    function renderPanel(L) {
+      const m = CLUSTERS[L.cluster];
+      let html = '<div class="panel-lang">' + esc(L.name) + '</div>';
+      const branchPath = L.branches.length ? L.branches.join(" › ") : "—";
+      html += '<div class="panel-branch">' + esc(branchPath) +
+        (L.macro_zh ? ' · ' + esc(L.macro_zh) : '') + '</div>';
+      if (m) {
+        html += '<div class="type-pill"><span class="type-dot" style="background:' + m.color +
+          '"></span>' + esc(m.label_zh) + '</div>';
+      }
+      html += '<div class="num-grid">';
+      for (let i = 1; i <= 10; i++) {
+        const v = L.numerals[String(i)] || "";
+        html += '<div class="num-cell"><span class="num-k">' + i + '</span>' +
+          '<span class="num-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '—') + '</span></div>';
+      }
+      html += '</div>';
+      if (m) html += '<p class="panel-note">' + esc(m.desc) + '</p>';
+      if (L.special) html += '<p class="panel-note"><strong>備註：</strong>' + esc(L.special) + '</p>';
+      if (L.glottocode) {
+        html += '<p class="panel-note"><a href="https://glottolog.org/resource/languoid/id/' +
+          esc(L.glottocode) + '" target="_blank" rel="noopener">Glottolog: ' + esc(L.glottocode) + ' ↗</a></p>';
+      }
+      if (L.x === null) html += '<p class="panel-note">（此語言無地理座標，未顯示於地圖）</p>';
+      panel.innerHTML = html;
+    }
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    }
+
+    // ── hierarchy bars ──
+    function buildHier() {
+      const maxN = Math.max(...HIER_ORDER.map(k => (CLUSTERS[k] ? CLUSTERS[k].n : 0)));
+      let html = "";
+      for (const k of HIER_ORDER) {
+        const m = CLUSTERS[k];
+        if (!m) continue;
+        const w = Math.max(3, (m.n / maxN) * 100);
+        html += '<div class="hier-row">' +
+          '<span class="hier-dot" style="background:' + m.color + '"></span>' +
+          '<span class="hier-label">' + esc(m.label_zh) +
+          ' <small>' + esc(m.label_en) + '</small></span>' +
+          '<span class="hier-bar-wrap"><span class="hier-bar" style="width:' + w + '%;background:' + m.color + '"></span></span>' +
+          '<span class="hier-n">' + m.n + '</span></div>';
+      }
+      hierEl.innerHTML = html;
+    }
+
+    // ── zoom & pan ──
+    let view = { x: 0, y: 0, w: VB_W, h: VB_H };
+    function setVB() { svg.setAttribute("viewBox", view.x + " " + view.y + " " + view.w + " " + view.h); }
+    function clamp() {
+      view.w = Math.min(VB_W, Math.max(VB_W * 0.18, view.w));
+      view.h = view.w * (VB_H / VB_W);
+      view.x = Math.min(VB_W - view.w, Math.max(0, view.x));
+      view.y = Math.min(VB_H - view.h, Math.max(0, view.y));
+    }
+    function zoomAt(factor, cx, cy) {
+      const nx = view.x + (cx / svg.clientWidth) * view.w;
+      const ny = view.y + (cy / svg.clientHeight) * view.h;
+      view.w *= factor;
+      clamp();
+      view.x = nx - (cx / svg.clientWidth) * view.w;
+      view.y = ny - (cy / svg.clientHeight) * view.h;
+      clamp(); setVB();
+    }
+    svg.addEventListener("wheel", e => {
+      e.preventDefault();
+      const r = svg.getBoundingClientRect();
+      zoomAt(e.deltaY > 0 ? 1.15 : 0.87, e.clientX - r.left, e.clientY - r.top);
+    }, { passive: false });
+
+    document.getElementById("zoom-in").onclick  = () => zoomAt(0.8, svg.clientWidth / 2, svg.clientHeight / 2);
+    document.getElementById("zoom-out").onclick = () => zoomAt(1.25, svg.clientWidth / 2, svg.clientHeight / 2);
+    document.getElementById("zoom-reset").onclick = () => { view = { x: 0, y: 0, w: VB_W, h: VB_H }; setVB(); };
+
+    let drag = null;
+    svg.addEventListener("pointerdown", e => {
+      drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
+      svg.classList.add("grabbing"); svg.setPointerCapture(e.pointerId);
+    });
+    svg.addEventListener("pointermove", e => {
+      if (!drag) return;
+      const r = svg.getBoundingClientRect();
+      view.x = drag.vx - (e.clientX - drag.x) / r.width * view.w;
+      view.y = drag.vy - (e.clientY - drag.y) / r.height * view.h;
+      clamp(); setVB();
+    });
+    function endDrag(e) { drag = null; svg.classList.remove("grabbing"); }
+    svg.addEventListener("pointerup", endDrag);
+    svg.addEventListener("pointercancel", endDrag);
+
+    function focusOn(L) {
+      // gently centre without over-zooming
+      const targetW = Math.min(view.w, VB_W * 0.5);
+      view.w = targetW; clamp();
+      view.x = sx(L.x) - view.w / 2;
+      view.y = sy(L.lat) - view.h / 2;
+      clamp(); setVB();
+    }
+  })();
+  </script>
+
+</body>
+</html>
