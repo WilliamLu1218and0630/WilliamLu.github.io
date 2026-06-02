@@ -64,23 +64,31 @@
       display: block;
       width: 100%;
       height: auto;
-      background:
-        radial-gradient(120% 120% at 60% 35%, #fbfaf8 0%, #f3f1ec 100%);
+      background: #F2EFE9;
       touch-action: none;
       cursor: grab;
     }
     #map.grabbing { cursor: grabbing; }
 
-    .coast { fill: none; stroke: #cfc9c1; stroke-width: 0.7; }
+    .coast { fill: none; stroke: #d7d0c4; stroke-width: 0.7; }
+    .geo-label {
+      fill: #a89e8c;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 9px;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      text-anchor: middle;
+    }
     .pt {
-      stroke: rgba(0,0,0,0.28);
+      stroke: rgba(0,0,0,0.30);
       stroke-width: 0.5;
       cursor: pointer;
       transition: opacity 0.15s ease;
     }
-    .pt.bg { stroke: rgba(95,116,136,0.35); }
-    .pt.dim { opacity: 0.08; pointer-events: none; }
-    .pt.sel { stroke: var(--text); stroke-width: 1.4; }
+    .pt.bg { stroke: rgba(140,128,108,0.28); opacity: 0.65; }
+    .pt.dim { opacity: 0.06; pointer-events: none; }
+    .pt.sel { stroke: var(--text); stroke-width: 1.6; }
 
     .map-hint {
       position: absolute;
@@ -282,37 +290,117 @@
     }
     .res-chip:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── FINDINGS ── */
-    .find-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.4rem;
+    /* ── HERO LEAD ── */
+    .hero-lead {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+      letter-spacing: 0.01em;
     }
-    .find-card {
+
+    /* ── INTRO / LEAD ── */
+    .intro { padding-top: 0; }
+    .lead {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 1rem !important;
+      max-width: 720px;
+    }
+    .research-desc .lead + p { font-size: 0.95rem; }
+
+    /* ── IMPLICATION DIAGRAM ── */
+    .implic-row { padding: 1.6rem 0; border-top: 1px solid var(--border); }
+    .implic-row:last-of-type { border-bottom: 1px solid var(--border); }
+    .implic-head {
+      display: flex;
+      align-items: baseline;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .implic-name {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+    }
+    .implic-tag {
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .chain {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 0.55rem;
+      margin-bottom: 0.9rem;
+    }
+    .node {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.95rem;
+      padding: 0.4em 0.8em;
       border: 1px solid var(--border);
       background: var(--surface);
-      padding: 1.4rem 1.5rem;
-    }
-    .find-card h3 {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      font-weight: 400;
-      margin-bottom: 0.6rem;
-      line-height: 1.25;
-    }
-    .find-card p {
-      font-size: 0.84rem;
-      line-height: 1.75;
       color: var(--text);
     }
-    .find-card .k { color: var(--accent); font-weight: 500; }
-
-    .hier {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: 1.6rem 1.6rem 1.3rem;
-      margin-top: 0.4rem;
+    .node-seed {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 2px 2px 0 var(--accent);
     }
+    .arr { color: var(--accent); font-size: 1.1rem; line-height: 1; }
+    .chain-note {
+      margin-left: 0.4rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .implic-note {
+      font-size: 0.86rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    /* ── FINDINGS (editorial numbered list) ── */
+    .findings { list-style: none; }
+    .findings li {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0.4rem 1.6rem;
+      align-items: start;
+      padding: 1.7rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .findings li:last-child { border-bottom: 1px solid var(--border); }
+    .f-num {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      font-weight: 300;
+      line-height: 0.9;
+      color: var(--accent);
+    }
+    .f-body h3 {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .f-body p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text);
+      max-width: 640px;
+    }
+
+    .dist { margin-top: 0.6rem; }
     .hier-row {
       display: flex;
       align-items: center;
@@ -331,8 +419,10 @@
     @media (max-width: 740px) {
       .explorer { grid-template-columns: 1fr; }
       .panel { position: static; }
-      .find-grid { grid-template-columns: 1fr; }
       .hier-bar-wrap { width: 80px; }
+      .lead { font-size: 1.25rem; }
+      .findings li { grid-template-columns: 44px 1fr; gap: 0.3rem 1rem; }
+      .f-num { font-size: 1.9rem; }
     }
   </style>
 </head>
@@ -382,33 +472,20 @@
         <span>›</span>
         Numeral Explorer
       </p>
-      <p class="section-label">Research Tool</p>
       <h1>南島語數詞類型探索器</h1>
-      <p class="hero-sub">數到十，能看見一整片海洋的歷史</p>
+      <p class="hero-lead">數到十，能看見一整片海洋的歷史。</p>
     </section>
 
     <!-- OVERVIEW -->
-    <section>
-      <p class="section-label">Overview</p>
-      <h2 class="section-title">這是什麼</h2>
+    <section class="intro">
       <div class="research-desc">
-        <p>南島語系橫跨半個地球，從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞以十進位為主，1–10 可上溯到原始南島語；但在十進位之外，不少語言用算術策略來構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。</p>
-        <p>這個工具收錄 <strong>892 個南島語的 1–10 數詞</strong>，放上太平洋置中的地圖，依主要構詞策略上色。你可以縮放、搜尋、點選任一語言，看它怎麼數數、用了哪些構詞策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-item"><div class="stat-num">892</div><div class="stat-label">南島語</div></div>
-        <div class="stat-item"><div class="stat-num">677</div><div class="stat-label">有地理座標</div></div>
-        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">構詞策略</div></div>
-        <div class="stat-item"><div class="stat-num">1–10</div><div class="stat-label">數詞欄位</div></div>
+        <p class="lead">南島語系橫跨半個地球，從臺灣、菲律賓、馬達加斯加，到整個玻里尼西亞。它們的數詞以十進位為主，1–10 可上溯到原始南島語。</p>
+        <p>但在十進位之外，不少語言用算術策略構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。這個工具收錄 892 個南島語的 1–10 數詞，放上太平洋置中的地圖，依主要構詞策略上色；你可以縮放、搜尋、點選任一語言，看它怎麼數數、用了哪些策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
       </div>
     </section>
 
     <!-- EXPLORER -->
     <section>
-      <p class="section-label">Explore</p>
-      <h2 class="section-title">互動地圖</h2>
-
       <div class="controls">
         <input type="text" id="search" class="search-box" placeholder="搜尋語言（例：Atayal、Maori、Malagasy…）" autocomplete="off">
         <div class="legend" id="legend"></div>
@@ -419,6 +496,7 @@
         <div class="map-wrap">
           <svg id="map" viewBox="0 0 1100 440" role="img" aria-label="南島語數詞類型地理分布地圖">
             <g id="layer-coast"></g>
+            <g id="layer-labels"></g>
             <g id="layer-pts"></g>
           </svg>
           <div class="map-zoom">
@@ -437,57 +515,70 @@
 
     <!-- STRATEGIES -->
     <section>
-      <p class="section-label">Strategies</p>
       <h2 class="section-title">十進位之外的構詞策略</h2>
       <div class="research-desc">
         <p>南島語數詞以十進位為主，但在 4–9 上會用到三種算術運算來構詞：加法、減法、乘法（除法未見）。把 892 個語言依其主要策略歸類，分布如下。</p>
       </div>
-      <div class="hier" id="hier"></div>
-      <p class="research-meta" style="margin-top:1rem;">註：一個語言可能同時用到多種策略；上方依優先序（減法 ＞ 倍數 ＞ 五進制 ＞ 加法 ＞ 純十進位）取其主要策略上色，點選語言可在側欄看到它使用的所有策略。除十進位與五進制外，資料中也有罕見的四進制（如 Bam）與八進制（如 Yotafa／Tobati），以及僅以 1、2 相加構詞的系統（如 Azera）。</p>
+      <div class="dist" id="hier"></div>
+      <p class="research-meta" style="margin-top:1.4rem;">一個語言可能同時用到多種策略，上方依優先序（減法、倍數、五進制、加法、純十進位）取其主要策略；點選語言可在側欄看到它使用的全部策略。除十進位與五進制外，資料中也有罕見的四進制（如 Bam）、八進制（如 Yotafa／Tobati），以及僅以 1、2 相加構詞的系統（如 Azera）。</p>
     </section>
 
     <!-- HIERARCHIES -->
     <section>
-      <p class="section-label">Hierarchies</p>
       <h2 class="section-title">兩條蘊含階層</h2>
       <div class="research-desc">
-        <p>這些特殊策略並非隨意出現，而是遵循可預測的蘊含關係。本研究在資料中發現兩條穩定成立的蘊含階層，且皆無反例。</p>
+        <p>這些策略並非隨意出現，而是遵循可預測的蘊含關係。資料中有兩條穩定成立、且無反例的階層：出現左端的策略，右側便隨之出現。</p>
       </div>
-      <div class="find-grid">
-        <div class="find-card">
-          <h3>減法階層</h3>
-          <p>若一個語言用 <span class="k">10−a</span>（1 ≤ a ≤ 4）來構詞，則從 10−a 到 9 都以減法表示。也就是說，有 <span class="k">6=10−4</span> 就會有 7=10−3、8=10−2、9=10−1（如 Likum）。許多 Manus 分支語言以減法表 7、8、9。</p>
+
+      <div class="implic-row">
+        <div class="implic-head"><span class="implic-name">減法階層</span><span class="implic-tag">Subtractive</span></div>
+        <div class="chain">
+          <span class="node node-seed">6=10−4</span><span class="arr">→</span>
+          <span class="node">7=10−3</span><span class="arr">→</span>
+          <span class="node">8=10−2</span><span class="arr">→</span>
+          <span class="node">9=10−1</span>
         </div>
-        <div class="find-card">
-          <h3>倍數階層</h3>
-          <p>若一個語言有 <span class="k">6=2×3</span>，就會有 <span class="k">8=2×4</span>，但反之不然（如 Seediq 的 6=2×3、8=2×4）。部分語言更把策略疊加，如 Roro 的 7=2×3+1、9=2×4+1，或 Keapara 的 7=2×4−1、9=2×5−1。</p>
+        <p class="implic-note">有最左端 6=10−4，其右全部隨之成立（如 Likum）。許多 Manus 分支語言以減法表 7、8、9。</p>
+      </div>
+
+      <div class="implic-row">
+        <div class="implic-head"><span class="implic-name">倍數階層</span><span class="implic-tag">Doubling</span></div>
+        <div class="chain">
+          <span class="node node-seed">6=2×3</span><span class="arr">→</span>
+          <span class="node">8=2×4</span>
+          <span class="chain-note">反之不然</span>
         </div>
+        <p class="implic-note">如 Seediq 的 6=2×3、8=2×4。部分語言再疊加 ±1：Roro 的 7=2×3+1、9=2×4+1，Keapara 的 7=2×4−1、9=2×5−1。</p>
       </div>
     </section>
 
     <!-- FINDINGS -->
     <section>
-      <p class="section-label">Findings</p>
       <h2 class="section-title">三個研究結論</h2>
-      <div class="find-grid">
-        <div class="find-card">
-          <h3>單一語系，高度多樣</h3>
-          <p>儘管同屬一個語系，這約 900 個語言在數詞系統上展現出可觀的類型差異，反映南島語內部構詞策略的多樣，也反映人類對「數」的不同概念化方式。</p>
-        </div>
-        <div class="find-card">
-          <h3>不只由底數決定</h3>
-          <p>數詞系統雖以十進位為主，南島語仍用加法、乘法、減法等算術策略構成 4–9，顯示數詞構詞並非單由底數系統決定。</p>
-        </div>
-        <div class="find-card">
-          <h3>底數系統的分布</h3>
-          <p>十進位最普遍，其次為五進制（如 Ilongot），約佔樣本的四分之一到五分之一；另有罕見的四進制（Bam）與八進制（Yotafa／Tobati），未見七進制或九進制。</p>
-        </div>
-        <div class="find-card">
-          <h3>兩條可預測的階層</h3>
-          <p>資料支持兩條蘊含通則：有 10−4=6 的語言也會有 10−3=7、10−2=8、10−1=9；有 3×2=6 的語言也會有 4×2=8。</p>
-        </div>
-      </div>
-      <p class="research-meta" style="margin-top:1.4rem;">數詞拼寫資料取自 the Numbers List。本研究的工作是對 1–10 進行構詞分析、辨識數詞詞根與彼此的關係，並逐一校核每個語言的策略標註；地圖與本頁的分類即依此校核結果。出自作者 EULC 7 研究「Beyond Decimal: Typological Patterns and Hierarchies in Numeral Formation (1–10) across 900 Austronesian Languages」。</p>
+      <ol class="findings">
+        <li>
+          <span class="f-num">01</span>
+          <div class="f-body">
+            <h3>單一語系，高度多樣</h3>
+            <p>儘管同屬一個語系，這約 900 個語言在數詞系統上展現出可觀的類型差異，反映南島語內部構詞策略的多樣，也反映人類對「數」的不同概念化方式。</p>
+          </div>
+        </li>
+        <li>
+          <span class="f-num">02</span>
+          <div class="f-body">
+            <h3>不只由底數決定</h3>
+            <p>數詞系統雖以十進位為主，南島語仍以加法、乘法、減法等算術策略構成 4–9，顯示數詞構詞並非單由底數系統決定。</p>
+          </div>
+        </li>
+        <li>
+          <span class="f-num">03</span>
+          <div class="f-body">
+            <h3>遵循可預測的蘊含階層</h3>
+            <p>策略的出現有規律：有 10−4=6 的語言也會有 10−3=7、10−2=8、10−1=9；有 3×2=6 的語言也會有 4×2=8。數詞構詞並非任意，而是受蘊含關係約束。</p>
+          </div>
+        </li>
+      </ol>
+      <p class="research-meta" style="margin-top:2rem;">數詞拼寫資料取自 the Numbers List。本研究的工作是對 1–10 進行構詞分析、辨識數詞詞根與彼此的關係，並逐一校核每個語言的策略標註；地圖與本頁的分類即依此校核結果。出自作者 EULC 7 研究「Beyond Decimal: Typological Patterns and Hierarchies in Numeral Formation (1–10) across 900 Austronesian Languages」。</p>
     </section>
 
   </main>
@@ -511,8 +602,9 @@
     const sx = x => (x - LON0) / (LON1 - LON0) * VB_W;
     const sy = lat => (LAT0 - lat) / (LAT0 - LAT1) * VB_H;
 
-    const layerCoast = document.getElementById("layer-coast");
-    const layerPts   = document.getElementById("layer-pts");
+    const layerCoast  = document.getElementById("layer-coast");
+    const layerLabels = document.getElementById("layer-labels");
+    const layerPts    = document.getElementById("layer-pts");
     const svg        = document.getElementById("map");
     const panel      = document.getElementById("panel");
     const legendEl   = document.getElementById("legend");
@@ -541,6 +633,7 @@
       DATA = nd; STRAT = nd.strategies;
       ORDER = ["decimal", "quinary", "subtractive", "doubling", "additive"];
       drawCoast(coast.segments);
+      drawLabels();
       drawPoints();
       buildLegend();
       buildHier();
@@ -560,6 +653,23 @@
       layerCoast.appendChild(frag);
     }
 
+    // region anchors (lon, lat) — recentred via sx/sy
+    const REGIONS = [
+      ["Taiwan", 121, 25.5], ["Philippines", 124, 14], ["Borneo", 113, 1.5],
+      ["Madagascar", 47, -20], ["New Guinea", 141, -7.5],
+      ["Micronesia", 156, 9], ["Polynesia", 205, -17],
+    ];
+    function drawLabels() {
+      const frag = document.createDocumentFragment();
+      for (const [name, lon, lat] of REGIONS) {
+        const x = lon < -30 ? lon + 360 : lon;
+        const t = el("text", { x: sx(x).toFixed(1), y: sy(lat).toFixed(1), class: "geo-label" });
+        t.textContent = name;
+        frag.appendChild(t);
+      }
+      layerLabels.appendChild(frag);
+    }
+
     function colorOf(s) {
       return (STRAT[s] && STRAT[s].color) || "#c4bcae";
     }
@@ -576,7 +686,7 @@
         const c = el("circle", {
           cx: sx(L.x).toFixed(1),
           cy: sy(L.lat).toFixed(1),
-          r: bg ? 2.6 : 3.6,
+          r: bg ? 2.3 : 4.2,
           fill: colorOf(L.strat),
           class: "pt" + (bg ? " bg" : "")
         });
