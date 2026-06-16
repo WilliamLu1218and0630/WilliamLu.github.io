@@ -594,7 +594,7 @@
           </div>
           <div class="legend" id="legend-base"></div>
           <div class="map-wrap">
-            <svg class="map" id="map-base" viewBox="0 0 1000 1000" role="img" aria-label="南島語進位制地理分布地圖">
+            <svg class="map" id="map-base" viewBox="0 0 1000 540" role="img" aria-label="南島語進位制地理分布地圖">
               <g class="layer-coast"></g>
               <g class="layer-labels"></g>
               <g class="layer-pts"></g>
@@ -615,7 +615,7 @@
           </div>
           <div class="legend" id="legend-special"></div>
           <div class="map-wrap">
-            <svg class="map" id="map-special" viewBox="0 0 1000 1000" role="img" aria-label="南島語特殊數詞表達方式地理分布地圖">
+            <svg class="map" id="map-special" viewBox="0 0 1000 540" role="img" aria-label="南島語特殊數詞表達方式地理分布地圖">
               <g class="layer-coast"></g>
               <g class="layer-labels"></g>
               <g class="layer-pts"></g>
@@ -701,12 +701,16 @@
   (function () {
     "use strict";
 
-    // ── map projection (Pacific-centred) ──
-    const VB_W = 1000, VB_H = 1000;  // square frame
-    const LON0 = 40, LON1 = 262;     // x range (recentred longitude)
-    const LAT0 = 46, LAT1 = -74;     // top→bottom latitude (widened to fill the square)
-    const sx = x => (x - LON0) / (LON1 - LON0) * VB_W;
-    const sy = lat => (LAT0 - lat) / (LAT0 - LAT1) * VB_H;
+    // ── map projection (Pacific-centred, equirectangular) ──
+    // Both axes share ONE deg→unit scale so the map is never squished; the
+    // frame height follows the true latitude span instead of forcing a square.
+    const VB_W = 1000;               // frame width
+    const LON0 = 40, LON1 = 262;     // x range (recentred longitude): 222°
+    const LAT0 = 46, LAT1 = -74;     // top→bottom latitude: 120°
+    const SCALE = VB_W / (LON1 - LON0);   // uniform degrees→units
+    const VB_H = (LAT0 - LAT1) * SCALE;   // ≈540 → correct aspect, not distorted
+    const sx = x => (x - LON0) * SCALE;
+    const sy = lat => (LAT0 - lat) * SCALE;
 
     const panel      = document.getElementById("panel");
     const resultsEl  = document.getElementById("results");
@@ -962,6 +966,7 @@
         for (const n in ptByName) ptByName[n].classList.toggle("sel", n === name);
       }
 
+      setVB();   // set initial viewBox from JS so the correct (non-square) aspect applies on load
       return { dimKey, ptByName, drawCoast, drawLabels, drawPoints, buildLegend, applyFilter, focusOn, highlight };
     }
 
