@@ -46,12 +46,28 @@
   <link rel="stylesheet" href="styles.css">
   <style>
     /* ── EXPLORER LAYOUT ── */
-    .explorer {
+    .maps {
       display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 1.4rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
       align-items: start;
+      margin-bottom: 1.6rem;
     }
+    .map-block { min-width: 0; }
+    .map-head { margin-bottom: 0.6rem; }
+    .map-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+    .map-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0.2rem 0 0;
+    }
+    .map-block .legend { margin-bottom: 0.7rem; }
 
     .map-wrap {
       position: relative;
@@ -60,7 +76,7 @@
       overflow: hidden;
     }
 
-    #map {
+    .map {
       display: block;
       width: 100%;
       height: auto;
@@ -68,7 +84,7 @@
       touch-action: none;
       cursor: grab;
     }
-    #map.grabbing { cursor: grabbing; }
+    .map.grabbing { cursor: grabbing; }
 
     .coast { fill: none; stroke: #d7d0c4; stroke-width: 0.7; }
     .geo-label {
@@ -138,14 +154,12 @@
       transform: translate(-50%, -130%);
     }
 
-    /* ── SIDE PANEL ── */
+    /* ── DETAIL PANEL ── */
     .panel {
-      position: sticky;
-      top: 68px;
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 1.3rem 1.3rem 1.5rem;
-      min-height: 320px;
+      min-height: 220px;
     }
     .panel .empty {
       color: var(--text-muted);
@@ -496,8 +510,7 @@
     .hier-n { font-size: 0.74rem; color: var(--text-muted); width: 56px; text-align: right; flex-shrink: 0; }
 
     @media (max-width: 740px) {
-      .explorer { grid-template-columns: 1fr; }
-      .panel { position: static; }
+      .maps { grid-template-columns: 1fr; }
       .hier-bar-wrap { width: 80px; }
       .lead { font-size: 1.25rem; }
       .findings li { grid-template-columns: 44px 1fr; gap: 0.3rem 1rem; }
@@ -561,7 +574,7 @@
     <section class="intro">
       <div class="research-desc">
         <p>南島語系橫跨半個地球：北起臺灣、西至馬達加斯加、東抵復活節島、南達紐西蘭。它們的數詞以十進位為主，1–10 可上溯到原始南島語。</p>
-        <p>但在十進位之外，不少語言用算術策略構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。這個工具收錄 892 個南島語的 1–10 數詞，放上太平洋置中的地圖，依主要構詞策略上色；你可以縮放、搜尋、點選任一語言，看它怎麼數數、用了哪些策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
+        <p>但在十進位之外，不少語言用算術策略構成 4–9：有的「五加幾」（5+n），有的「十減幾」（10−n），有的用倍數（2×3、2×4）。這個工具收錄 892 個南島語的 1–10 數詞，放上太平洋置中的地圖。下方兩張地圖分別依「進位制」與「特殊表達方式」上色：一張看底數系統（十進位／五進制），一張看 4–9 上的算術運算（減法、倍數、加法）。你可以縮放、搜尋、點選任一語言，兩張圖會同步標出它，並看它怎麼數數、用了哪些策略。延續我在 <a href="linguistics.html#research">EULC 2026 的研究「Beyond Decimal」</a>。</p>
       </div>
     </section>
 
@@ -569,29 +582,56 @@
     <section>
       <div class="controls">
         <input type="text" id="search" class="search-box" placeholder="搜尋語言（例：Atayal、Maori、Malagasy…）" autocomplete="off">
-        <div class="legend" id="legend"></div>
         <div class="results" id="results"></div>
       </div>
 
-      <div class="explorer">
-        <div class="map-wrap">
-          <svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="南島語數詞類型地理分布地圖">
-            <g id="layer-coast"></g>
-            <g id="layer-labels"></g>
-            <g id="layer-pts"></g>
-          </svg>
-          <div class="map-zoom">
-            <button id="zoom-in" aria-label="放大">+</button>
-            <button id="zoom-out" aria-label="縮小">−</button>
-            <button id="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button>
+      <div class="maps">
+        <div class="map-block">
+          <div class="map-head">
+            <h3 class="map-title">進位制</h3>
+            <p class="map-sub">數詞系統的底數：十進位為主，五進制以 5 為子基底（6=5+1…）。</p>
           </div>
-          <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+          <div class="legend" id="legend-base"></div>
+          <div class="map-wrap">
+            <svg class="map" id="map-base" viewBox="0 0 1000 1000" role="img" aria-label="南島語進位制地理分布地圖">
+              <g class="layer-coast"></g>
+              <g class="layer-labels"></g>
+              <g class="layer-pts"></g>
+            </svg>
+            <div class="map-zoom">
+              <button class="zoom-in" aria-label="放大">+</button>
+              <button class="zoom-out" aria-label="縮小">−</button>
+              <button class="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button>
+            </div>
+            <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+          </div>
         </div>
 
-        <aside class="panel" id="panel">
-          <p class="empty">在地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、所屬分支與構詞策略。</p>
-        </aside>
+        <div class="map-block">
+          <div class="map-head">
+            <h3 class="map-title">特殊表達方式</h3>
+            <p class="map-sub">十進位之外用於 4–9 的算術運算：減法（10−n）、倍數（×2）、加法（4=2+2）。</p>
+          </div>
+          <div class="legend" id="legend-special"></div>
+          <div class="map-wrap">
+            <svg class="map" id="map-special" viewBox="0 0 1000 1000" role="img" aria-label="南島語特殊數詞表達方式地理分布地圖">
+              <g class="layer-coast"></g>
+              <g class="layer-labels"></g>
+              <g class="layer-pts"></g>
+            </svg>
+            <div class="map-zoom">
+              <button class="zoom-in" aria-label="放大">+</button>
+              <button class="zoom-out" aria-label="縮小">−</button>
+              <button class="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button>
+            </div>
+            <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+          </div>
+        </div>
       </div>
+
+      <aside class="panel" id="panel">
+        <p class="empty">在任一張地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、所屬分支與構詞策略；兩張地圖會同步標出所選語言。</p>
+      </aside>
     </section>
 
     <!-- STRATEGIES -->
@@ -667,12 +707,7 @@
     const sx = x => (x - LON0) / (LON1 - LON0) * VB_W;
     const sy = lat => (LAT0 - lat) / (LAT0 - LAT1) * VB_H;
 
-    const layerCoast  = document.getElementById("layer-coast");
-    const layerLabels = document.getElementById("layer-labels");
-    const layerPts    = document.getElementById("layer-pts");
-    const svg        = document.getElementById("map");
     const panel      = document.getElementById("panel");
-    const legendEl   = document.getElementById("legend");
     const resultsEl  = document.getElementById("results");
     const searchEl   = document.getElementById("search");
     const hierEl     = document.getElementById("hier");
@@ -681,44 +716,15 @@
     const tip        = document.getElementById("tip");
     const SVGNS = "http://www.w3.org/2000/svg";
 
-    let DATA = null, STRAT = null, ORDER = [];
-    const active = new Set();      // active strategy keys (filter)
-    let selected = null;           // selected language name
-    const ptByName = {};
+    let DATA = null, STRAT = null;
+    let selected = null;           // selected language name (shared across maps)
+    let dragMoved = false;         // shared: distinguishes drag from click
+    const maps = [];               // map instances
 
     function el(tag, attrs) {
       const e = document.createElementNS(SVGNS, tag);
       for (const k in attrs) e.setAttribute(k, attrs[k]);
       return e;
-    }
-
-    // ── load data ──
-    Promise.all([
-      fetch("assets/data/numerals.json").then(r => r.json()),
-      fetch("assets/data/an_coastline.json").then(r => r.json())
-    ]).then(([nd, coast]) => {
-      DATA = nd; STRAT = nd.strategies;
-      ORDER = ["decimal", "quinary", "subtractive", "doubling", "additive"];
-      drawCoast(coast.segments);
-      drawLabels();
-      drawPoints();
-      buildLegend();
-      buildHier();
-      buildImplic();
-    }).catch(err => {
-      panel.innerHTML = '<p class="empty">資料載入失敗。若是在本機直接開啟檔案，請改用本地伺服器或部署後的網址（GitHub Pages）瀏覽。<br><br>' + err + '</p>';
-    });
-
-    function drawCoast(segs) {
-      const frag = document.createDocumentFragment();
-      for (const seg of segs) {
-        let d = "";
-        for (let i = 0; i < seg.length; i++) {
-          d += (i ? "L" : "M") + sx(seg[i][0]).toFixed(1) + " " + sy(seg[i][1]).toFixed(1) + " ";
-        }
-        frag.appendChild(el("path", { d: d, class: "coast" }));
-      }
-      layerCoast.appendChild(frag);
     }
 
     // region anchors (lon, lat) — recentred via sx/sy
@@ -727,100 +733,240 @@
       ["Madagascar", 47, -20], ["New Guinea", 141, -7.5],
       ["Micronesia", 156, 9], ["Polynesia", 205, -17],
     ];
-    function drawLabels() {
-      const frag = document.createDocumentFragment();
-      for (const [name, lon, lat] of REGIONS) {
-        const x = lon < -30 ? lon + 360 : lon;
-        const t = el("text", { x: sx(x).toFixed(1), y: sy(lat).toFixed(1), class: "geo-label" });
-        t.textContent = name;
-        frag.appendChild(t);
-      }
-      layerLabels.appendChild(frag);
+
+    // which category a language falls into, for a given dimension
+    function catOf(dimKey, L) {
+      const s = L.strats || [];
+      if (dimKey === "base") return s.indexOf("quinary") >= 0 ? "quinary" : "decimal";
+      // special: pick the primary operation by priority; "none" = background
+      if (s.indexOf("subtractive") >= 0) return "subtractive";
+      if (s.indexOf("doubling") >= 0) return "doubling";
+      if (s.indexOf("additive") >= 0) return "additive";
+      return "none";
+    }
+    function isBgCat(dimKey, cat) {
+      return (dimKey === "base" && cat === "decimal") ||
+             (dimKey === "special" && cat === "none");
     }
 
-    function colorOf(s) {
-      return (STRAT[s] && STRAT[s].color) || "#c4bcae";
-    }
-    function isBg(s) { return s === "decimal" || !s; }
-
-    function drawPoints() {
-      const frag = document.createDocumentFragment();
-      // draw background (decimal) first, special strategies on top
-      const ordered = DATA.languages
-        .filter(L => L.x !== null)
-        .sort((a, b) => (isBg(b.strat) ? 1 : 0) - (isBg(a.strat) ? 1 : 0));
-      for (const L of ordered) {
-        const bg = isBg(L.strat);
-        const c = el("circle", {
-          cx: sx(L.x).toFixed(1),
-          cy: sy(L.lat).toFixed(1),
-          r: bg ? 2.3 : 4.2,
-          fill: colorOf(L.strat),
-          class: "pt" + (bg ? " bg" : "")
-        });
-        c.dataset.name = L.name;
-        c.dataset.strat = L.strat || "";
-        c.addEventListener("click", e => { e.stopPropagation(); if (!dragMoved) select(L.name); });
-        c.addEventListener("mouseenter", e => showTip(e, L));
-        c.addEventListener("mousemove", moveTip);
-        c.addEventListener("mouseleave", hideTip);
-        ptByName[L.name] = c;
-        frag.appendChild(c);
-      }
-      layerPts.appendChild(frag);
-    }
-
-    function showTip(e, L) {
-      tip.textContent = L.name + (STRAT[L.strat] ? " · " + STRAT[L.strat].label_zh : "");
-      tip.style.opacity = "1";
-      moveTip(e);
-    }
+    // shared tooltip movement
     function moveTip(e) { tip.style.left = e.clientX + "px"; tip.style.top = e.clientY + "px"; }
     function hideTip() { tip.style.opacity = "0"; }
 
-    // ── legend / filter ──
-    function buildLegend() {
-      legendEl.innerHTML = "";
-      for (const k of ORDER) {
-        if (!STRAT[k]) continue;
-        const m = STRAT[k];
-        const b = document.createElement("div");
-        b.className = "leg";
-        b.dataset.k = k;
-        b.innerHTML = '<span class="leg-dot" style="background:' + m.color + '"></span>' +
-          '<span>' + m.label_zh + '</span><span class="leg-n">' + m.n + '</span>';
-        b.addEventListener("click", () => toggle(k));
-        legendEl.appendChild(b);
+    // ── load data ──
+    Promise.all([
+      fetch("assets/data/numerals.json").then(r => r.json()),
+      fetch("assets/data/an_coastline.json").then(r => r.json())
+    ]).then(([nd, coast]) => {
+      DATA = nd; STRAT = nd.strategies;
+      maps.push(makeMap("base", {
+        svgId: "map-base", legendId: "legend-base",
+        order: ["decimal", "quinary"],
+        meta: { decimal: STRAT.decimal, quinary: STRAT.quinary }
+      }));
+      maps.push(makeMap("special", {
+        svgId: "map-special", legendId: "legend-special",
+        order: ["subtractive", "doubling", "additive", "none"],
+        meta: {
+          subtractive: STRAT.subtractive,
+          doubling: STRAT.doubling,
+          additive: STRAT.additive,
+          none: { label_zh: "無特殊運算", label_en: "No special operation", color: "#C2B8A6", desc: "" }
+        }
+      }));
+      for (const mp of maps) {
+        mp.drawCoast(coast.segments);
+        mp.drawLabels();
+        mp.drawPoints();
+        mp.buildLegend();
       }
-      active.clear();          // empty = show all
-      applyFilter();
-    }
+      buildHier();
+      buildImplic();
+    }).catch(err => {
+      panel.innerHTML = '<p class="empty">資料載入失敗。若是在本機直接開啟檔案，請改用本地伺服器或部署後的網址（GitHub Pages）瀏覽。<br><br>' + err + '</p>';
+    });
 
-    function toggle(k) {
-      if (active.has(k)) active.delete(k);
-      else active.add(k);
-      // reflect off-state: when set non-empty, non-active are "off"
-      [...legendEl.children].forEach(c => {
-        const on = active.size === 0 || active.has(c.dataset.k);
-        c.classList.toggle("off", !on);
+    // ── map instance ──
+    // dimKey: "base" (進位制) or "special" (特殊表達方式). Each instance owns its own
+    // SVG, layers, legend filter and zoom/pan state; selection is synced via select().
+    function makeMap(dimKey, cfg) {
+      const svg = document.getElementById(cfg.svgId);
+      const layerCoast  = svg.querySelector(".layer-coast");
+      const layerLabels = svg.querySelector(".layer-labels");
+      const layerPts    = svg.querySelector(".layer-pts");
+      const legendEl    = document.getElementById(cfg.legendId);
+      const ptByName = {};
+      const active = new Set();          // active category keys (filter)
+      let view = { x: 0, y: 0, w: VB_W, h: VB_H };
+
+      function colorOf(cat) { return (cfg.meta[cat] && cfg.meta[cat].color) || "#c4bcae"; }
+
+      function drawCoast(segs) {
+        const frag = document.createDocumentFragment();
+        for (const seg of segs) {
+          let d = "";
+          for (let i = 0; i < seg.length; i++)
+            d += (i ? "L" : "M") + sx(seg[i][0]).toFixed(1) + " " + sy(seg[i][1]).toFixed(1) + " ";
+          frag.appendChild(el("path", { d: d, class: "coast" }));
+        }
+        layerCoast.appendChild(frag);
+      }
+
+      function drawLabels() {
+        const frag = document.createDocumentFragment();
+        for (const [name, lon, lat] of REGIONS) {
+          const x = lon < -30 ? lon + 360 : lon;
+          const t = el("text", { x: sx(x).toFixed(1), y: sy(lat).toFixed(1), class: "geo-label" });
+          t.textContent = name;
+          frag.appendChild(t);
+        }
+        layerLabels.appendChild(frag);
+      }
+
+      function drawPoints() {
+        const frag = document.createDocumentFragment();
+        // background categories first, coloured ones on top
+        const ordered = DATA.languages
+          .filter(L => L.x !== null)
+          .map(L => ({ L, cat: catOf(dimKey, L) }))
+          .sort((a, b) => (isBgCat(dimKey, b.cat) ? 1 : 0) - (isBgCat(dimKey, a.cat) ? 1 : 0));
+        for (const { L, cat } of ordered) {
+          const bg = isBgCat(dimKey, cat);
+          const c = el("circle", {
+            cx: sx(L.x).toFixed(1),
+            cy: sy(L.lat).toFixed(1),
+            r: bg ? 2.3 : 4.2,
+            fill: colorOf(cat),
+            class: "pt" + (bg ? " bg" : "")
+          });
+          c.dataset.name = L.name;
+          c.dataset.cat = cat;
+          c.addEventListener("click", e => { e.stopPropagation(); if (!dragMoved) select(L.name); });
+          c.addEventListener("mouseenter", e => showTip(e, L, cat));
+          c.addEventListener("mousemove", moveTip);
+          c.addEventListener("mouseleave", hideTip);
+          ptByName[L.name] = c;
+          frag.appendChild(c);
+        }
+        layerPts.appendChild(frag);
+      }
+
+      function showTip(e, L, cat) {
+        const m = cfg.meta[cat];
+        tip.textContent = L.name + (m ? " · " + m.label_zh : "");
+        tip.style.opacity = "1";
+        moveTip(e);
+      }
+
+      // ── legend / filter ──
+      function buildLegend() {
+        const counts = {};
+        cfg.order.forEach(k => counts[k] = 0);
+        for (const L of DATA.languages) { const k = catOf(dimKey, L); if (k in counts) counts[k]++; }
+        legendEl.innerHTML = "";
+        for (const k of cfg.order) {
+          const m = cfg.meta[k];
+          if (!m) continue;
+          const b = document.createElement("div");
+          b.className = "leg";
+          b.dataset.k = k;
+          b.innerHTML = '<span class="leg-dot" style="background:' + m.color + '"></span>' +
+            '<span>' + m.label_zh + '</span><span class="leg-n">' + counts[k] + '</span>';
+          b.addEventListener("click", () => toggle(k));
+          legendEl.appendChild(b);
+        }
+        active.clear();          // empty = show all
+        applyFilter();
+      }
+
+      function toggle(k) {
+        if (active.has(k)) active.delete(k);
+        else active.add(k);
+        [...legendEl.children].forEach(c => {
+          const on = active.size === 0 || active.has(c.dataset.k);
+          c.classList.toggle("off", !on);
+        });
+        applyFilter();
+      }
+
+      function applyFilter() {
+        const q = searchEl.value.trim().toLowerCase();
+        for (const name in ptByName) {
+          const c = ptByName[name];
+          const passCat = active.size === 0 || active.has(c.dataset.cat);
+          const passSearch = !q || name.toLowerCase().includes(q);
+          c.classList.toggle("dim", !(passCat && passSearch));
+        }
+      }
+
+      // ── zoom & pan ──
+      function setVB() { svg.setAttribute("viewBox", view.x + " " + view.y + " " + view.w + " " + view.h); }
+      function clamp() {
+        view.w = Math.min(VB_W, Math.max(VB_W * 0.18, view.w));
+        view.h = view.w * (VB_H / VB_W);
+        view.x = Math.min(VB_W - view.w, Math.max(0, view.x));
+        view.y = Math.min(VB_H - view.h, Math.max(0, view.y));
+      }
+      function zoomAt(factor, cx, cy) {
+        const nx = view.x + (cx / svg.clientWidth) * view.w;
+        const ny = view.y + (cy / svg.clientHeight) * view.h;
+        view.w *= factor;
+        clamp();
+        view.x = nx - (cx / svg.clientWidth) * view.w;
+        view.y = ny - (cy / svg.clientHeight) * view.h;
+        clamp(); setVB();
+      }
+      svg.addEventListener("wheel", e => {
+        e.preventDefault();
+        const r = svg.getBoundingClientRect();
+        zoomAt(e.deltaY > 0 ? 1.15 : 0.87, e.clientX - r.left, e.clientY - r.top);
+      }, { passive: false });
+
+      const wrap = svg.parentNode;
+      wrap.querySelector(".zoom-in").onclick  = () => zoomAt(0.8, svg.clientWidth / 2, svg.clientHeight / 2);
+      wrap.querySelector(".zoom-out").onclick = () => zoomAt(1.25, svg.clientWidth / 2, svg.clientHeight / 2);
+      wrap.querySelector(".zoom-reset").onclick = () => { view = { x: 0, y: 0, w: VB_W, h: VB_H }; setVB(); };
+
+      // Track drag via window listeners and a moved-flag (see note: no setPointerCapture).
+      let drag = null;
+      svg.addEventListener("pointerdown", e => {
+        drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
+        dragMoved = false;
+        svg.classList.add("grabbing");
       });
-      applyFilter();
-    }
+      window.addEventListener("pointermove", e => {
+        if (!drag) return;
+        const r = svg.getBoundingClientRect();
+        const ddx = e.clientX - drag.x, ddy = e.clientY - drag.y;
+        if (Math.abs(ddx) > 3 || Math.abs(ddy) > 3) dragMoved = true;
+        view.x = drag.vx - ddx / r.width * view.w;
+        view.y = drag.vy - ddy / r.height * view.h;
+        clamp(); setVB();
+      });
+      function endDrag() { drag = null; svg.classList.remove("grabbing"); }
+      window.addEventListener("pointerup", endDrag);
+      window.addEventListener("pointercancel", endDrag);
 
-    function applyFilter() {
-      const q = searchEl.value.trim().toLowerCase();
-      for (const name in ptByName) {
-        const c = ptByName[name];
-        const s = c.dataset.strat;
-        const passStrat = active.size === 0 || active.has(s);
-        const passSearch = !q || name.toLowerCase().includes(q);
-        c.classList.toggle("dim", !(passStrat && passSearch));
+      function focusOn(L) {
+        const targetW = Math.min(view.w, VB_W * 0.5);
+        view.w = targetW; clamp();
+        view.x = sx(L.x) - view.w / 2;
+        view.y = sy(L.lat) - view.h / 2;
+        clamp(); setVB();
       }
+
+      function highlight(name) {
+        const c = ptByName[name];
+        if (c) c.classList.remove("dim");
+        for (const n in ptByName) ptByName[n].classList.toggle("sel", n === name);
+      }
+
+      return { dimKey, ptByName, drawCoast, drawLabels, drawPoints, buildLegend, applyFilter, focusOn, highlight };
     }
 
     // ── search ──
     searchEl.addEventListener("input", () => {
-      applyFilter();
+      for (const mp of maps) mp.applyFilter();
       renderResults();
     });
     function renderResults() {
@@ -842,17 +988,17 @@
       }
     }
 
-    // ── selection / panel ──
+    // ── selection / panel ── (synced across both maps)
     function select(name) {
       const L = DATA.languages.find(x => x.name === name);
       if (!L) return;
       selected = name;
-      if (ptByName[name]) ptByName[name].classList.remove("dim");
-      for (const n in ptByName) ptByName[n].classList.toggle("sel", n === name);
+      for (const mp of maps) {
+        mp.highlight(name);
+        if (L.x !== null) mp.focusOn(L);
+      }
       renderPanel(L);
-      // pan to it if it has coords
-      if (L.x !== null) focusOn(L);
-      // on narrow screens the panel sits below the map; bring it into view
+      // on narrow screens the panel sits below the maps; bring it into view
       if (window.innerWidth <= 740) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
@@ -893,10 +1039,11 @@
     }
 
     // ── strategy distribution bars ──
+    const HIER_ORDER = ["decimal", "quinary", "subtractive", "doubling", "additive"];
     function buildHier() {
-      const maxN = Math.max(...ORDER.map(k => (STRAT[k] ? STRAT[k].n : 0)));
+      const maxN = Math.max(...HIER_ORDER.map(k => (STRAT[k] ? STRAT[k].n : 0)));
       let html = "";
-      for (const k of ORDER) {
+      for (const k of HIER_ORDER) {
         const m = STRAT[k];
         if (!m) continue;
         const w = Math.max(3, (m.n / maxN) * 100);
@@ -986,65 +1133,6 @@
       html += '</div>';
       html += '<p class="ht-note">' + node.note + '</p>';
       hierTableEl.innerHTML = html;
-    }
-
-    // ── zoom & pan ──
-    let view = { x: 0, y: 0, w: VB_W, h: VB_H };
-    function setVB() { svg.setAttribute("viewBox", view.x + " " + view.y + " " + view.w + " " + view.h); }
-    function clamp() {
-      view.w = Math.min(VB_W, Math.max(VB_W * 0.18, view.w));
-      view.h = view.w * (VB_H / VB_W);
-      view.x = Math.min(VB_W - view.w, Math.max(0, view.x));
-      view.y = Math.min(VB_H - view.h, Math.max(0, view.y));
-    }
-    function zoomAt(factor, cx, cy) {
-      const nx = view.x + (cx / svg.clientWidth) * view.w;
-      const ny = view.y + (cy / svg.clientHeight) * view.h;
-      view.w *= factor;
-      clamp();
-      view.x = nx - (cx / svg.clientWidth) * view.w;
-      view.y = ny - (cy / svg.clientHeight) * view.h;
-      clamp(); setVB();
-    }
-    svg.addEventListener("wheel", e => {
-      e.preventDefault();
-      const r = svg.getBoundingClientRect();
-      zoomAt(e.deltaY > 0 ? 1.15 : 0.87, e.clientX - r.left, e.clientY - r.top);
-    }, { passive: false });
-
-    document.getElementById("zoom-in").onclick  = () => zoomAt(0.8, svg.clientWidth / 2, svg.clientHeight / 2);
-    document.getElementById("zoom-out").onclick = () => zoomAt(1.25, svg.clientWidth / 2, svg.clientHeight / 2);
-    document.getElementById("zoom-reset").onclick = () => { view = { x: 0, y: 0, w: VB_W, h: VB_H }; setVB(); };
-
-    // No setPointerCapture: capturing the pointer on the SVG retargets the
-    // click to the SVG, so clicks on data points never reach their handler.
-    // Track drag via window listeners and a moved-flag instead.
-    let drag = null, dragMoved = false;
-    svg.addEventListener("pointerdown", e => {
-      drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
-      dragMoved = false;
-      svg.classList.add("grabbing");
-    });
-    window.addEventListener("pointermove", e => {
-      if (!drag) return;
-      const r = svg.getBoundingClientRect();
-      const ddx = e.clientX - drag.x, ddy = e.clientY - drag.y;
-      if (Math.abs(ddx) > 3 || Math.abs(ddy) > 3) dragMoved = true;
-      view.x = drag.vx - ddx / r.width * view.w;
-      view.y = drag.vy - ddy / r.height * view.h;
-      clamp(); setVB();
-    });
-    function endDrag() { drag = null; svg.classList.remove("grabbing"); }
-    window.addEventListener("pointerup", endDrag);
-    window.addEventListener("pointercancel", endDrag);
-
-    function focusOn(L) {
-      // gently centre without over-zooming
-      const targetW = Math.min(view.w, VB_W * 0.5);
-      view.w = targetW; clamp();
-      view.x = sx(L.x) - view.w / 2;
-      view.y = sy(L.lat) - view.h / 2;
-      clamp(); setVB();
     }
   })();
   </script>
