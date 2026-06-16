@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全球數詞 1–10 類型地圖 · 進位制與特殊表達 · William Lu 呂乃崴</title>
+  <meta name="description" content="互動探索全球 5240 個語言的 1–10 數詞：一張依「進位制」（十進位／五進位／二十進位／身體計數…）上色，一張依「特殊表達方式」（5+n、10−n、×2、2+2）上色。資料源自 Numeralbank（Eugene Chan, Numeral Systems of the World's Languages, CC-BY-4.0）。比 WALS 進位地圖更細緻。">
+  <meta name="author" content="William Lu 呂乃崴">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="全球數詞 1–10 類型地圖 · William Lu 呂乃崴">
+  <meta property="og:description" content="5240 個語言、1–10 數詞、進位制與特殊表達雙地圖，可縮放、搜尋、點選。">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:#F8F7F4; --surface:#FFFFFF; --text:#1A1A1A; --text-muted:#747070;
+      --accent:#A83226; --border:#E0DBD5;
+      --font-sans:'Inter','Taipei Sans TC','Noto Sans TC',sans-serif;
+      --font-serif:'Cormorant Garamond','Times New Roman',serif;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--font-sans); font-size: 15px; line-height: 1.6;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 2.4rem 1.6rem 4rem; }
+    a { color: var(--accent); }
+
+    .breadcrumb { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 0.8rem; }
+    h1 { font-family: var(--font-serif); font-weight: 400; font-size: 2.5rem; line-height: 1.1; margin: 0 0 0.4rem; }
+    .hero-lead { font-family: var(--font-serif); font-style: italic; font-weight: 300; font-size: 1.35rem; color: var(--text-muted); margin: 0 0 1.6rem; }
+    .intro p { max-width: 760px; font-size: 0.95rem; color: var(--text); }
+    .intro .lead { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 300; line-height: 1.4; }
+
+    .controls { margin: 1.8rem 0 1.2rem; }
+    .search-box {
+      width: 100%; max-width: 480px; font-family: var(--font-sans); font-size: 0.9rem;
+      padding: 0.6rem 0.8rem; border: 1px solid var(--border); background: var(--surface); color: var(--text);
+    }
+    .search-box:focus { outline: none; border-color: var(--accent); }
+    .results { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.35rem; max-height: 120px; overflow-y: auto; }
+    .res-chip { font-size: 0.74rem; padding: 0.22em 0.6em; border: 1px solid var(--border); background: var(--surface); cursor: pointer; }
+    .res-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    .maps { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; margin-bottom: 1.6rem; }
+    .map-block { min-width: 0; }
+    .map-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; margin: 0; }
+    .map-sub { font-size: 0.74rem; color: var(--text-muted); line-height: 1.5; margin: 0.2rem 0 0.7rem; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+    .leg { display: inline-flex; align-items: center; gap: 0.4em; font-size: 0.72rem; padding: 0.28em 0.6em;
+      border: 1px solid var(--border); background: var(--surface); cursor: pointer; user-select: none; }
+    .leg:hover { border-color: var(--text-muted); }
+    .leg.off { opacity: 0.32; }
+    .leg .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .leg .leg-n { color: var(--text-muted); font-size: 0.66rem; }
+    .leg-note { font-size: 0.68rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4em; padding: 0.28em 0.2em; }
+    .leg-note .ring { width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 1.5px solid var(--text-muted); }
+
+    .map-wrap { position: relative; background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+    .map { display: block; width: 100%; background: #F2EFE9; touch-action: none; cursor: grab; }
+    .map.grabbing { cursor: grabbing; }
+
+    .map-hint { position: absolute; left: 0.7rem; bottom: 0.5rem; font-size: 0.66rem; color: var(--text-muted);
+      background: rgba(248,247,244,0.8); padding: 0.15em 0.5em; pointer-events: none; }
+    .map-zoom { position: absolute; right: 0.6rem; top: 0.6rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .map-zoom button { width: 28px; height: 28px; background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      font-size: 1rem; line-height: 1; cursor: pointer; font-family: var(--font-sans); }
+    .map-zoom button:hover { border-color: var(--accent); color: var(--accent); }
+
+    #tip { position: fixed; z-index: 50; pointer-events: none; background: var(--text); color: #fff; font-size: 0.72rem;
+      padding: 0.3em 0.6em; border-radius: 2px; opacity: 0; transition: opacity 0.12s; white-space: nowrap; transform: translate(-50%,-130%); }
+
+    .panel { background: var(--surface); border: 1px solid var(--border); padding: 1.3rem 1.3rem 1.5rem; min-height: 200px; }
+    .panel .empty { color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; }
+    .panel-lang { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 300; line-height: 1.15; margin-bottom: 0.2rem; }
+    .panel-branch { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; margin-bottom: 0.9rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+    .type-pill { display: inline-flex; align-items: center; gap: 0.45em; font-size: 0.72rem; padding: 0.25em 0.7em; border: 1px solid var(--border); }
+    .type-pill .lab { color: var(--text-muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .type-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .num-grid { display: grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(5,auto); grid-auto-flow: column;
+      gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .num-cell { background: var(--surface); padding: 0.45rem 0.6rem; display: flex; align-items: baseline; gap: 0.5rem; }
+    .num-k { font-family: var(--font-serif); font-size: 0.95rem; color: var(--accent); width: 1.1em; flex-shrink: 0; }
+    .num-v { font-size: 0.86rem; word-break: break-word; }
+    .num-v.none { color: var(--text-muted); font-style: italic; }
+    .panel-note { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.9rem; }
+    .panel-note a { color: var(--accent); }
+
+    footer { max-width: 1180px; margin: 0 auto; padding: 2rem 1.6rem 3rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; line-height: 1.7; }
+    footer a { color: var(--accent); }
+    .section-title { font-family: var(--font-serif); font-weight: 400; font-size: 1.7rem; margin: 2.4rem 0 0.6rem; }
+
+    @media (max-width: 760px) {
+      .maps { grid-template-columns: 1fr; }
+      h1 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="breadcrumb"><a href="../interactive.html" style="color:var(--text-muted);">Interactive</a> › <a href="../numerals.html" style="color:var(--text-muted);">Numeral Explorer</a> › World Numerals</p>
+    <h1>全球數詞 1–10 類型地圖</h1>
+    <p class="hero-lead">同樣數到十，世界用了多少種不同的辦法。</p>
+
+    <section class="intro">
+      <p class="lead">兩張地圖：一張看「進位制」（底數系統），一張看 1–10 之內的「特殊表達方式」（算術構詞）。</p>
+      <p>多數語言以十進位為主，但世界各地仍保留著用五（一隻手）、二十（手腳並用）甚至身體部位來計數的系統；而即使在十進位裡，4–9 也可能用「五加幾」（5+n）、「十減幾」（10−n）、倍數（×2）或加法（2+2）來構成。本圖收錄 <strong id="n-langs">5240</strong> 個語言的 1–10 數詞，置於世界地圖上。可縮放、拖曳、搜尋、點選任一語言——兩張圖會同步標出它，並列出它怎麼數數。空心點表示分類為<strong>推定</strong>（資料未經原始標註者直接標明，僅由詞形或描述推得），請保留懷疑。</p>
+    </section>
+
+    <div class="controls">
+      <input type="text" id="search" class="search-box" placeholder="搜尋語言（例：Yoruba、Nahuatl、Welsh、Kobon…）" autocomplete="off">
+      <div class="results" id="results"></div>
+    </div>
+
+    <div class="maps">
+      <div class="map-block">
+        <h3 class="map-title">進位制</h3>
+        <p class="map-sub">數詞系統的底數：十進位、五進位、二十進位、身體計數、有限系統等。點圖例可篩選。</p>
+        <div class="legend" id="legend-base"></div>
+        <div class="map-wrap">
+          <canvas class="map" id="map-base" role="img" aria-label="全球進位制地理分布地圖"></canvas>
+          <div class="map-zoom"><button class="zoom-in" aria-label="放大">+</button><button class="zoom-out" aria-label="縮小">−</button><button class="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button></div>
+          <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+        </div>
+      </div>
+
+      <div class="map-block">
+        <h3 class="map-title">特殊表達方式</h3>
+        <p class="map-sub">十進位之外用於 4–9 的算術運算：五加（5+n）、減法（10−n）、倍數（×2）、加法（2+2）。</p>
+        <div class="legend" id="legend-special"></div>
+        <div class="map-wrap">
+          <canvas class="map" id="map-special" role="img" aria-label="全球特殊數詞表達方式地理分布地圖"></canvas>
+          <div class="map-zoom"><button class="zoom-in" aria-label="放大">+</button><button class="zoom-out" aria-label="縮小">−</button><button class="zoom-reset" aria-label="重置" style="font-size:0.7rem;">⤺</button></div>
+          <div class="map-hint">滾輪縮放 · 拖曳平移 · 點選語言</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel" id="panel">
+      <p class="empty">在任一張地圖上點一個語言，或用上方搜尋框，就會在這裡看到它的 1–10 數詞、語系、進位制與特殊表達分類；兩張地圖會同步標出所選語言。</p>
+    </aside>
+
+    <h2 class="section-title">關於分類</h2>
+    <div class="intro">
+      <p>「進位制」分類在 Numeralbank 原始標註者（Eugene Chan）已標明底數的語言上，直接採用其標註；未標明者，由 1–100 詞形與系統描述推定，並以空心點標為推定。本圖逾半數語言（約 53%）的底數屬推定，請據此斟酌。Koile &amp; Blasi (2025, <em>Phil. Trans. R. Soc. B</em>) 以底數可確定的「完整數詞集」語言計算，得十進位約 66%、五進位 18%、二十進位 13%、其他 3%；本圖涵蓋更廣，含資料不全與未能定底數者（約四分之一語言列為未分類），故圖中所見十進位占比低於該基準。兩者統計基礎不同，不宜直接相比。「特殊表達方式」由 1–10 詞形的構詞分析加描述關鍵詞偵測得出；低信賴者同樣標為推定。純 1–10 無法區分十進位與更高底數（兩者在 1–10 完全相同），故二十進位等判定使用 11 以上的詞形。</p>
+    </div>
+  </main>
+
+  <footer>
+    <p><strong>資料來源</strong>：<a href="https://github.com/numeralbank/channumerals" target="_blank" rel="noopener">Numeralbank channumerals</a>（CLDF 版本），原始資料為 Chan, Eugene (ed.) 2019, <em>Numeral Systems of the World's Languages</em>，授權 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY-4.0</a>。座標與分類經本站處理；分類錯誤責任在本站，不在原始資料。</p>
+    <p>分類方法延續作者南島語數詞研究「Beyond Decimal」(EULC 7)。© 2026 William Lu 呂乃崴 · 臺北，臺灣</p>
+  </footer>
+
+  <div id="tip"></div>
+
+  <script>
+  (function () {
+    "use strict";
+    // ── world equirectangular projection (degrees → map units, 1000×417 space) ──
+    const VB_W = 1000, LON0 = -180, LAT0 = 85;
+    const SCALE = VB_W / 360;
+    const VB_H = Math.round((LAT0 - (-65)) * SCALE);  // ≈417
+    const RATIO = VB_H / VB_W;
+    const sx = lon => (lon - LON0) * SCALE;
+    const sy = lat => (LAT0 - lat) * SCALE;
+    const TAU = Math.PI * 2;
+
+    const BASE_META = {
+      decimal:           { zh: "純十進位",      color: "#C2B8A6", bg: true },
+      quinary:           { zh: "五進（5+n）",   color: "#2F6E78" },
+      quinary_vigesimal: { zh: "五–二十進",     color: "#6B5B95" },
+      vigesimal_pure:    { zh: "純二十進",       color: "#A83226" },
+      vigesimal_decimal: { zh: "二十–十進混合", color: "#CB7A52" },
+      body_tally:        { zh: "身體計數",       color: "#B07A2E" },
+      restricted:        { zh: "有限系統",       color: "#6B7D4F" },
+      other:             { zh: "其他底數",       color: "#5A5A5A" },
+      unknown:           { zh: "未分類",         color: "#C9C2B6", bg: true }
+    };
+    const BASE_ORDER = ["decimal","quinary","quinary_vigesimal","vigesimal_pure","vigesimal_decimal","body_tally","restricted","other","unknown"];
+
+    const SPECIAL_META = {
+      pure:        { zh: "無特殊運算", color: "#C2B8A6", bg: true },
+      quinary:     { zh: "五加（5+n）", color: "#2F6E78" },
+      subtractive: { zh: "減法（10−n）", color: "#A83226" },
+      doubling:    { zh: "倍數（×2）",   color: "#B07A2E" },
+      additive:    { zh: "加法（2+2）",  color: "#6B7D4F" }
+    };
+    const SPECIAL_ORDER = ["pure","quinary","subtractive","doubling","additive"];
+
+    const REGIONS = [
+      ["West Africa", -3, 9], ["Mesoamerica", -97, 18], ["Amazonia", -62, -6],
+      ["New Guinea", 142, -6], ["Caucasus", 44, 42], ["SE Asia", 103, 14],
+      ["Australia", 134, -25], ["Europe", 12, 49]
+    ];
+
+    const panel = document.getElementById("panel");
+    const resultsEl = document.getElementById("results");
+    const searchEl = document.getElementById("search");
+    const tip = document.getElementById("tip");
+
+    let DATA = null, BYID = {}, COAST = null, selected = null, dragMoved = false;
+    const maps = [];
+    function moveTip(e) { tip.style.left = e.clientX + "px"; tip.style.top = e.clientY + "px"; }
+    function hideTip() { tip.style.opacity = "0"; }
+    function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+    Promise.all([
+      fetch("world_numerals.json").then(r => r.json()),
+      fetch("world_coastline.json").then(r => r.json())
+    ]).then(([langs, coast]) => {
+      DATA = langs;
+      BYID = Object.fromEntries(langs.map(L => [L.id, L]));
+      langs.forEach(L => { L._x = sx(L.lon); L._y = sy(L.lat); });          // precompute map coords
+      COAST = coast.segments.map(seg => seg.map(c => [sx(c[0]), sy(c[1])])); // precompute coastline
+      document.getElementById("n-langs").textContent = langs.length.toLocaleString();
+      maps.push(makeMap("base", { canvasId: "map-base", legendId: "legend-base", meta: BASE_META, order: BASE_ORDER, field: "base", uncField: "base_unc" }));
+      maps.push(makeMap("special", { canvasId: "map-special", legendId: "legend-special", meta: SPECIAL_META, order: SPECIAL_ORDER, field: "special", uncField: "special_unc" }));
+      for (const mp of maps) { mp.buildLegend(); mp.resize(); }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => maps.forEach(m => m.draw()));
+    }).catch(err => {
+      panel.innerHTML = '<p class="empty">資料載入失敗。若是在本機直接以檔案開啟，瀏覽器會擋住 JSON 載入；請改用本地伺服器或部署後的網址（GitHub Pages）瀏覽。<br><br>' + esc(String(err)) + '</p>';
+    });
+
+    function makeMap(dimKey, cfg) {
+      const canvas = document.getElementById(cfg.canvasId);
+      const ctx = canvas.getContext("2d");
+      const wrap = canvas.parentNode;
+      let cssW = 0, cssH = 0, dpr = 1;
+      let view = { x: 0, y: 0, w: VB_W, h: VB_H };
+      const active = new Set();
+      const legendEl = document.getElementById(cfg.legendId);
+      const catOf = L => L[cfg.field] || (dimKey === "base" ? "unknown" : "pure");
+      const isBg = cat => !!(cfg.meta[cat] && cfg.meta[cat].bg);
+      const colorOf = cat => (cfg.meta[cat] && cfg.meta[cat].color) || "#c4bcae";
+      const X = mx => (mx - view.x) / view.w * cssW;
+      const Y = my => (my - view.y) / view.h * cssH;
+
+      function resize() {
+        cssW = canvas.clientWidth || wrap.clientWidth;
+        cssH = Math.round(cssW * RATIO);
+        canvas.style.height = cssH + "px";
+        dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.round(cssW * dpr);
+        canvas.height = Math.round(cssH * dpr);
+        draw();
+      }
+
+      function pass(wantBg, q) {
+        for (const L of DATA) {
+          const cat = catOf(L);
+          if (isBg(cat) !== wantBg) continue;
+          if (active.size && !active.has(cat)) continue;
+          if (q && L.name.toLowerCase().indexOf(q) < 0) continue;
+          const px = X(L._x), py = Y(L._y);
+          if (px < -4 || px > cssW + 4 || py < -4 || py > cssH + 4) continue;
+          const r = wantBg ? 1.5 : 2.7;
+          ctx.beginPath();
+          ctx.arc(px, py, r, 0, TAU);
+          if (L[cfg.uncField]) {
+            ctx.fillStyle = "#fff"; ctx.fill();
+            ctx.lineWidth = 1; ctx.strokeStyle = colorOf(cat); ctx.stroke();
+          } else {
+            ctx.fillStyle = colorOf(cat); ctx.fill();
+            ctx.lineWidth = 0.4; ctx.strokeStyle = "rgba(0,0,0,0.28)"; ctx.stroke();
+          }
+        }
+      }
+
+      function draw() {
+        if (!cssW) return;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, cssW, cssH);
+        ctx.fillStyle = "#F2EFE9"; ctx.fillRect(0, 0, cssW, cssH);
+        // coastline
+        ctx.strokeStyle = "#d7d0c4"; ctx.lineWidth = 0.5; ctx.beginPath();
+        for (const seg of COAST) {
+          for (let i = 0; i < seg.length; i++) {
+            const px = X(seg[i][0]), py = Y(seg[i][1]);
+            if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+          }
+        }
+        ctx.stroke();
+        // region labels
+        ctx.fillStyle = "#a89e8c"; ctx.font = 'italic 9px "Cormorant Garamond",serif'; ctx.textAlign = "center";
+        for (const [name, lon, lat] of REGIONS) ctx.fillText(name, X(sx(lon)), Y(sy(lat)));
+        // points
+        const q = searchEl.value.trim().toLowerCase();
+        pass(true, q); pass(false, q);
+        // selection ring
+        if (selected && BYID[selected]) {
+          const L = BYID[selected];
+          ctx.beginPath(); ctx.arc(X(L._x), Y(L._y), 5, 0, TAU);
+          ctx.lineWidth = 1.8; ctx.strokeStyle = "#1A1A1A"; ctx.stroke();
+        }
+      }
+
+      function pick(clientX, clientY) {
+        const r = canvas.getBoundingClientRect();
+        const mx = view.x + (clientX - r.left) / cssW * view.w;
+        const my = view.y + (clientY - r.top) / cssH * view.h;
+        const tol = view.w / cssW * 7;
+        let best = null, bestD = tol * tol;
+        for (const L of DATA) {
+          if (active.size && !active.has(catOf(L))) continue;
+          const dx = L._x - mx, dy = L._y - my, d = dx * dx + dy * dy;
+          if (d < bestD) { bestD = d; best = L; }
+        }
+        return best;
+      }
+
+      function clampView() {
+        view.w = Math.min(VB_W, Math.max(VB_W * 0.05, view.w));
+        view.h = view.w * RATIO;
+        view.x = Math.min(VB_W - view.w, Math.max(0, view.x));
+        view.y = Math.min(VB_H - view.h, Math.max(0, view.y));
+      }
+      function zoomAt(factor, cx, cy) {
+        const mx = view.x + cx / cssW * view.w, my = view.y + cy / cssH * view.h;
+        view.w *= factor; clampView();
+        view.x = mx - cx / cssW * view.w; view.y = my - cy / cssH * view.h;
+        clampView(); draw();
+      }
+      canvas.addEventListener("wheel", e => {
+        e.preventDefault();
+        const r = canvas.getBoundingClientRect();
+        zoomAt(e.deltaY > 0 ? 1.15 : 0.87, e.clientX - r.left, e.clientY - r.top);
+      }, { passive: false });
+      wrap.querySelector(".zoom-in").onclick = () => zoomAt(0.8, cssW / 2, cssH / 2);
+      wrap.querySelector(".zoom-out").onclick = () => zoomAt(1.25, cssW / 2, cssH / 2);
+      wrap.querySelector(".zoom-reset").onclick = () => { view = { x: 0, y: 0, w: VB_W, h: VB_H }; draw(); };
+
+      let drag = null;
+      canvas.addEventListener("pointerdown", e => {
+        drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y };
+        dragMoved = false; canvas.classList.add("grabbing");
+      });
+      window.addEventListener("pointermove", e => {
+        if (!drag) return;
+        const r = canvas.getBoundingClientRect();
+        const ddx = e.clientX - drag.x, ddy = e.clientY - drag.y;
+        if (Math.abs(ddx) > 3 || Math.abs(ddy) > 3) dragMoved = true;
+        view.x = drag.vx - ddx / r.width * view.w;
+        view.y = drag.vy - ddy / r.height * view.h;
+        clampView(); draw();
+      });
+      function endDrag() { drag = null; canvas.classList.remove("grabbing"); }
+      window.addEventListener("pointerup", endDrag);
+      window.addEventListener("pointercancel", endDrag);
+
+      canvas.addEventListener("click", e => { if (dragMoved) return; const L = pick(e.clientX, e.clientY); if (L) select(L.id); });
+      canvas.addEventListener("mousemove", e => {
+        if (drag) return;
+        const L = pick(e.clientX, e.clientY);
+        if (L) {
+          const m = cfg.meta[catOf(L)];
+          tip.textContent = L.name + (m ? " · " + m.zh : "") + (L[cfg.uncField] ? "（推定）" : "");
+          tip.style.opacity = "1"; moveTip(e); canvas.style.cursor = "pointer";
+        } else { hideTip(); canvas.style.cursor = drag ? "grabbing" : "grab"; }
+      });
+      canvas.addEventListener("mouseleave", hideTip);
+
+      function buildLegend() {
+        const counts = {}; cfg.order.forEach(k => counts[k] = 0);
+        for (const L of DATA) { const k = catOf(L); if (k in counts) counts[k]++; }
+        legendEl.innerHTML = "";
+        for (const k of cfg.order) {
+          const m = cfg.meta[k]; if (!m) continue;
+          const b = document.createElement("div");
+          b.className = "leg"; b.dataset.k = k;
+          b.innerHTML = '<span class="leg-dot" style="background:' + m.color + '"></span><span>' + m.zh + '</span><span class="leg-n">' + counts[k] + '</span>';
+          b.addEventListener("click", () => toggle(k));
+          legendEl.appendChild(b);
+        }
+        const note = document.createElement("div");
+        note.className = "leg-note";
+        note.innerHTML = '<span class="ring"></span>空心 = 推定';
+        legendEl.appendChild(note);
+      }
+      function toggle(k) {
+        if (active.has(k)) active.delete(k); else active.add(k);
+        [...legendEl.children].forEach(c => { if (!c.dataset.k) return; const on = active.size === 0 || active.has(c.dataset.k); c.classList.toggle("off", !on); });
+        draw();
+      }
+
+      if (window.ResizeObserver) new ResizeObserver(() => resize()).observe(wrap);
+
+      return { dimKey, draw, resize, buildLegend, focusOn(L) { view.w = Math.min(view.w, VB_W * 0.22); clampView(); view.x = L._x - view.w / 2; view.y = L._y - view.h / 2; clampView(); draw(); } };
+    }
+
+    searchEl.addEventListener("input", () => { for (const mp of maps) mp.draw(); renderResults(); });
+    function renderResults() {
+      const q = searchEl.value.trim().toLowerCase();
+      resultsEl.innerHTML = "";
+      if (!q) return;
+      const hits = DATA.filter(L => L.name.toLowerCase().indexOf(q) >= 0).slice(0, 50);
+      for (const L of hits) {
+        const chip = document.createElement("span");
+        chip.className = "res-chip"; chip.textContent = L.name;
+        chip.addEventListener("click", () => select(L.id));
+        resultsEl.appendChild(chip);
+      }
+      if (!hits.length) resultsEl.innerHTML = '<span class="res-chip" style="cursor:default;color:var(--text-muted)">查無此語言</span>';
+    }
+
+    function select(id) {
+      const L = BYID[id]; if (!L) return;
+      selected = id;
+      for (const mp of maps) mp.focusOn(L);
+      renderPanel(L);
+      if (window.innerWidth <= 760) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function renderPanel(L) {
+      const bm = BASE_META[L.base] || BASE_META.unknown;
+      const sm = SPECIAL_META[L.special] || SPECIAL_META.pure;
+      const dot = (m, unc) => '<span class="type-dot" style="' + (unc ? 'background:#fff;border:1.5px solid ' + m.color : 'background:' + m.color) + '"></span>';
+      let html = '<div class="panel-lang">' + esc(L.name) + '</div>';
+      html += '<div class="panel-branch">' + esc(L.family || "·") + (L.area ? ' · ' + esc(L.area) : '') + '</div>';
+      html += '<div class="pills">';
+      html += '<div class="type-pill"><span class="lab">進位</span>' + dot(bm, L.base_unc) + esc(bm.zh) + (L.base_unc ? '（推定）' : '') + '</div>';
+      html += '<div class="type-pill"><span class="lab">表達</span>' + dot(sm, L.special_unc) + esc(sm.zh) + (L.special_unc ? '（推定）' : '') + '</div>';
+      html += '</div>';
+      html += '<div class="num-grid">';
+      for (let i = 1; i <= 10; i++) {
+        const v = L.num[i] || "";
+        html += '<div class="num-cell"><span class="num-k">' + i + '</span><span class="num-v' + (v ? '' : ' none') + '">' + (v ? esc(v) : '·') + '</span></div>';
+      }
+      html += '</div>';
+      if (L.glottocode) html += '<p class="panel-note"><a href="https://glottolog.org/resource/languoid/id/' + esc(L.glottocode) + '" target="_blank" rel="noopener">Glottolog: ' + esc(L.glottocode) + ' ↗</a></p>';
+      panel.innerHTML = html;
+    }
+
+    window.addEventListener("resize", () => { for (const mp of maps) mp.resize(); });
+  })();
+  </script>
+</body>
+</html>
