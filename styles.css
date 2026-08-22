@@ -664,6 +664,51 @@ section {
   color: var(--accent);
 }
 
+.launch-row,
+.store-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.launch-row {
+  margin-top: 1rem;
+}
+
+.store-links {
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.itch-badge,
+.google-play-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 60px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.itch-badge img,
+.google-play-badge img {
+  display: block;
+  width: 200px;
+  height: auto;
+  transition: opacity 0.2s ease;
+}
+
+.itch-badge:hover img {
+  opacity: 0.78;
+}
+
+.itch-badge:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 /* ── STAT GRID ── */
 .stat-grid {
   display: grid;
