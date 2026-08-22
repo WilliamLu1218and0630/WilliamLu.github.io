@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
 :root {
   --bg:         #F8F7F4;
@@ -7,8 +7,9 @@
   --text-muted: #747070;
   --accent:     #A83226;
   --border:     #E0DBD5;
-  --font-sans:  'Inter', 'Taipei Sans TC', 'Noto Sans TC', sans-serif;
-  --font-serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans:  'Inter', 'Taipei Sans TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-serif: var(--font-sans);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,11 +46,12 @@ nav {
 }
 
 .nav-logo {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text);
   text-decoration: none;
+  letter-spacing: 0.01em;
 }
 
 .nav-links {
@@ -148,7 +150,7 @@ section {
 }
 
 .section-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 2rem;
   font-weight: 300;
   line-height: 1.15;
@@ -163,7 +165,7 @@ section {
 }
 
 .page-hero h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 3rem;
   font-weight: 300;
   line-height: 1.1;
@@ -196,7 +198,7 @@ section {
 }
 
 .research-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.55rem;
   font-weight: 300;
   margin-bottom: 0.3rem;
@@ -372,7 +374,7 @@ section {
 }
 
 .award-item .award-thumb.is-pdf {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1rem;
   color: var(--text-muted);
   letter-spacing: 0.08em;
@@ -603,7 +605,7 @@ section {
 }
 
 .project-card h3 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 1.5rem;
   font-weight: 300;
   line-height: 1.2;
@@ -726,7 +728,7 @@ section {
 }
 
 .stat-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 2rem;
   font-weight: 300;
   color: var(--accent);

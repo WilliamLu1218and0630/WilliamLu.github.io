@@ -18,8 +18,7 @@
     :root {
       --bg:#F8F7F4; --surface:#FFFFFF; --text:#1A1A1A; --text-muted:#747070;
       --accent:#A83226; --border:#E0DBD5;
-      --font-sans:'Inter','Taipei Sans TC','Noto Sans TC',sans-serif;
-      --font-serif:'Cormorant Garamond','Times New Roman',serif;
+      --font-sans:'Inter','Taipei Sans TC','Microsoft JhengHei','Noto Sans TC',sans-serif;
     }
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
@@ -31,10 +30,10 @@
     a { color: var(--accent); }
 
     .breadcrumb { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 0.8rem; }
-    h1 { font-family: var(--font-serif); font-weight: 400; font-size: 2.5rem; line-height: 1.1; margin: 0 0 0.4rem; }
-    .hero-lead { font-family: var(--font-serif); font-style: italic; font-weight: 300; font-size: 1.35rem; color: var(--text-muted); margin: 0 0 1.6rem; }
+    h1 { font-family: var(--font-sans); font-weight: 400; font-size: 2.5rem; line-height: 1.1; margin: 0 0 0.4rem; }
+    .hero-lead { font-family: var(--font-sans); font-style: italic; font-weight: 300; font-size: 1.35rem; color: var(--text-muted); margin: 0 0 1.6rem; }
     .intro p { max-width: 760px; font-size: 0.95rem; color: var(--text); }
-    .intro .lead { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 300; line-height: 1.4; }
+    .intro .lead { font-family: var(--font-sans); font-size: 1.4rem; font-weight: 300; line-height: 1.4; }
 
     .controls { margin: 1.8rem 0 1.2rem; }
     .search-box {
@@ -48,7 +47,7 @@
 
     .maps { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; align-items: start; margin-bottom: 1.6rem; }
     .map-block { min-width: 0; }
-    .map-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; margin: 0; }
+    .map-title { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 500; margin: 0; }
     .map-sub { font-size: 0.74rem; color: var(--text-muted); line-height: 1.5; margin: 0.2rem 0 0.7rem; }
 
     .legend { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
@@ -77,7 +76,7 @@
 
     .panel { background: var(--surface); border: 1px solid var(--border); padding: 1.3rem 1.3rem 1.5rem; min-height: 200px; }
     .panel .empty { color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; }
-    .panel-lang { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 300; line-height: 1.15; margin-bottom: 0.2rem; }
+    .panel-lang { font-family: var(--font-sans); font-size: 1.6rem; font-weight: 300; line-height: 1.15; margin-bottom: 0.2rem; }
     .panel-branch { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.02em; margin-bottom: 0.9rem; }
     .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
     .type-pill { display: inline-flex; align-items: center; gap: 0.45em; font-size: 0.72rem; padding: 0.25em 0.7em; border: 1px solid var(--border); }
@@ -86,7 +85,7 @@
     .num-grid { display: grid; grid-template-columns: repeat(2,1fr); grid-template-rows: repeat(5,auto); grid-auto-flow: column;
       gap: 1px; background: var(--border); border: 1px solid var(--border); }
     .num-cell { background: var(--surface); padding: 0.45rem 0.6rem; display: flex; align-items: baseline; gap: 0.5rem; }
-    .num-k { font-family: var(--font-serif); font-size: 0.95rem; color: var(--accent); width: 1.1em; flex-shrink: 0; }
+    .num-k { font-family: var(--font-sans); font-size: 0.95rem; color: var(--accent); width: 1.1em; flex-shrink: 0; }
     .num-v { font-size: 0.86rem; word-break: break-word; }
     .num-v.none { color: var(--text-muted); font-style: italic; }
     .panel-note { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.9rem; }
@@ -94,7 +93,7 @@
 
     footer { max-width: 1180px; margin: 0 auto; padding: 2rem 1.6rem 3rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; line-height: 1.7; }
     footer a { color: var(--accent); }
-    .section-title { font-family: var(--font-serif); font-weight: 400; font-size: 1.7rem; margin: 2.4rem 0 0.6rem; }
+    .section-title { font-family: var(--font-sans); font-weight: 400; font-size: 1.7rem; margin: 2.4rem 0 0.6rem; }
 
     @media (max-width: 760px) {
       .maps { grid-template-columns: 1fr; }
@@ -287,7 +286,7 @@
         }
         ctx.stroke();
         // region labels
-        ctx.fillStyle = "#a89e8c"; ctx.font = 'italic 9px "Cormorant Garamond",serif'; ctx.textAlign = "center";
+        ctx.fillStyle = "#a89e8c"; ctx.font = 'italic 9px Inter,sans-serif'; ctx.textAlign = "center";
         for (const [name, lon, lat] of REGIONS) ctx.fillText(name, X(sx(lon)), Y(sy(lat)));
         // points
         const q = searchEl.value.trim().toLowerCase();
